@@ -41,6 +41,11 @@ public class Books {
 
 	}
 
+	public Books(String name) {
+		super();
+		this.name = name;
+	}
+
 	public Books(String name, String author, String language, String description, BigDecimal price,
 			Collection<Pictures> pictures) {
 		super();
