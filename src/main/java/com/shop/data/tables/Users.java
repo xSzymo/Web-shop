@@ -31,10 +31,10 @@ public class Users {
 	private boolean isAdmin;
 
 	@OneToOne
-	@JoinColumn(name = "addr123ess_id")
+	@JoinColumn(name = "address_id")
 	private Address address;
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id")
 	private Collection<Orders> orders = new LinkedHashSet<Orders>();
 
@@ -58,7 +58,7 @@ public class Users {
 		this.eMail = eMail;
 		this.dateBirth = dateBirth;
 		this.isAdmin = isAdmin;
-		this.address = address;
+		this.setAddress(address);
 		this.orders = orders;
 	}
 
@@ -66,7 +66,7 @@ public class Users {
 	public String toString() {
 		return "Users [id=" + id + ", login=" + login + ", password=" + password + ", name=" + name + ", surname="
 				+ surname + ", eMail=" + eMail + ", dateBirth=" + dateBirth + ", isAdmin=" + isAdmin + ", address="
-				+ address + ", orders=" + orders + "]";
+				+ getAddress() + ", orders=" + orders + "]";
 	}
 
 	public Long getId() {
@@ -82,7 +82,7 @@ public class Users {
 	}
 
 	public String getPassword() {
-		return password;
+        return password;
 	}
 
 	public void setPassword(String password) {
@@ -129,4 +129,11 @@ public class Users {
 		this.isAdmin = isAdmin;
 	}
 
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
 }

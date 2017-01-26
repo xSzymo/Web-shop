@@ -6,11 +6,14 @@ import java.util.LinkedHashSet;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.Hibernate;
 
 @Entity
 @Table(name = "categories")
@@ -24,12 +27,12 @@ public class Categories {
 	@Column(name = "category_name")
 	private String name;
 
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "books_id") // here sssss
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "categories_id") // here sssss
 	private Collection<Books> books = new LinkedHashSet<Books>();
 
 	public Categories() {
-
+		books = new LinkedHashSet<Books>();
 	}
 
 	public Categories(String name, Collection<Books> books) {

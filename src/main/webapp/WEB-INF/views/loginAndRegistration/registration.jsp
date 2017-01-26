@@ -38,7 +38,7 @@
                     </tr>
 					<tr>
                         <td>Date birth</td>
-                        <td><input type="text" name="dateBirth" value="optional" /></td>
+                        <td><input type="date" name="dateBirth" value="optional" /></td>
                     </tr>
 					<tr>
                         <td>Country </td>

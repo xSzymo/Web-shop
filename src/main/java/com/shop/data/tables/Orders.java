@@ -41,10 +41,10 @@ public class Orders {
 	@OneToOne
 	@JoinColumn(name = "coupon_codes_id")
 	private CouponCodes couponCodes;
-
-	@OneToMany(cascade = CascadeType.ALL)
-	@Column(name = "books_id")
-	private Collection<Books> books = new LinkedHashSet<Books>();
+//
+//	@OneToMany(cascade = CascadeType.ALL)
+//	@Column(name = "books_id")
+//	private Collection<Books> books = new LinkedHashSet<Books>();
 
 	public Orders() {
 
@@ -58,7 +58,7 @@ public class Orders {
 		this.shippingAddressId = shippingAddressId;
 		this.billingAddressId = billingAddressId;
 		this.couponCodes = couponCodes;
-		this.books = books;
+//		this.books = books;
 	}
 
 	public Orders(Long id, BigDecimal price, EnumPayments paymentMethod, Address shippingAddressId,
@@ -69,15 +69,15 @@ public class Orders {
 		this.shippingAddressId = shippingAddressId;
 		this.billingAddressId = billingAddressId;
 		this.couponCodes = couponCodes;
-		this.books = books;
+//		this.books = books;
 	}
 
 	@Override
 	public String toString() {
 		return "Orders [id=" + id + ", price=" + price + ", paymentMethod=" + paymentMethod + ", shippingAddressId="
 				+ shippingAddressId + ", billingAddressId=" + billingAddressId + ", couponCodes=" + couponCodes
-				+ ", books=" + books + "]";
-	}
+//				+ ", books=" + books + "]";
+	;}
 
 	public Long getId() {
 		return id;
@@ -127,11 +127,11 @@ public class Orders {
 		this.couponCodes = couponCodes;
 	}
 
-	public Collection<Books> getBooks() {
-		return books;
-	}
-
-	public void setBooks(Collection<Books> books) {
-		this.books = books;
-	}
+//	public Collection<Books> getBooks() {
+//		return books;
+//	}
+//
+//	public void setBooks(Collection<Books> books) {
+//		this.books = books;
+//	}
 }

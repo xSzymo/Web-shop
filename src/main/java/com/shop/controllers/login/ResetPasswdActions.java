@@ -1,4 +1,4 @@
-package com.shop.controllers;
+package com.shop.controllers.login;
 
 import java.util.Properties;
 
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.shop.data.tables.Users;
-import com.shop.others.RunAtStart;
+import com.shop.others.RepositoriesAccess;
 
 @Controller
 public class ResetPasswdActions {
@@ -33,14 +33,14 @@ public class ResetPasswdActions {
 	public String sendCode(@RequestParam("login") String login, @RequestParam("email") String email, Model model,
 			HttpServletResponse response, HttpServletRequest request) {
 
-		if ((RunAtStart.usersRepository.findByeMail(email) == null)) {
+		if ((RepositoriesAccess.usersRepository.findByeMail(email) == null)) {
 			model.addAttribute("msg", "Wrong e-mail");
 			return "loginAndRegistration/reset/forgotPassword";
-		} else if (RunAtStart.usersRepository.findByLogin(login) == null) {
+		} else if (RepositoriesAccess.usersRepository.findByLogin(login) == null) {
 			model.addAttribute("msg", "Wrong login");
 			return "loginAndRegistration/reset/forgotPassword";
 		}
-		Users user = RunAtStart.usersRepository.findByeMail(email);
+		Users user = RepositoriesAccess.usersRepository.findByeMail(email);
 
 		final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
 		Properties props = System.getProperties();
@@ -70,7 +70,9 @@ public class ResetPasswdActions {
 
 			Message msg = new MimeMessage(session);
 			msg.setFrom(new InternetAddress("examplewebshop@gmail.com"));
-			msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(user.geteMail(), false));
+			// msg.setRecipients(Message.RecipientType.TO,
+			// InternetAddress.parse(user.geteMail(), false));
+			msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse("szymeksss@wp.pl", false));
 			msg.setSubject("Reset password");
 			msg.setText("After 5 min code will be delete\n" + code);
 			msg.setSentDate(new Date());
@@ -94,11 +96,11 @@ public class ResetPasswdActions {
 	public String sendUsername(@RequestParam("email") String email, Model model, HttpServletResponse response,
 			HttpServletRequest request) {
 
-		if ((RunAtStart.usersRepository.findByeMail(email) == null)) {
+		if ((RepositoriesAccess.usersRepository.findByeMail(email) == null)) {
 			model.addAttribute("msg", "Wrong e-mail");
 			return "loginAndRegistration/reset/forgotUsername";
 		}
-		Users user = RunAtStart.usersRepository.findByeMail(email);
+		Users user = RepositoriesAccess.usersRepository.findByeMail(email);
 
 		final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
 		Properties props = System.getProperties();
@@ -122,7 +124,9 @@ public class ResetPasswdActions {
 
 			Message msg = new MimeMessage(session);
 			msg.setFrom(new InternetAddress("examplewebshop@gmail.com"));
-			 msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(user.geteMail(), false));
+			// msg.setRecipients(Message.RecipientType.TO,
+			// InternetAddress.parse(user.geteMail(), false));
+			msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse("szymeksss@wp.pl", false));
 			msg.setSubject("Reset password");
 			msg.setText("Login : " + user.getLogin());
 			msg.setSentDate(new Date());
@@ -140,7 +144,7 @@ public class ResetPasswdActions {
 	public String resetPassword1(@RequestParam(name = "password") String password, Model model) {
 
 		this.user.setPassword(password);
-		RunAtStart.usersRepository.save(user);
+		RepositoriesAccess.usersRepository.save(user);
 		model.addAttribute("msg", "Success");
 		
 		return "loginAndRegistration/reset/resetPassword";

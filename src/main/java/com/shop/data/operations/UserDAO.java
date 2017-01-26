@@ -5,11 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.shop.data.repositories.UsersRepository;
 import com.shop.data.tables.Address;
 import com.shop.data.tables.Users;
-import com.shop.others.RunAtStart;
+import com.shop.others.RepositoriesAccess;
 
 public class UserDAO {
 	public static Users login(String login, String password) {
-		Iterable<Users> u = RunAtStart.usersRepository.findAll();
+		Iterable<Users> u = RepositoriesAccess.usersRepository.findAll();
 		for (Users x : u)
 			if (x.getLogin().equals(login) && x.getPassword().equals(password))
 				return x;
@@ -18,7 +18,7 @@ public class UserDAO {
 	}
 
 	public static boolean isUser(String login, String password) {
-		Iterable<Users> u = RunAtStart.usersRepository.findAll();
+		Iterable<Users> u = RepositoriesAccess.usersRepository.findAll();
 		for (Users x : u)
 			if (x.getLogin().equals(login) && x.getPassword().equals(password))
 				return true;
@@ -38,6 +38,6 @@ public class UserDAO {
 		//user.setAddress(address);
 		user.setIsAdmin(false);
 		
-		RunAtStart.usersRepository.save(user);
+		RepositoriesAccess.usersRepository.save(user);
 	}
 }

@@ -1,4 +1,4 @@
-package com.shop.controllers;
+package com.shop.controllers.login;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.shop.data.operations.UserDAO;
 import com.shop.data.tables.Users;
-import com.shop.others.RunAtStart;
+import com.shop.others.RepositoriesAccess;
 
 @Controller("log")
 public class LoginActions {
@@ -85,7 +85,7 @@ public class LoginActions {
 		if (postalCode.equals("optional")) postalCode = null;
 		if (street.equals("optional")) street = null;
 
-		Iterable<Users> users = RunAtStart.usersRepository.findAll();
+		Iterable<Users> users = RepositoriesAccess.usersRepository.findAll();
 
 		for (Users x : users) {
 			if (x.getLogin().equals(login)) {

@@ -15,34 +15,40 @@ public class Pictures {
 	private Long id;
 
 	@Column(name = "product_picture_name")
-	private String Name;
+	private String name;
 	@Column(name = "product_picture_path")
-	private String Path;
+	private String path;
 	@Column(name = "product_picture_file_type")
 	private String fileType;
 
 	public Pictures() {
 
 	}
+	
+	public Pictures(String name, String path ) {
+		super();
+		this.name = name;
+		this.path = path;
+	}
 
 	public Pictures(String name, String path, String fileType) {
 		super();
-		Name = name;
-		Path = path;
+		this.name = name;
+		this.path = path;
 		this.fileType = fileType;
 	}
 
 	public Pictures(Long id, String name, String path, String fileType) {
 		super();
 		this.id = id;
-		Name = name;
-		Path = path;
+		this.name = name;
+		this.path = path;
 		this.fileType = fileType;
 	}
 
 	@Override
 	public String toString() {
-		return "Pictures [id=" + id + ", Name=" + Name + ", Path=" + Path + ", fileType=" + fileType + "]";
+		return "Pictures [id=" + id + ", Name=" + name + ", Path=" + path + ", fileType=" + fileType + "]";
 	}
 
 	public Long getId() {
@@ -54,19 +60,19 @@ public class Pictures {
 	}
 
 	public String getName() {
-		return Name;
+		return name;
 	}
 
 	public void setName(String name) {
-		Name = name;
+		this.name = name;
 	}
 
 	public String getPath() {
-		return Path;
+		return path;
 	}
 
 	public void setPath(String path) {
-		Path = path;
+		this.path = path;
 	}
 
 	public String getFileType() {

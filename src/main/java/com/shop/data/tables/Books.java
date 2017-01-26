@@ -7,11 +7,13 @@ import java.util.LinkedHashSet;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.transaction.Transactional;
 
 @Entity
 @Table(name = "books")
@@ -33,17 +35,27 @@ public class Books {
 	@Column(name = "book_price")
 	private BigDecimal price;
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "book_id")
 	private Collection<Pictures> pictures = new LinkedHashSet<Pictures>();
+	
 
 	public Books() {
-
+		
 	}
-
+	
 	public Books(String name) {
 		super();
 		this.name = name;
+	}
+	
+	public Books(String name, String author, String language, String description, BigDecimal price) {
+		super();
+		this.name = name;
+		this.author = author;
+		this.language = language;
+		this.description = description;
+		this.price = price;
 	}
 
 	public Books(String name, String author, String language, String description, BigDecimal price,
