@@ -16,7 +16,6 @@
 	<c:if test="${msg != null}">
 		<c:out value="${msg}"></c:out>
 	</c:if>
-
 	<center>
 			<c:forEach items="${books}" var="book">
 			<table border="0" width="13%">

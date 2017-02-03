@@ -1,35 +1,22 @@
 package com.shop.controllers.administratorSite.books;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.math.BigDecimal;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Collection;
-import java.util.LinkedHashSet;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
-import com.shop.data.operations.CategoriesOperations;
+import com.shop.configuration.ApplicationConfig;
 import com.shop.data.tables.Books;
 import com.shop.data.tables.Categories;
 import com.shop.data.tables.Pictures;
-import com.shop.data.tables.Users;
 import com.shop.others.RepositoriesAccess;
 
 /*
@@ -79,12 +66,11 @@ public class BooksCRUD {
 	@RequestMapping("read")
 	public String readSite(Model model, HttpServletRequest request) {
 		Iterable<Books> books = RepositoriesAccess.booksRepository.findAll();
+		Iterable<Categories> categories = RepositoriesAccess.categoriesRepository.findAll();
 
 		model.addAttribute("books", books);
+		model.addAttribute("categories", categories);
 
-	    String referrer = request.getHeader("Referer");
-	    request.getSession().setAttribute("url_prior_login", referrer);
-		
 		return "administratorSite/booksCRUD/read";
 	}
 
@@ -107,32 +93,40 @@ public class BooksCRUD {
 		return "administratorSite/booksCRUD/update";
 	}
 
+	/*
+	 * JUST UPDATE pictures categories back to prevoius page...mistake bah
+	 */
 	@RequestMapping("updateBook/update")
 	public String updateBook(@RequestParam("id") String id, @RequestParam("name") String name,
 			@RequestParam("author") String author, @RequestParam("language") String language,
 			@RequestParam("price") String price, @RequestParam("description") String description,
 			@RequestParam("category") String category, Model model) {
 
-		System.out.println("hej");
 		Books foundBook = RepositoriesAccess.booksRepository.findById(Long.parseLong(id));
 		if (foundBook == null) {
+			model.addAttribute("book", foundBook);
 			model.addAttribute("msg", "not found book to update");
-			return "AdministratorSite/booksCRUD/update";
+			return "administratorSite/booksCRUD/updateOneBook";
 		}
 		Categories foundCategory = RepositoriesAccess.categoriesRepository.findByName(category);
-		if(foundCategory == null) {
+		if (foundCategory == null) {
+			model.addAttribute("book", foundBook);
 			model.addAttribute("msg", "not category found");
-			return "AdministratorSite/booksCRUD/update";			
+			return "administratorSite/booksCRUD/updateOneBook";
 		}
+
 		foundBook.setName(name);
 		foundBook.setAuthor(author);
 		foundBook.setPrice(new BigDecimal(price));
 		foundBook.setDescription(description);
 		foundBook.setLanguage(language);
+		RepositoriesAccess.booksRepository.save(foundBook);
+
 		foundCategory.getBooks().add(foundBook);
 		RepositoriesAccess.categoriesRepository.save(foundCategory);
-
-		return "administratorSite/booksCRUD/update";
+		model.addAttribute("book", foundBook);
+		model.addAttribute("msg", "Success");
+		return "administratorSite/booksCRUD/updateOneBook";
 	}
 
 	@RequestMapping(value = "updateBook/{bookId}")
@@ -143,10 +137,10 @@ public class BooksCRUD {
 			model.addAttribute("msg", "not found");
 
 		model.addAttribute("book", foundBook);
-		return "/administratorSite/booksCRUD/update1";
+		return "/administratorSite/booksCRUD/updateOneBook";
 	}
 
-	//2
+	// 2
 	@RequestMapping("delete")
 	public String deleteSite(Model model) {
 		Iterable<Books> books = RepositoriesAccess.booksRepository.findAll();
@@ -156,20 +150,22 @@ public class BooksCRUD {
 	}
 
 	@RequestMapping(value = "deleteBook/{bookId}")
-	public String deleteB(@PathVariable Long bookId, Model model) {
+	public RedirectView deleteB(@PathVariable Long bookId, Model model) {
 		Books foundBook = RepositoriesAccess.booksRepository.findById(bookId);
 
 		if (foundBook == null)
-			model.addAttribute("msg", "not found");
+			model.addAttribute("msg", "not found");// wont work for redirectView
 		else {
 			RepositoriesAccess.booksRepository.delete(foundBook);
-			model.addAttribute("msg", "Succes");
+			model.addAttribute("msg", "Succes, back to delete more");// wont
+																		// work
+																		// for
+																		// redirectView
 		}
-
 		Iterable<Books> books = RepositoriesAccess.booksRepository.findAll();
 		model.addAttribute("books", books);
 
-		return "/administratorSite/booksCRUD/delete";
+		return new RedirectView(ApplicationConfig.projectName + "administratorSite/books/delete");
 	}
 
 	@RequestMapping(value = "deleteBook")
@@ -186,5 +182,30 @@ public class BooksCRUD {
 		Iterable<Books> books = RepositoriesAccess.booksRepository.findAll();
 		model.addAttribute("books", books);
 		return "/administratorSite/booksCRUD/delete";
+	}
+
+	/*
+	 * need to delete picture from disc
+	 * LATER
+	 */
+	@RequestMapping(value = "updateBook/deletePicture")
+	public ModelAndView deleteB(@RequestParam("bookId") Long bookId, @RequestParam("pictureId") Long pictureId,
+			RedirectAttributes redir) {
+		Books foundBook = RepositoriesAccess.booksRepository.findById(bookId);
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("redirect:http://localhost:8080/CRUD/administratorSite/books/updateBook/" + bookId);
+		
+		for(Pictures x : foundBook.getPictures()) {
+			if(x.getId() == pictureId) {
+				Pictures foundPicture = RepositoriesAccess.picturesRepository.findById(pictureId);
+				foundBook.getPictures().remove(foundPicture);
+				RepositoriesAccess.booksRepository.save(foundBook);
+				RepositoriesAccess.picturesRepository.delete(foundPicture);
+				redir.addFlashAttribute("msg", "Success");
+				return modelAndView;				
+			}
+		}
+		redir.addFlashAttribute("msg", "Error with delete picture");
+		return modelAndView;
 	}
 }

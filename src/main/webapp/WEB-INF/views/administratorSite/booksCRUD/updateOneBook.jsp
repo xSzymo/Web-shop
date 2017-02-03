@@ -8,12 +8,11 @@
 <title>Update</title>
 </head>
 <body>
-
+<center>
 			<c:if test="${book != null}">
 				<c:set var="book" scope="page" value="${book}"/>
 			</c:if>
 						
-
         <form action="update">
             <table border="0" width="20%" cellpadding="3">
                     <tr>
@@ -45,22 +44,91 @@
                     </tr>
 					<tr>
                         <td>Category</td>
-                        <td><input type="text" name="category" value="<c:out value="${book.price}"/>" /></td>
+                        <td><input type="text" name="category" value="<c:out value="${param.category}"/>" /></td>
                     </tr>
                     <tr>
                         <td><input type="submit" value="Update" /></td>
                     </tr>
             </table>
         </form>
-				
 
 
 
-
-
+		<form action="/CRUD/administratorSite/books/update">
+    		<input type="submit" value="Back" />
+		</form>
 
 	<c:if test="${msg != null}">
 		<c:out value="${msg}"></c:out>
 	</c:if>
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+            <table border="0" width="20%" cellpadding="3">
+<tr><td>
+
+<br><br>
+	<form method="POST" action="uploadFilePictureWithId" enctype="multipart/form-data">
+        <input type="hidden" name="bookId" value="${book.id}"/>
+		File to upload: <input type="file" name="file"><br /><br>
+		 Name:<br> <input type="text" name="name"><br /><br>
+		 <input type="submit" value="add"> 
+		 <c:if test="${msg != mull}">
+		 <c:out value="${msg}"></c:out>
+		 </c:if>
+	</form>
+	</td>
+	<td>
+<br><br>
+	<form action="uploadFileLinkId">
+        <input type="hidden" name="bookId" value="${book.id}"/>
+		Link: <input type="text" name="link"><br /> <br /> 
+		Name: <input type="text" name="name"><br /> <br /> 
+		<input type="submit" value="add"> 
+		 <c:if test="${msgLink != mull}">
+			 <c:out value="${msgLink}"></c:out>
+		 </c:if>
+	</form>
+	
+	</table>
+	<td></td><tr>
+	</tr></table>
+	</center>
+	
+	
+	
+				 <form action="deletePicture/${book.id}">
+     			 <input type="hidden" name="bookId" value=""/>
+       			 <input type="hidden" name="picture" value=""/>
+				</form>
+	
+	
+	
+		<center>		
+		<br><br><br><br>	
+		
+            <table border="0" width="20%" cellpadding="3">
+				<c:forEach items="${book.pictures}" var="picture">
+				 <form action="deletePicture">
+     			 <input type="hidden" name="bookId" value="${book.id}"/>
+       			 <input type="hidden" name="pictureId" value="${picture.id}"/>
+				
+				<td>
+						&nbsp;<input align="top" type="submit" value="Delete" /><br>
+							<IMG HEIGHT="100" WIDTH="100" SRC="/CRUD/getImage/${picture.name}">
+				</td>
+  			 </form>
+			</c:forEach>
+			</table>
+	</center>
+	
+	
 </body>
 </html>

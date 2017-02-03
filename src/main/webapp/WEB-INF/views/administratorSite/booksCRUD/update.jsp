@@ -14,10 +14,10 @@
 			</c:if>
 						
 
-        <form action="updateBook">
+        <form action="updateBook/update">
             <table border="0" width="20%" cellpadding="3">
                     <tr>
-                        <th colspan="2">Registration</th>
+                        <th colspan="2">Update</th>
                     </tr>
                     <tr>
                         <td>id</td>
@@ -76,7 +76,7 @@
 			
 			<tr><c:out value="Price :${book.price}" /><br></tr>
 			
-			<tr><c:out value="Description :${book.description}" /><br><br><br></tr>
+			<tr><c:out value="Description :${book.description}" /><br><br></tr>
 			
 			
 			<c:forEach items="${book.pictures}" var="picture">
@@ -84,7 +84,7 @@
 			</c:forEach>
 			
 			 <form action="updateBook/${book.id}">
-				<input align="top" type="submit" value="Update" />
+				<br><input align="top" type="submit" value="Update" />
   			 </form>
 			</table>
 			</c:forEach>

@@ -27,7 +27,7 @@ public class Categories {
 	@Column(name = "category_name")
 	private String name;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "categories_id") // here sssss
 	private Collection<Books> books = new LinkedHashSet<Books>();
 

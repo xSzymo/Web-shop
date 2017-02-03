@@ -8,10 +8,7 @@
 </head>
 <body>
 <center>
-
-<!-- Fix : sometimes give diffrent url like books/books/create or books/create(correct) -->
-
-		<form id="saveForm" action="books" method="get"></form>
+		<form id="saveForm" action="administratorSite/books" method="get"></form>
 		<form id="deleteForm" action="registration" method="get"></form>
 
 

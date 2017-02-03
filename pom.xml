@@ -4,7 +4,6 @@
   <artifactId>Spring-web-shop-project</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>Simply web shop using </name>
 	<url>http://maven.apache.org</url>
 	<properties>
 		<java-version>1.7</java-version>
@@ -177,6 +176,9 @@
 		</dependency>  
 
 
+
+<!-- https://mvnrepository.com/artifact/org.everit.email/org.everit.email.api -->
+<!-- https://mvnrepository.com/artifact/javax.mail/mail -->
 <dependency>
     <groupId>javax.mail</groupId>
     <artifactId>mail</artifactId>
@@ -194,7 +196,7 @@
 					<artifactId>tomcat7-maven-plugin</artifactId>
 					<version>2.2</version>
 					<configuration>
-						<path>/WebShop</path><!-- name of your path -->
+						<path>/CRUD</path><!-- name of your path -->
 					</configuration>
 				</plugin>
 				<plugin>

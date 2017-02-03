@@ -81,7 +81,7 @@ footer {background: #aaa;color:white;}
 
 
 
-
+<%-- 
 <center>
 
 
@@ -103,6 +103,7 @@ footer {background: #aaa;color:white;}
 
 
 
+ --%>
 
 
 
@@ -110,11 +111,10 @@ footer {background: #aaa;color:white;}
 
 
 
+12
+<c:out value="${msg}"></c:out>
 
-
-
-
-
+12
 
 
 

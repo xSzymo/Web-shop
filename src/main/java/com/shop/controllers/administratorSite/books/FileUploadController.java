@@ -35,7 +35,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.shop.data.tables.Books;
 import com.shop.data.tables.Pictures;
 import com.shop.others.RepositoriesAccess;
 
@@ -48,7 +51,8 @@ import com.shop.others.RepositoriesAccess;
 public class FileUploadController {
 
 	public static final String picturePath = "E:/WebShopPictures/";
-	//private static final String testPicturePath = picturePath + "/linkPictures/";
+	// private static final String testPicturePath = picturePath +
+	// "/linkPictures/";
 	private static final Logger logger = LoggerFactory.getLogger(FileUploadController.class);
 
 	@RequestMapping("upload")
@@ -155,4 +159,138 @@ public class FileUploadController {
 			System.out.println(e.getMessage());
 		}
 	}
+
+	@RequestMapping(value = "updateBook/uploadFilePictureWithId")
+	public ModelAndView uploadFileHandlerPictureId(@RequestParam(name = "bookId") Long id,
+			@RequestParam(name = "name") String name, @RequestParam("file") MultipartFile file, Model model,
+			RedirectAttributes redir) {
+		Pictures found = RepositoriesAccess.picturesRepository.findByName(name);
+		Books foundBook = RepositoriesAccess.booksRepository.findById(id);
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("redirect:http://localhost:8080/CRUD/administratorSite/books/updateBook/" + id);
+
+		if (found != null) {
+			redir.addFlashAttribute("msg", "This picture already exist");
+			return modelAndView;
+		}
+
+		if (foundBook == null) {
+			redir.addFlashAttribute("msg", "error book not found");
+			return modelAndView;
+		}
+
+		if (!file.isEmpty()) {
+			try {
+				byte[] bytes = file.getBytes();
+
+				String rootPath = System.getProperty("catalina.home");
+				File dir = new File(picturePath);
+				System.out.println("File : " + dir.getPath());
+				if (!dir.exists())
+					dir.mkdirs();
+
+				File serverFile = new File(dir.getAbsolutePath() + File.separator + name);
+				System.out.println("Server : " + serverFile.getAbsolutePath());
+				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+				stream.write(bytes);
+				stream.close();
+
+				Pictures picture = new Pictures();
+				picture.setName(name);
+				picture.setPath(dir.getPath());
+
+				foundBook.getPictures().add(picture);
+				RepositoriesAccess.booksRepository.save(foundBook);
+
+				logger.info("Server File Location=" + serverFile.getAbsolutePath());
+
+				redir.addFlashAttribute("msg", "Success");
+				redir.addFlashAttribute("pictureName", name);
+				return modelAndView;
+			} catch (Exception e) {
+				redir.addFlashAttribute("msg", "Success");
+				return modelAndView;
+			}
+		} else {
+			redir.addFlashAttribute("msg", "error");
+		}
+		return modelAndView;
+	}
+
+	@RequestMapping(value = "updateBook/uploadFileLinkId")
+	public ModelAndView uploadFileHandlerLinkWithId(@RequestParam(name = "bookId") Long id,
+			@RequestParam(name = "name") String name, @RequestParam("link") String link, Model model, 
+			RedirectAttributes redir) throws IOException {
+		Pictures found = RepositoriesAccess.picturesRepository.findByName(name);
+		Books foundBook = RepositoriesAccess.booksRepository.findById(id);
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("redirect:http://localhost:8080/CRUD/administratorSite/books/updateBook/" + id);
+
+		if (found != null) {
+			redir.addFlashAttribute("msgLink", "This picture already exist");
+			return modelAndView;
+		}
+
+		try {
+			downloadImage(link, new File(picturePath).getAbsolutePath(), name);
+
+		} catch (IOException ex) {
+			redir.addFlashAttribute("msgLink", "error");
+			return modelAndView;
+		}
+
+		Pictures picture = new Pictures(name, new File(picturePath).getAbsolutePath() + File.separator + name);
+		foundBook.getPictures().add(picture);
+		RepositoriesAccess.booksRepository.save(foundBook);
+
+		redir.addFlashAttribute("pictureLinkName", name);
+		redir.addFlashAttribute("msgLink", "Success");
+		return modelAndView;
+	}
+
+	// @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
+	// public String uploadFileHandler(@RequestParam(name = "name") String name,
+	// @RequestParam("file") MultipartFile file,
+	// Model model) {
+	// System.out.println("here");
+	// if (!file.isEmpty()) {
+	// try {
+	// byte[] bytes = file.getBytes();
+	//
+	// // Creating the directory to store file
+	// String rootPath = System.getProperty("catalina.home");
+	// File dir = new File(picturePath);
+	// System.out.println("File : " + dir.getPath());
+	// if (!dir.exists())
+	// dir.mkdirs();
+	//
+	// // Create the file on server
+	// File serverFile = new File(dir.getAbsolutePath() + File.separator +
+	// name);
+	// System.out.println("Server : " + serverFile.getAbsolutePath());
+	// BufferedOutputStream stream = new BufferedOutputStream(new
+	// FileOutputStream(serverFile));
+	// stream.write(bytes);
+	// stream.close();
+	//
+	// Pictures picture = new Pictures();
+	// picture.setName(name);
+	// picture.setPath(dir.getPath());
+	// RepositoriesAccess.picturesRepository.save(picture);
+	//
+	// logger.info("Server File Location=" + serverFile.getAbsolutePath());
+	//
+	// model.addAttribute("msg", "Success");
+	// return null;
+	// } catch (Exception e) {
+	// model.addAttribute("msg", "Success");
+	// return null;// "You failed to upload " + name + " => " +
+	// // e.getMessage();
+	// }
+	// } else {
+	// model.addAttribute("msg", "Success");
+	// return null;// "You failed to upload " + name + " because the file
+	// // was empty.";
+	// }
+	// }
 }
