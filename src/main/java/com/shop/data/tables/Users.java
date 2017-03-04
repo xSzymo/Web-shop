@@ -6,6 +6,8 @@ import java.util.LinkedHashSet;
 
 import javax.persistence.*;
 
+import org.springframework.security.core.GrantedAuthority;
+
 @Entity
 @Table(name = "users")
 public class Users {
@@ -27,8 +29,6 @@ public class Users {
 	private String eMail;
 	@Column(name = "user_date_birth")
 	private Date dateBirth;
-	@Column(name = "user_is_admin")
-	private boolean isAdmin;
 
 	@OneToOne
 	@JoinColumn(name = "address_id")
@@ -57,16 +57,36 @@ public class Users {
 		this.surname = surname;
 		this.eMail = eMail;
 		this.dateBirth = dateBirth;
-		this.isAdmin = isAdmin;
 		this.setAddress(address);
-		this.orders = orders;
+		this.setOrders(orders);
+	}
+
+	public Users(Users user) {
+		this.login = user.login;
+		this.password = user.password;
+		this.name = user.name;
+		this.surname = user.surname;
+		this.eMail = user.eMail;
+		this.dateBirth = user.dateBirth;
+		this.setAddress(user.address);
+		this.setOrders(user.orders);
+	}
+
+
+	public Users(String login, String password, String name, String surname, String eMail) {
+		super();
+		this.login = login;
+		this.password = password;
+		this.name = name;
+		this.surname = surname;
+		this.eMail = eMail;
 	}
 
 	@Override
 	public String toString() {
 		return "Users [id=" + id + ", login=" + login + ", password=" + password + ", name=" + name + ", surname="
-				+ surname + ", eMail=" + eMail + ", dateBirth=" + dateBirth + ", isAdmin=" + isAdmin + ", address="
-				+ getAddress() + ", orders=" + orders + "]";
+				+ surname + ", eMail=" + eMail + ", dateBirth=" + dateBirth +  ", address="
+				+ getAddress() + ", orders=" + getOrders() + "]";
 	}
 
 	public Long getId() {
@@ -121,13 +141,6 @@ public class Users {
 		this.dateBirth = dateBirth;
 	}
 
-	public boolean getIsAdmin() {
-		return isAdmin;
-	}
-
-	public void setIsAdmin(boolean isAdmin) {
-		this.isAdmin = isAdmin;
-	}
 
 	public Address getAddress() {
 		return address;
@@ -135,5 +148,13 @@ public class Users {
 
 	public void setAddress(Address address) {
 		this.address = address;
+	}
+
+	public Collection<Orders> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(Collection<Orders> orders) {
+		this.orders = orders;
 	}
 }

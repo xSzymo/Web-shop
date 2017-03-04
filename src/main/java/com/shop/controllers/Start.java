@@ -3,6 +3,7 @@ package com.shop.controllers;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,5 +46,11 @@ public class Start {
 	public String test123() {
 		
 		return "test/test";
+	}
+	
+	@Secured(value = { "ROLE_ADMIN" })
+	@RequestMapping("secured")
+	public void sdasacxsxz() {
+		System.out.println("secured");
 	}
 }

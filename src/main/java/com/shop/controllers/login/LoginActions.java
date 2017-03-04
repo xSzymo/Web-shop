@@ -1,8 +1,29 @@
 package com.shop.controllers.login;
 
+import java.io.IOException;
+import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,7 +31,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 //import org.springframework.ui.Model;
 
+import com.shop.data.operations.CustomUserDetails;
 import com.shop.data.operations.UserDAO;
+import com.shop.data.tables.UserRole;
 import com.shop.data.tables.Users;
 import com.shop.others.RepositoriesAccess;
 
@@ -51,13 +74,13 @@ public class LoginActions {
 			return "loginAndRegistration/loginFailed";
 
 		if (UserDAO.isUser(login, password)) {
-			request.getSession().setAttribute("user", UserDAO.login(login, password));
+			UserDAO.login(login, password);	
 			return "start";
 		} else {
 			model.addAttribute("msg", "Wrong password or username, check it again !");
 			return "loginAndRegistration/login";
 		}
-	}
+	}	
 	
 	@RequestMapping(value = "userRegistration", method = RequestMethod.POST)
 	public String userRegistration(@RequestParam(name = "login", required = false, defaultValue = "") String login,
@@ -106,10 +129,7 @@ public class LoginActions {
 
 	@RequestMapping(value = "logout")
 	public String logout() {
-
-		// session.removeAttribute("username");
-		// session.removeAttribute("password");
-		// session.invalidate();
+		UserDAO.logout();
 		return "start";
 	}
 }

@@ -7,6 +7,7 @@ import java.util.LinkedHashSet;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -41,13 +42,23 @@ public class Orders {
 	@OneToOne
 	@JoinColumn(name = "coupon_codes_id")
 	private CouponCodes couponCodes;
-//
-//	@OneToMany(cascade = CascadeType.ALL)
-//	@Column(name = "books_id")
-//	private Collection<Books> books = new LinkedHashSet<Books>();
+
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+	@Column(name = "books_id")
+	private Collection<Books> books = new LinkedHashSet<Books>();
 
 	public Orders() {
 
+	}
+	
+	public Orders(BigDecimal price, EnumPayments paymentMethod, Address shippingAddressId, Address billingAddressId,
+			CouponCodes couponCodes) {
+		super();
+		this.price = price;
+		this.paymentMethod = paymentMethod;
+		this.shippingAddressId = shippingAddressId;
+		this.billingAddressId = billingAddressId;
+		this.couponCodes = couponCodes;
 	}
 
 	public Orders(BigDecimal price, EnumPayments paymentMethod, Address shippingAddressId, Address billingAddressId,
@@ -58,7 +69,7 @@ public class Orders {
 		this.shippingAddressId = shippingAddressId;
 		this.billingAddressId = billingAddressId;
 		this.couponCodes = couponCodes;
-//		this.books = books;
+		this.books = books;
 	}
 
 	public Orders(Long id, BigDecimal price, EnumPayments paymentMethod, Address shippingAddressId,
@@ -69,15 +80,14 @@ public class Orders {
 		this.shippingAddressId = shippingAddressId;
 		this.billingAddressId = billingAddressId;
 		this.couponCodes = couponCodes;
-//		this.books = books;
+		this.books = books;
 	}
 
 	@Override
 	public String toString() {
 		return "Orders [id=" + id + ", price=" + price + ", paymentMethod=" + paymentMethod + ", shippingAddressId="
-				+ shippingAddressId + ", billingAddressId=" + billingAddressId + ", couponCodes=" + couponCodes
-//				+ ", books=" + books + "]";
-	;}
+				+ shippingAddressId + ", billingAddressId=" + billingAddressId + ", couponCodes=" + couponCodes				+ ", books=" + books + "]";
+	}
 
 	public Long getId() {
 		return id;
@@ -127,11 +137,11 @@ public class Orders {
 		this.couponCodes = couponCodes;
 	}
 
-//	public Collection<Books> getBooks() {
-//		return books;
-//	}
-//
-//	public void setBooks(Collection<Books> books) {
-//		this.books = books;
-//	}
+	public Collection<Books> getBooks() {
+		return books;
+	}
+
+	public void setBooks(Collection<Books> books) {
+		this.books = books;
+	}
 }
