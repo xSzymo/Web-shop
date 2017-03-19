@@ -30,6 +30,8 @@
 			
 			<tr><c:out value="Price :${book.price}" /><br></tr>
 			
+			<tr><c:out value="category :${cateogries.name}" /><br></tr>
+			
 			<tr><c:out value="Description :${book.description}" /><br><br><br></tr>
 			
 			

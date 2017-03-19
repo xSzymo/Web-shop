@@ -34,7 +34,7 @@ public class RepositoriesAccess {
 	@Autowired
 	public static BooksRepository booksRepository;
 	@Autowired
-	public static AdressRepository adressRepository;
+	public static AdressRepository addressRepository;
 	@Autowired
 	public static CouponCodesRepository couponCodesRepository;
 	@Autowired
@@ -52,7 +52,7 @@ public class RepositoriesAccess {
 		RepositoriesAccess.usersRepository = usersRepository;
 		RepositoriesAccess.categoriesRepository = categoriesRepository;
 		RepositoriesAccess.booksRepository = booksRepository;
-		RepositoriesAccess.adressRepository = adressRepository;
+		RepositoriesAccess.addressRepository = adressRepository;
 		RepositoriesAccess.couponCodesRepository = couponCodesRepository;
 		RepositoriesAccess.picturesRepository = picturesRepository;
 		RepositoriesAccess.ordersRepository = ordersRepository;

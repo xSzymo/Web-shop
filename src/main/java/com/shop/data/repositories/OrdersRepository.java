@@ -4,6 +4,7 @@ import org.springframework.data.repository.CrudRepository;
 import com.shop.data.tables.Orders;
 
 
-public interface OrdersRepository extends CrudRepository<Orders, Long>{ 
+public interface OrdersRepository extends CrudRepository<Orders, Long>{
+	Orders findById(Long orderId); 
 
 }

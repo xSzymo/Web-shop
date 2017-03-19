@@ -16,7 +16,7 @@ public class Pictures {
 
 	@Column(name = "product_picture_name")
 	private String name;
-	@Column(name = "product_picture_path")
+	@Column(name = "product_picture_path", nullable = true)
 	private String path;
 	@Column(name = "product_picture_file_type")
 	private String fileType;

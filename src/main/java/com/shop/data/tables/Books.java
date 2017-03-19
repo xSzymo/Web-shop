@@ -35,7 +35,8 @@ public class Books {
 	@Column(name = "book_price")
 	private BigDecimal price;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "book_id")
 	private Collection<Pictures> pictures = new LinkedHashSet<Pictures>();
 	

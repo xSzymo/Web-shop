@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.Cascade;
 
 @Entity
 @Table(name = "categories")
@@ -34,7 +35,11 @@ public class Categories {
 	public Categories() {
 		books = new LinkedHashSet<Books>();
 	}
-
+	
+	public Categories(String name) {
+		this.name = name;
+	}
+	
 	public Categories(String name, Collection<Books> books) {
 		super();
 		this.name = name;
@@ -68,7 +73,7 @@ public class Categories {
 		this.name = name;
 	}
 
-	public Collection<Books> getBooks() {
+	public synchronized Collection<Books> getBooks() {
 		return books;
 	}
 

@@ -2,10 +2,14 @@ package com.shop.data.tables;
 
 import java.math.BigDecimal;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -17,7 +21,7 @@ public class CouponCodes {
 	private Long id;
 
 	@Column(name = "coupon_code_discount")
-	private BigDecimal codeDiscount;
+	private double codeDiscount;
 	@Column(name = "coupon_code")
 	private String code;
 
@@ -25,13 +29,12 @@ public class CouponCodes {
 
 	}
 
-	public CouponCodes(BigDecimal codeDiscount, String code) {
-		super();
+	public CouponCodes(double codeDiscount, String code) {
 		this.codeDiscount = codeDiscount;
 		this.code = code;
 	}
 
-	public CouponCodes(Long id, BigDecimal codeDiscount, String code) {
+	public CouponCodes(Long id, double codeDiscount, String code) {
 		this.id = id;
 		this.codeDiscount = codeDiscount;
 		this.code = code;
@@ -50,11 +53,11 @@ public class CouponCodes {
 		this.id = id;
 	}
 
-	public BigDecimal getCodeDiscount() {
+	public double getCodeDiscount() {
 		return codeDiscount;
 	}
 
-	public void setCodeDiscount(BigDecimal codeDiscount) {
+	public void setCodeDiscount(double codeDiscount) {
 		this.codeDiscount = codeDiscount;
 	}
 

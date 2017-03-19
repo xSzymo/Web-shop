@@ -9,27 +9,47 @@
 </head>
 
 <c:choose>
-	<c:when test="${user == null}">
+	<c:when test="${logged == true || logged == null}">
 		<form id="saveForm" action="userLogin" method="get"></form>
 		<form id="deleteForm" action="registration" method="get"></form>
 
-		<input type="text" name="login" form="saveForm" value="login" /> <br>
-		<input type="password" name="password" id="foo2" form="saveForm" value="password" />
+		<input type="text" name="login" form="saveForm" value="login" />
+		<br>
+		<input type="password" name="password" id="foo2" form="saveForm"
+			value="password" />
 
 		<input type="submit" name="save" value="Login" form="saveForm" />&nbsp;
-		<input type="submit" name="delete" value="Register" form="deleteForm" /><br>
+		<input type="submit" name="delete" value="Register" form="deleteForm" />
+		<br>
 		<a href="login">Go to login page</a>
 	</c:when>
-	
-	<c:when test="${user != null}">
-		<!-- if user is present -->
-		|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||<br>
-		|||||||||||||||||||||||hello maj friend||||||||||||||||||||<br>
-		||||||||||||||||||||||||||||||||||${user.getLogin()}||||||||||||||||||||||||||||
+
+	<c:when test="${logged == false}">
+		<form id="goToAccount" action="/CRUD/account" method="get"></form>
+		<input type="submit" value="go to account" form="goToAccount" />&nbsp;
 	</c:when>
 </c:choose>
 
 
+<center>
+<br><br><br><br><br><br><br><br><br>
+	<h1>Hey, welcome on start page</h1>
+	<h2>
+		This is my little web shop project, currently in progress. Enjoy clicking :)<br><br>
+		Actually modules : <h3>
+			- administrator site here (you have to login on admin acc before (try admin, admin) : <br>
+			- login/logout with click to remember(reset) password or e-mail here : <br>
+			- user site where you can change your data or see orders/account informations here : <br>
+			- shop with shopping basket here : <br>
+		</h3>
+		<h4>
+		<br><a href="http://www.xSzymo.com">My site</a>
+		<br><a href="https://github.com/xSzymo">Github</a>
+		<br><a href="https://www.youtube.com/user/xszymo">YT</a>
+		</h4>
+		
+	</h2>	
+</center>
 
 
 
@@ -46,8 +66,54 @@
 
 
 
-
-
+<!--  	MESS
+MESS
+MESS
+MESS  	MESS
+MESS
+MESS
+MESS  	MESS
+MESS
+MESS
+MESS  	MESS
+MESS
+MESS
+MESS  	MESS
+MESS
+MESS
+MESS  	MESS
+MESS
+MESS
+MESS
+MESS  	MESS
+MESS
+MESS
+MESS  	MESS
+MESS
+MESS
+MESS
+MESS  	MESS
+MESS
+MESS
+MESS  	MESS
+MESS
+MESS
+MESS
+MESS  	MESS
+MESS
+MESS
+MESS  	MESS
+MESS
+MESS
+MESS
+MESS  	MESS
+MESS
+MESS
+MESS  	MESS
+MESS
+MESS
+MESS
+ -->
 
 
 

@@ -6,4 +6,6 @@ import com.shop.data.tables.Address;
 
 public interface AdressRepository extends CrudRepository<Address, Long> {
 
+	Address findById(long parseLong);
+
 }

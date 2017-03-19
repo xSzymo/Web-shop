@@ -10,12 +10,12 @@ public class AdministratorSite {
 
 	@RequestMapping("/startAdministratorPage")
 	public String starterino() {
-		return "administratorSite/administratorStartPage";
+		return "administratorStartPage";
 	}
 	
 	@RequestMapping
 	public String start() {
-		return "administratorSite/administratorStartPage";
+		return "administratorStartPage";
 	}	
 
 }

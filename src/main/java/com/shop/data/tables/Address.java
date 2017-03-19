@@ -27,15 +27,11 @@ public class Address {
 
 	}
 
-	public Long getId() {
-		return id;
-	}
-
 	public Address(String street, String postalCode, String city, String country) {
 		super();
 		this.street = street;
 		this.postalCode = postalCode;
-		this.city = city;
+		this.setCity(city);
 		this.country = country;
 	}
 
@@ -43,16 +39,20 @@ public class Address {
 		this.id = id;
 		this.street = street;
 		this.postalCode = postalCode;
-		this.city = city;
+		this.setCity(city);
 		this.country = country;
 	}
 
 	@Override
 	public String toString() {
-		return "Address [id=" + id + ", street=" + street + ", postalCode=" + postalCode + ", city=" + city
-				+ ", country=" + country + "]";
+		return "street : " + street + ", postal Code : " + postalCode + ", city : " + city
+				+ ", country : " + country;
 	}
 
+	public Long getId() {
+		return id;
+	}
+	
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -79,5 +79,13 @@ public class Address {
 
 	public void setCountry(String country) {
 		this.country = country;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
 	}
 }

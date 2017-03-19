@@ -42,10 +42,12 @@
                         <td>description</td>
                         <td><input type="text" name="description" value="<c:out value="${book.description}"/>" /></td>
                     </tr>
-					<tr>
-                        <td>Category</td>
-                        <td><input type="text" name="category" value="<c:out value="${param.category}"/>" /></td>
-                    </tr>
+
+ 					<c:forEach items="${categories}" var="category"  >
+                      <tr>
+					   	<td>  <input type="checkbox" name="<c:out value="${category.getName()}"/>" value="${category.getName()}"><c:out value="${category.getName()}"/></td>
+					</tr>
+					</c:forEach> 
                     <tr>
                         <td><input type="submit" value="Update" /></td>
                     </tr>

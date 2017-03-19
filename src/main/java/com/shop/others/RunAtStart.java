@@ -1,8 +1,10 @@
 package com.shop.others;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 
 import javax.annotation.PostConstruct;
 
@@ -32,6 +34,11 @@ public class RunAtStart {
 		booksCollection.add(new Books("boom"));
 		booksCollection.add(new Books("halo"));
 		RepositoriesAccess.booksRepository.save(new Books("noname"));
+		
+		Collection<Books> booksCollection1 = new LinkedHashSet<Books>();
+		booksCollection1.add(new Books("xzvckmhvzixkcjvblkshjd"));
+		RepositoriesAccess.categoriesRepository.save(new Categories("halohalo", booksCollection1));
+		
 		RepositoriesAccess.categoriesRepository.save(new Categories("horror", booksCollection));
 
 		Users user = new Users("admin", "admin", "admin@wp.pl");
@@ -46,20 +53,33 @@ public class RunAtStart {
 		RepositoriesAccess.categoriesRepository.save(categories);
 		
 		
-		CouponCodes couponCode = new CouponCodes(new BigDecimal("500"), "123");
+		CouponCodes couponCode = new CouponCodes(0.25, "123");
 		RepositoriesAccess.couponCodesRepository.save(couponCode);
 		
-		Address shippingAddressId = new Address("cisowa", "33-45", "bielsko", "polska");
-		Address billingAddressId = new Address("cisowa123", "33-45", "bielsko", "poland");
-		RepositoriesAccess.adressRepository.save(shippingAddressId);
-		RepositoriesAccess.adressRepository.save(billingAddressId);
-		
+		Address shippingAddressId = new Address("czerwona", "33-45", "bielsko", "polska");
+		Address billingAddressId = new Address("czerwona123", "33-45", "bielsko", "poland");
+		RepositoriesAccess.addressRepository.save(shippingAddressId);
+		RepositoriesAccess.addressRepository.save(billingAddressId);
+
 		Orders o = new Orders(new BigDecimal("100"), EnumPayments.BANKTRANSFER, shippingAddressId, billingAddressId, couponCode);
 		o.setBooks(booksCollection);
 		RepositoriesAccess.ordersRepository.save(o);
 		
+		Collection<Books> books123 = new ArrayList();
+		books123.add(new Books("halohalo123123"));
+		books123.add(new Books("vczx"));
+		books123.add(new Books("halohaldrehr123o123123"));
+		RepositoriesAccess.ordersRepository.save(new Orders((long) 10, new BigDecimal("100000"), false, books123));
+
+		Orders o1 = new Orders(new BigDecimal("50"), true);
+		o.setBooks(booksCollection);
+		RepositoriesAccess.ordersRepository.save(o1);
+
 		user.getOrders().add(o);
 		RepositoriesAccess.usersRepository.save(user);
+
+		user1.getOrders().add(o1);
+		RepositoriesAccess.usersRepository.save(user1);
 
 		Collection<Users> users = new LinkedHashSet<Users>();
 		users.add(user);

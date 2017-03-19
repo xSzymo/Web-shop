@@ -7,6 +7,26 @@
 <title>Create</title>
 </head>
 <body>
+
+<%-- <script>
+static int HALO = 0;
+function increment() {
+	HALO++;
+}
+
+function check() {
+	if(HALO % 2 == 0)
+		return true;
+	else
+		return false;
+}
+
+</script>
+
+			<c:forEach items="${categories}" var="category"  >
+		 <script type="text/javascript">
+ 			   increment();
+  		  </script> --%>
 <center>
 <h2>Create book :</h2>
 		        <form method="get" action="createBook">
@@ -31,14 +51,16 @@
                         <td>Price</td>
                         <td><input type="text" name="price" value="" /></td>
                     </tr>
-                     <tr>
-                        <td>Category</td>
-                        <td><input type="text" name="categoryName" value="" /></td>
-                    </tr>
                     <tr>
                         <td>Picture</td>
-                        <td><input type="text" name="pictureName" value="<c:out value="${pictureName}"/><c:out value="${pictureLinkName}"/>"/></td>
-                    </tr> 
+                        <td><input type="hidden" name="pictureName" value="<c:out value="${pictureName}"/><c:out value="${pictureLinkName}"/>"/>
+						<c:out value="${pictureName}"/><c:out value="${pictureLinkName}"/> </td>
+					</tr>
+ 					<c:forEach items="${categories}" var="category"  >
+                      <tr>
+					   	<td>  <input type="checkbox" name="<c:out value="${category.getName()}"/>" value="${category.getName()}"><c:out value="${category.getName()}"/></td>
+					</tr>
+					</c:forEach> 
             </table>
 			
 				<c:if test="${msgError != null}">
@@ -71,7 +93,7 @@
 
 
 <br><br>
-	<form method="POST" action="uploadFilePicture" enctype="multipart/form-data">
+	<form method="POST" action="uploadFilePicture?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data">
 		File to upload: <input type="file" name="file"><br /><br>
 		 Name:<br> <input type="text" name="name"><br /><br>
 		 <input type="submit" value="upload"> 

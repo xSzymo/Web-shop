@@ -1,6 +1,8 @@
 package com.shop.controllers.administratorSite.books;
 
 import java.math.BigDecimal;
+import java.util.Collection;
+import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,10 +18,18 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.shop.configuration.ApplicationConfig;
 import com.shop.data.tables.Books;
 import com.shop.data.tables.Categories;
+import com.shop.data.tables.Orders;
 import com.shop.data.tables.Pictures;
 import com.shop.others.RepositoriesAccess;
 
 /*
+ * YES ITS HEREYES ITS HEREYES ITS HEREYES ITS HEREYES ITS HERE
+ * YES ITS HEREYES ITS HEREYES ITS HEREYES ITS HEREYES ITS HERE
+ * YES ITS HEREYES ITS HEREYES ITS HEREYES ITS HEREYES ITS HERE
+ * YES ITS HEREYES ITS HEREYES ITS HEREYES ITS HEREYES ITS HERE
+ * YES ITS HEREYES ITS HEREYES ITS HEREYES ITS HEREYES ITS HERE
+ * YES ITS HEREYES ITS HEREYES ITS HEREYES ITS HEREYES ITS HERE
+ * YES ITS HEREYES ITS HEREYES ITS HEREYES ITS HEREYES ITS HERE
  * add a few picture to 1 book
  * 2.make http request with diffrent url which should be
  */
@@ -33,29 +43,51 @@ public class BooksCRUD {
 	}
 
 	@RequestMapping("create")
-	public String createSite() {
+	public String createSite(Model model) {
+		Iterable<Categories> categories = RepositoriesAccess.categoriesRepository.findAll();
+		model.addAttribute("categories", categories);
+
 		return "administratorSite/booksCRUD/create";
 	}
 
 	@RequestMapping("/createBook")
 	public String create1(@RequestParam("name") String name, @RequestParam("author") String author,
 			@RequestParam("description") String description, @RequestParam("langauge") String langauge,
-			@RequestParam("price") String price, @RequestParam("categoryName") String categoryName,
-			@RequestParam("pictureName") String pictureName, Model model) {
+			@RequestParam("price") String price, @RequestParam("pictureName") String pictureName, Model model,
+			HttpServletRequest request) {
 
-		Categories category = RepositoriesAccess.categoriesRepository.findByName(categoryName);
 		Pictures picture = RepositoriesAccess.picturesRepository.findByName(pictureName);
 
-		if (category == null) {
-			model.addAttribute("msgError", "No category found");
-			if (picture == null)
-				model.addAttribute("msgError", "No category and picture(optional) found");
-			return "administratorSite/booksCRUD/create";
-		} else if (picture == null)
-			model.addAttribute("msgError", "No picture(optional) found");
+		Iterable<Categories> categories = RepositoriesAccess.categoriesRepository.findAll();
+		model.addAttribute("categories", categories);
 
+		String categoryName = null;
+		boolean moreThanOne = false;
+
+		for (Categories x : categories) {
+			if (request.getParameter(x.getName()) != null) {
+				categoryName = x.getName();
+
+				if (moreThanOne) {
+					model.addAttribute("msgError", "Check only 1 category");
+					return "administratorSite/booksCRUD/create";
+				}
+				moreThanOne = true;
+			}
+		}
+		if (moreThanOne == false) {
+			model.addAttribute("msgError", "You have to check 1 category");
+			return "administratorSite/booksCRUD/create";
+		}
+
+		Categories category = RepositoriesAccess.categoriesRepository.findByName(categoryName);
+
+		if (picture == null) {
+			model.addAttribute("msgError", "No category and picture(optional) found");
+		}
 		Books book = new Books(name, author, langauge, description, new BigDecimal(price));
 		book.getPictures().add(picture);
+		RepositoriesAccess.booksRepository.save(book);
 		category.getBooks().add(book);
 		RepositoriesAccess.categoriesRepository.save(category);
 		model.addAttribute("msgSuccess", "success");
@@ -82,6 +114,13 @@ public class BooksCRUD {
 			model.addAttribute("msg", "not found");
 			return "administratorSite/booksCRUD/read";
 		}
+		Iterable<Categories> categories = RepositoriesAccess.categoriesRepository.findAll();
+		for (Categories x : categories)
+			for (Books x1 : x.getBooks())
+				if (x1.getId() == book.getId()) {
+					model.addAttribute("category", x);
+				}
+
 		model.addAttribute("book", book);
 		return "administratorSite/booksCRUD/read";
 	}
@@ -89,7 +128,9 @@ public class BooksCRUD {
 	@RequestMapping("/update")
 	public String updateEmpl(Model model) {
 		Iterable<Books> books = RepositoriesAccess.booksRepository.findAll();
+		Iterable<Categories> allCategories = RepositoriesAccess.categoriesRepository.findAll();
 		model.addAttribute("books", books);
+		model.addAttribute("categories", allCategories);
 		return "administratorSite/booksCRUD/update";
 	}
 
@@ -99,8 +140,11 @@ public class BooksCRUD {
 	@RequestMapping("updateBook/update")
 	public String updateBook(@RequestParam("id") String id, @RequestParam("name") String name,
 			@RequestParam("author") String author, @RequestParam("language") String language,
-			@RequestParam("price") String price, @RequestParam("description") String description,
-			@RequestParam("category") String category, Model model) {
+			@RequestParam("price") String price, @RequestParam("description") String description, Model model,
+			HttpServletRequest request) {
+
+		Iterable<Categories> allCategories = RepositoriesAccess.categoriesRepository.findAll();
+		model.addAttribute("categories", allCategories);
 
 		Books foundBook = RepositoriesAccess.booksRepository.findById(Long.parseLong(id));
 		if (foundBook == null) {
@@ -108,12 +152,28 @@ public class BooksCRUD {
 			model.addAttribute("msg", "not found book to update");
 			return "administratorSite/booksCRUD/updateOneBook";
 		}
-		Categories foundCategory = RepositoriesAccess.categoriesRepository.findByName(category);
-		if (foundCategory == null) {
-			model.addAttribute("book", foundBook);
-			model.addAttribute("msg", "not category found");
-			return "administratorSite/booksCRUD/updateOneBook";
+		Iterable<Categories> categories = RepositoriesAccess.categoriesRepository.findAll();
+
+		String categoryName = null;
+		boolean moreThanOne = false;
+
+		for (Categories x : categories) {
+			if (request.getParameter(x.getName()) != null) {
+				categoryName = x.getName();
+
+				if (moreThanOne) {
+					model.addAttribute("msgError", "Check only 1 category");
+					return "administratorSite/booksCRUD/create";
+				}
+				moreThanOne = true;
+			}
 		}
+		if (moreThanOne == false) {
+			model.addAttribute("msgError", "You have to check 1 category");
+			return "administratorSite/booksCRUD/create";
+		}
+
+		Categories foundCategory = RepositoriesAccess.categoriesRepository.findByName(categoryName);
 
 		foundBook.setName(name);
 		foundBook.setAuthor(author);
@@ -124,6 +184,7 @@ public class BooksCRUD {
 
 		foundCategory.getBooks().add(foundBook);
 		RepositoriesAccess.categoriesRepository.save(foundCategory);
+		
 		model.addAttribute("book", foundBook);
 		model.addAttribute("msg", "Success");
 		return "administratorSite/booksCRUD/updateOneBook";
@@ -136,7 +197,10 @@ public class BooksCRUD {
 		if (foundBook == null)
 			model.addAttribute("msg", "not found");
 
+		Iterable<Categories> categories = RepositoriesAccess.categoriesRepository.findAll();
+
 		model.addAttribute("book", foundBook);
+		model.addAttribute("categories", categories);
 		return "/administratorSite/booksCRUD/updateOneBook";
 	}
 
@@ -153,31 +217,103 @@ public class BooksCRUD {
 	public RedirectView deleteB(@PathVariable Long bookId, Model model) {
 		Books foundBook = RepositoriesAccess.booksRepository.findById(bookId);
 
-		if (foundBook == null)
-			model.addAttribute("msg", "not found");// wont work for redirectView
-		else {
-			RepositoriesAccess.booksRepository.delete(foundBook);
-			model.addAttribute("msg", "Succes, back to delete more");// wont
-																		// work
-																		// for
-																		// redirectView
+		if (foundBook == null) {
+			model.addAttribute("msg", "not found");
+			Iterable<Books> books = RepositoriesAccess.booksRepository.findAll();
+			model.addAttribute("books", books);
+
+			return new RedirectView(ApplicationConfig.projectName + "administratorSite/books/delete");
 		}
+
+		Iterable<Orders> orders = RepositoriesAccess.ordersRepository.findAll();
+
+		for (Iterator<Orders> iterator = orders.iterator(); iterator.hasNext();) {
+			Orders x = iterator.next();
+			for (Iterator<Books> iterator2 = x.getBooks().iterator(); iterator2.hasNext();) {
+				Books x1 = iterator2.next();
+				if (x1.getId() == foundBook.getId()) {
+					iterator2.remove();
+					RepositoriesAccess.ordersRepository.save(x);
+				}
+			}
+		}
+
+		Iterable<Categories> categories = RepositoriesAccess.categoriesRepository.findAll();
+
+		for (Iterator<Categories> iterator = categories.iterator(); iterator.hasNext();) {
+			Categories x2 = iterator.next();
+			for (Iterator<Books> iterator2 = x2.getBooks().iterator(); iterator2.hasNext();) {
+				Books x3 = iterator2.next();
+				if (x3.getId() == foundBook.getId()) {
+					iterator2.remove();
+					RepositoriesAccess.categoriesRepository.save(x2);
+				}
+			}
+		}
+
+		RepositoriesAccess.booksRepository.delete(foundBook.getId());
+
 		Iterable<Books> books = RepositoriesAccess.booksRepository.findAll();
 		model.addAttribute("books", books);
 
 		return new RedirectView(ApplicationConfig.projectName + "administratorSite/books/delete");
+		/*
+		 * Iterable<Orders> orders =
+		 * RepositoriesAccess.ordersRepository.findAll();
+		 * 
+		 * for(Orders x : orders) for(Books x1 : x.getBooks()) if(x1.getId() ==
+		 * foundBook.getId()) { x.getBooks().remove(x1);
+		 * RepositoriesAccess.ordersRepository.save(x); }
+		 * 
+		 * Iterable<Categories> categories =
+		 * RepositoriesAccess.categoriesRepository.findAll();
+		 * 
+		 * for(Categories x2 : categories) { for(Books x3 : x2.getBooks()) {
+		 * if(x3.getId() == foundBook.getId()) { x2.getBooks().remove(x3);
+		 * RepositoriesAccess.categoriesRepository.save(x2); } } }
+		 * RepositoriesAccess.booksRepository.delete(foundBook.getId());
+		 */
 	}
 
 	@RequestMapping(value = "deleteBook")
 	public String deleteB(@RequestParam("bookName") String bookName, Model model) {
 		Books foundBook = RepositoriesAccess.booksRepository.findByName(bookName);
 
-		if (foundBook == null)
+		if (foundBook == null) {
 			model.addAttribute("msg", "not found");
-		else {
-			RepositoriesAccess.booksRepository.delete(foundBook);
-			model.addAttribute("msg", "Succes");
+			Iterable<Books> books = RepositoriesAccess.booksRepository.findAll();
+			model.addAttribute("books", books);
+
+			return "/administratorSite/booksCRUD/delete";
 		}
+
+		Iterable<Orders> orders = RepositoriesAccess.ordersRepository.findAll();
+
+		for (Iterator<Orders> iterator = orders.iterator(); iterator.hasNext();) {
+			Orders x = iterator.next();
+			for (Iterator<Books> iterator2 = x.getBooks().iterator(); iterator2.hasNext();) {
+				Books x1 = iterator2.next();
+				if (x1.getId() == foundBook.getId()) {
+					iterator2.remove();
+					RepositoriesAccess.ordersRepository.save(x);
+				}
+			}
+		}
+
+		Iterable<Categories> categories = RepositoriesAccess.categoriesRepository.findAll();
+
+		for (Iterator<Categories> iterator = categories.iterator(); iterator.hasNext();) {
+			Categories x2 = iterator.next();
+			for (Iterator<Books> iterator2 = x2.getBooks().iterator(); iterator2.hasNext();) {
+				Books x3 = iterator2.next();
+				if (x3.getId() == foundBook.getId()) {
+					iterator2.remove();
+					RepositoriesAccess.categoriesRepository.save(x2);
+				}
+			}
+		}
+
+		RepositoriesAccess.booksRepository.delete(foundBook.getId());
 
 		Iterable<Books> books = RepositoriesAccess.booksRepository.findAll();
 		model.addAttribute("books", books);
@@ -185,8 +321,7 @@ public class BooksCRUD {
 	}
 
 	/*
-	 * need to delete picture from disc
-	 * LATER
+	 * need to delete picture from disc LATER
 	 */
 	@RequestMapping(value = "updateBook/deletePicture")
 	public ModelAndView deleteB(@RequestParam("bookId") Long bookId, @RequestParam("pictureId") Long pictureId,
@@ -194,15 +329,15 @@ public class BooksCRUD {
 		Books foundBook = RepositoriesAccess.booksRepository.findById(bookId);
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("redirect:http://localhost:8080/CRUD/administratorSite/books/updateBook/" + bookId);
-		
-		for(Pictures x : foundBook.getPictures()) {
-			if(x.getId() == pictureId) {
+
+		for (Pictures x : foundBook.getPictures()) {
+			if (x.getId() == pictureId) {
 				Pictures foundPicture = RepositoriesAccess.picturesRepository.findById(pictureId);
 				foundBook.getPictures().remove(foundPicture);
 				RepositoriesAccess.booksRepository.save(foundBook);
 				RepositoriesAccess.picturesRepository.delete(foundPicture);
 				redir.addFlashAttribute("msg", "Success");
-				return modelAndView;				
+				return modelAndView;
 			}
 		}
 		redir.addFlashAttribute("msg", "Error with delete picture");

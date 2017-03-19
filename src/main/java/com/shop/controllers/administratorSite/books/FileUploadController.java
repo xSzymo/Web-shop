@@ -39,6 +39,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shop.data.tables.Books;
+import com.shop.data.tables.Categories;
 import com.shop.data.tables.Pictures;
 import com.shop.others.RepositoriesAccess;
 
@@ -74,6 +75,10 @@ public class FileUploadController {
 	@RequestMapping(value = "/uploadFilePicture", method = RequestMethod.POST)
 	public String uploadFileHandlerPicture(@RequestParam(name = "name") String name,
 			@RequestParam("file") MultipartFile file, Model model) {
+		
+		Iterable<Categories> categories = RepositoriesAccess.categoriesRepository.findAll();
+		model.addAttribute("categories", categories);
+		
 		Pictures found = RepositoriesAccess.picturesRepository.findByName(name);
 
 		if (found != null) {
@@ -121,6 +126,10 @@ public class FileUploadController {
 	@RequestMapping(value = "/uploadFileLink")
 	public String uploadFileHandlerLink(@RequestParam(name = "name") String name, @RequestParam("link") String link,
 			Model model) throws IOException {
+		
+		Iterable<Categories> categories = RepositoriesAccess.categoriesRepository.findAll();
+		model.addAttribute("categories", categories);
+		
 		Pictures found = RepositoriesAccess.picturesRepository.findByName(name);
 
 		if (found != null) {
@@ -164,6 +173,9 @@ public class FileUploadController {
 	public ModelAndView uploadFileHandlerPictureId(@RequestParam(name = "bookId") Long id,
 			@RequestParam(name = "name") String name, @RequestParam("file") MultipartFile file, Model model,
 			RedirectAttributes redir) {
+		Iterable<Categories> categories = RepositoriesAccess.categoriesRepository.findAll();
+		model.addAttribute("categories", categories);
+		
 		Pictures found = RepositoriesAccess.picturesRepository.findByName(name);
 		Books foundBook = RepositoriesAccess.booksRepository.findById(id);
 		ModelAndView modelAndView = new ModelAndView();
@@ -221,6 +233,9 @@ public class FileUploadController {
 	public ModelAndView uploadFileHandlerLinkWithId(@RequestParam(name = "bookId") Long id,
 			@RequestParam(name = "name") String name, @RequestParam("link") String link, Model model, 
 			RedirectAttributes redir) throws IOException {
+		Iterable<Categories> categories = RepositoriesAccess.categoriesRepository.findAll();
+		model.addAttribute("categories", categories);
+		
 		Pictures found = RepositoriesAccess.picturesRepository.findByName(name);
 		Books foundBook = RepositoriesAccess.booksRepository.findById(id);
 		ModelAndView modelAndView = new ModelAndView();

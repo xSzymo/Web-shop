@@ -9,8 +9,6 @@
 </head>
 <body>
 
-
-
  <form method="get" action="readOne">
   Name :  <input type="text" name="name" value="" />
 		<input align="top" type="submit" value="Find" />
@@ -19,7 +17,7 @@
 		<input align="top" type="submit" value="Back" />
    </form>
 
-<c:if test="${book != null}"> 
+<c:if test="${book != null}">
 			--------------------------------------------<br>
 			<tr>Book id : <c:out value="${book.id}"></c:out><br></tr>
 			
@@ -30,6 +28,8 @@
 			<tr><c:out value="Language :${book.language}" /><br></tr>
 			
 			<tr><c:out value="Price :${book.price}" /><br></tr>
+			
+			<tr><c:out value="Price :${category.getName()}" /><br></tr>
 			
 			<tr><c:out value="Description :${book.description}" /><br><br><br></tr>
 			

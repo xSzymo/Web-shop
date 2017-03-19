@@ -75,12 +75,12 @@ public class LoginActions {
 
 		if (UserDAO.isUser(login, password)) {
 			UserDAO.login(login, password);	
-			return "start";
+			return "userAccount/userAccount";
 		} else {
 			model.addAttribute("msg", "Wrong password or username, check it again !");
 			return "loginAndRegistration/login";
 		}
-	}	
+	}
 	
 	@RequestMapping(value = "userRegistration", method = RequestMethod.POST)
 	public String userRegistration(@RequestParam(name = "login", required = false, defaultValue = "") String login,
@@ -128,8 +128,9 @@ public class LoginActions {
 	}
 
 	@RequestMapping(value = "logout")
-	public String logout() {
+	public String logout(Model model) {
 		UserDAO.logout();
+		model.addAttribute("logged", false);
 		return "start";
 	}
 }

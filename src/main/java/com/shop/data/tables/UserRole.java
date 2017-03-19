@@ -29,7 +29,7 @@ public class UserRole {
 		this.role = role;
 	}
 
-	public Long getUserroleid() {
+	public Long getUserRoleId() {
 		return roleid;
 	}
 
