@@ -12,7 +12,7 @@
 			<c:if test="${book != null}">
 				<c:set var="user" scope="page" value="${user}"/>
 			</c:if>
-						
+			
 		<h2>Create order :</h2>
 
 		<form method="get" action="update">
@@ -20,7 +20,7 @@
 				<tr>
 				<c:forEach items="${payments}" var="payment">
 				<c:if test="${payment.equals(orderPayment)}">
-					<td><input type="radio" name="payment" value="" checked="checked">${payment}</input></td>
+					<td><input type="radio" name="payment" value="${payment}" checked="checked">${payment}</input></td>
 				</c:if>
 				 <c:if test="${!payment.equals(orderPayment)}">
 					<td><input type="radio" name="payment" value="${payment}">${payment}</input></td>
@@ -33,7 +33,7 @@
                     </tr>
 			<tr><td></td></tr>
 			  	  <tr>
-                       <td>billing address</td>
+                       <td>shipping address</td>
                     </tr>
 				 <tr>
                         <td>street</td>
@@ -54,7 +54,8 @@
 
 				<tr><td></td></tr>
                     <tr>
-                        <td>shipping address</td>
+                        <td>billing address</td>
+
                     </tr>
 				 <tr>
                         <td>street</td>
@@ -78,20 +79,12 @@
                     </tr>
 
                     <tr>
+                        <td>code discount</td>
+                        <td><input type="text" name="couponCodeDiscount" value="${order.getCouponCodes().getCodeDiscount()}" /></td>
+                    </tr>
+                    <tr>
                         <td>code</td>
-                        <td><input type="text" name="couponCode" value="${order.getCouponCodes().getCodeDiscount()}" /></td>
-                    </tr>
-                    <tr>
-                        <td>code discount</td>
-                        <td><input type="text" name="couponCodeDiscount" value="${order.getCouponCodes().getCode()}" /></td>
-                    </tr>
-                    <tr>
-                        <td>code discount</td>
-                        <td><input type="text" name="couponCodeDiscount" value="${order.getIsRealized()}" /></td>
-                    </tr>
-                    <tr>
-                        <td>code discount</td>
-                        <td><input type="text" name="couponCodeDiscount" value="${order.getPrice()}" /></td>
+                        <td><input type="text" name="couponCode" value="${order.getCouponCodes().getCode()}" /></td>
                     </tr>
 				<br>
 				<br>

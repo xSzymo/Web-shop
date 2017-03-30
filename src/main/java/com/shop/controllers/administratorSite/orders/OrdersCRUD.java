@@ -30,6 +30,7 @@ import com.shop.others.RepositoriesAccess;
 
 /*
  * payment method in update not working
+ * update for street etc doeasnt work
  */
 @Controller
 @RequestMapping("administratorSite/orders")
@@ -102,29 +103,25 @@ public class OrdersCRUD {
 			billingAddress.setCountry(billingAddressCountry);
 			billingAddress.setPostalCode(billingAddressPostalCode);
 			billingAddress.setStreet(billingAddressStreet);
-			order.setBillingAddress(billingAddress);
 		} else {
 			billingAddress = new Address();
 			billingAddress.setCity(billingAddressCity);
 			billingAddress.setCountry(billingAddressCountry);
 			billingAddress.setPostalCode(billingAddressPostalCode);
 			billingAddress.setStreet(billingAddressStreet);
-			order.setBillingAddress(billingAddress);
 		}
 
 		if (shippingAddress != null) {
-			shippingAddress.setCity(billingAddressCity);
-			shippingAddress.setCountry(billingAddressCountry);
-			shippingAddress.setPostalCode(billingAddressPostalCode);
-			shippingAddress.setStreet(billingAddressStreet);
-			order.setShippingAddress(shippingAddress);
+			shippingAddress.setCity(shippingAddressCity);
+			shippingAddress.setCountry(shippingAddressCountry);
+			shippingAddress.setPostalCode(shippingAddressPostalCode);
+			shippingAddress.setStreet(shippingAddressStreet);
 		} else {
 			shippingAddress = new Address();
-			shippingAddress.setCity(billingAddressCity);
-			shippingAddress.setCountry(billingAddressCountry);
-			shippingAddress.setPostalCode(billingAddressPostalCode);
-			shippingAddress.setStreet(billingAddressStreet);
-			order.setShippingAddress(shippingAddress);
+			shippingAddress.setCity(shippingAddressCity);
+			shippingAddress.setCountry(shippingAddressCountry);
+			shippingAddress.setPostalCode(shippingAddressPostalCode);
+			shippingAddress.setStreet(shippingAddressStreet);
 		}
 
 		if (couponCodes != null) {
@@ -143,6 +140,8 @@ public class OrdersCRUD {
 		order.setPrice(new BigDecimal(price));
 		order.setRealized(realized);
 		order.setPaymentMethod(paymentType);
+		order.setShippingAddress(shippingAddress);
+		order.setBillingAddress(billingAddress);
 
 		ArrayList<Books> b = new ArrayList<Books>();
 
@@ -357,7 +356,7 @@ public class OrdersCRUD {
 
 			@RequestParam("payment") Object payment, @RequestParam("price") String price,
 			@RequestParam("realized") boolean realized, HttpServletRequest request, Model model, String... books) {
-		
+
 		EnumPayments[] kindOfPayment = EnumPayments.values();
 		EnumPayments paymentType = null;
 
@@ -365,6 +364,8 @@ public class OrdersCRUD {
 			if (x.name().equals(payment))
 				paymentType = x;
 
+		System.out.println(paymentType);
+		
 		// System.out.println(payment);
 
 		Orders order = RepositoriesAccess.ordersRepository.findById(orderId);
@@ -378,29 +379,25 @@ public class OrdersCRUD {
 			billingAddress.setCountry(billingAddressCountry);
 			billingAddress.setPostalCode(billingAddressPostalCode);
 			billingAddress.setStreet(billingAddressStreet);
-			order.setBillingAddress(billingAddress);
 		} else {
 			billingAddress = new Address();
 			billingAddress.setCity(billingAddressCity);
 			billingAddress.setCountry(billingAddressCountry);
 			billingAddress.setPostalCode(billingAddressPostalCode);
 			billingAddress.setStreet(billingAddressStreet);
-			order.setBillingAddress(billingAddress);
 		}
 
 		if (shippingAddress != null) {
-			shippingAddress.setCity(billingAddressCity);
-			shippingAddress.setCountry(billingAddressCountry);
-			shippingAddress.setPostalCode(billingAddressPostalCode);
-			shippingAddress.setStreet(billingAddressStreet);
-			order.setShippingAddress(shippingAddress);
+			shippingAddress.setCity(shippingAddressCity);
+			shippingAddress.setCountry(shippingAddressCountry);
+			shippingAddress.setPostalCode(shippingAddressPostalCode);
+			shippingAddress.setStreet(shippingAddressStreet);
 		} else {
 			shippingAddress = new Address();
-			shippingAddress.setCity(billingAddressCity);
-			shippingAddress.setCountry(billingAddressCountry);
-			shippingAddress.setPostalCode(billingAddressPostalCode);
-			shippingAddress.setStreet(billingAddressStreet);
-			order.setShippingAddress(shippingAddress);
+			shippingAddress.setCity(shippingAddressCity);
+			shippingAddress.setCountry(shippingAddressCountry);
+			shippingAddress.setPostalCode(shippingAddressPostalCode);
+			shippingAddress.setStreet(shippingAddressStreet);
 		}
 
 		if (couponCodes != null) {
@@ -419,6 +416,8 @@ public class OrdersCRUD {
 		order.setPrice(new BigDecimal(price));
 		order.setRealized(realized);
 		order.setPaymentMethod(paymentType);
+		order.setBillingAddress(billingAddress);
+		order.setShippingAddress(shippingAddress);
 
 		ArrayList<Books> b = new ArrayList<Books>();
 
@@ -431,9 +430,12 @@ public class OrdersCRUD {
 		RepositoriesAccess.booksRepository.save(b);
 
 		order.getBooks().addAll(b);
-		RepositoriesAccess.ordersRepository.save(order);	
-		
-		return updateBook(orderId, model);
+		RepositoriesAccess.ordersRepository.save(order);
+		//System.out.println(order.getBooks());
+
+		//if(order.getPaymentMethod() != null)
+		//	model.addAttribute("orderPayment", order.getPaymentMethod().toString());
+		return updateBook(order.getId(), model);
 	}
 	
 	
