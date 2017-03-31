@@ -29,6 +29,13 @@ public class RunAtStart {
 	
 	@PostConstruct
 	public void runAtStart() {
+		
+		Address a = new Address();
+		a.setCity("CITI");
+		a.setCountry("CONTRY");
+		a.setStreet("STRIT");
+		a.setPostalCode("45-4555555");
+		RepositoriesAccess.addressRepository.save(a);
 
 		Collection<Books> booksCollection = new LinkedHashSet<Books>();
 		booksCollection.add(new Books("boom"));
@@ -42,6 +49,7 @@ public class RunAtStart {
 		RepositoriesAccess.categoriesRepository.save(new Categories("horror", booksCollection));
 
 		Users user = new Users("admin", "admin", "admin@wp.pl");
+		user.setAddress(a);
 		Users user1 = new Users("user", "user", "user@wp.pl");
 		RepositoriesAccess.usersRepository.save(user);
 		RepositoriesAccess.usersRepository.save(user1);

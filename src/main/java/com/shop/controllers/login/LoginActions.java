@@ -70,12 +70,15 @@ public class LoginActions {
 			@RequestParam(name = "password", required = false, defaultValue = "") String password,
 			HttpServletRequest request, Model model) {
 
-		if (login == null || login.equals("") || password == null || password.equals(""))
+		if (login == null || login.equals("") && password == null || password.equals(""))
 			return "loginAndRegistration/loginFailed";
-
+		
 		if (UserDAO.isUser(login, password)) {
 			UserDAO.login(login, password);	
-			return "userAccount/userAccount";
+			if(SecurityContextHolder.getContext().getAuthentication().getCredentials().equals("admin"))
+				return "administratorStartPage";
+			else
+				return "userAccount/userAccount";
 		} else {
 			model.addAttribute("msg", "Wrong password or username, check it again !");
 			return "loginAndRegistration/login";

@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 
-<c:choose>
+<%-- <c:choose>
 	<c:when test="${logged == true || logged == null}">
 		<form id="saveForm" action="userLogin" method="get"></form>
 		<form id="deleteForm" action="registration" method="get"></form>
@@ -28,19 +28,23 @@
 		<form id="goToAccount" action="/CRUD/account" method="get"></form>
 		<input type="submit" value="go to account" form="goToAccount" />&nbsp;
 	</c:when>
-</c:choose>
+</c:choose> --%>
+
 
 
 <center>
+
+<h1><a href="shop">Go to start page</a></h1>
+
 <br><br><br><br><br><br><br><br><br>
 	<h1>Hey, welcome on start page</h1>
 	<h2>
 		This is my little web shop project, currently in progress. Enjoy clicking :)<br><br>
 		Actually modules : <h3>
-			- administrator site here (you have to login on admin acc before (try admin, admin) : <br>
-			- login/logout with click to remember(reset) password or e-mail here : <br>
-			- user site where you can change your data or see orders/account informations here : <br>
-			- shop with shopping basket here : <br>
+			- administrator site here (you have to login on admin acc before (try admin, admin) : <a href="http://localhost:8080/CRUD/administratorSite">click</a><br>
+			- login/logout with click to remember(reset) password or e-mail here : <a href="http://localhost:8080/CRUD/login">click</a><br>
+			- user site where you can change your data or see orders/account informations (you have to login on acc before) here : <a href="http://localhost:8080/CRUD/login">click</a><br>
+			- shop with shopping basket here : <a href="http://localhost:8080/CRUD/shop">click</a><br>
 		</h3>
 		<h4>
 		<br><a href="http://www.xSzymo.com">My site</a>

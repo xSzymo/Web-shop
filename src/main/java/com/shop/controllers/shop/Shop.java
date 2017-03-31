@@ -341,7 +341,4 @@ public class Shop {
 		model.addAttribute("success", "success");
 		return "shop/options/userOrder";
 	}
-	
-	
-	
 }

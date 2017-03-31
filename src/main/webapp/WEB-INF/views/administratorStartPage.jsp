@@ -26,7 +26,6 @@
 		
 		<input type="submit" value="address" form="address" />&nbsp;
 		
-		
 	</center>
 </body>
 </html>

@@ -133,5 +133,117 @@ public class SendEmail {
 //		System.out.println(this.user.getPassword());
 //		System.out.println(this.user.geteMail());
 	}
+	
+	public static String sendCode123(Users user, Model model, String newPassword) {
+
+		if ((RepositoriesAccess.usersRepository.findByeMail(user.geteMail()) == null)) {
+			model.addAttribute("msg", "Wrong e-mail");
+			return "userAccount/options/changePassword";
+		} else if (RepositoriesAccess.usersRepository.findByLogin(user.getLogin()) == null) {
+			model.addAttribute("msg", "Wrong login");
+			return "userAccount/options/changePassword";
+		}
+
+		final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
+		Properties props = System.getProperties();
+		props.setProperty("mail.smtp.host", "smtp.gmail.com");
+		props.setProperty("mail.smtp.socketFactory.class", SSL_FACTORY);
+		props.setProperty("mail.smtp.socketFactory.fallback", "false");
+		props.setProperty("mail.smtp.port", "465");
+		props.setProperty("mail.smtp.socketFactory.port", "465");
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.debug", "true");
+		props.put("mail.store.protocol", "pop3");
+		props.put("mail.transport.protocol", "smtp");
+		final String username = "examplewebshop@gmail.com";
+		final String password = "ZAQ!2wsx";
+		try {
+			Session session = Session.getDefaultInstance(props, new Authenticator() {
+				protected PasswordAuthentication getPasswordAuthentication() {
+					return new PasswordAuthentication(username, password);
+				}
+			});
+			// cookie.setPath("/WebShop");
+			// cookie.setHttpOnly(true);
+
+			Message msg = new MimeMessage(session);
+			msg.setFrom(new InternetAddress("examplewebshop@gmail.com"));
+			// msg.setRecipients(Message.RecipientType.TO,
+			// InternetAddress.parse(user.geteMail(), false));
+			msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse("szymeksss@wp.pl", false));
+			msg.setSubject("Reset password");
+			msg.setText("New password : " + newPassword);
+			msg.setSentDate(new Date());
+			Transport.send(msg);
+
+			Users user1 = RepositoriesAccess.usersRepository.findByLogin(user.getLogin());
+			user1.setPassword(newPassword);
+			RepositoriesAccess.usersRepository.save(user1);
+			
+		} catch (MessagingException e) {
+			System.out.println("Error : " + e);
+		}		
+
+		return "userAccount/options/changePassword";
+	}
+	
+	public static String sendEmail(Users user, String email, Model model, HttpServletRequest request) {
+		if ((RepositoriesAccess.usersRepository.findByeMail(user.geteMail()) == null)) {
+			//model.addAttribute("msg", "Wrong e-mail");
+			//return "loginAndRegistration/reset/forgotPassword";
+		} else if (RepositoriesAccess.usersRepository.findByLogin(user.getLogin()) == null) {
+			//model.addAttribute("msg", "Wrong login");
+			//return "loginAndRegistration/reset/forgotPassword";
+		}
+		final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
+		Properties props = System.getProperties();
+		props.setProperty("mail.smtp.host", "smtp.gmail.com");
+		props.setProperty("mail.smtp.socketFactory.class", SSL_FACTORY);
+		props.setProperty("mail.smtp.socketFactory.fallback", "false");
+		props.setProperty("mail.smtp.port", "465");
+		props.setProperty("mail.smtp.socketFactory.port", "465");
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.debug", "true");
+		props.put("mail.store.protocol", "pop3");
+		props.put("mail.transport.protocol", "smtp");
+		final String username = "examplewebshop@gmail.com";
+		final String password = "ZAQ!2wsx";
+		try {
+			Session session = Session.getDefaultInstance(props, new Authenticator() {
+				protected PasswordAuthentication getPasswordAuthentication() {
+					return new PasswordAuthentication(username, password);
+				}
+			});
+
+			String code = Long.toHexString(Double.doubleToLongBits(Math.random()));
+			// cookie.setPath("/WebShop");
+			// cookie.setHttpOnly(true);
+
+			Message msg = new MimeMessage(session);
+			msg.setFrom(new InternetAddress("examplewebshop@gmail.com"));
+			// msg.setRecipients(Message.RecipientType.TO,
+			// InternetAddress.parse(user.geteMail(), false));
+			msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse("szymeksss@wp.pl", false));
+			msg.setSubject("Change Email");
+			msg.setText("Your code : " + code);
+			msg.setSentDate(new Date());
+			Transport.send(msg);
+			request.getSession().setAttribute("code", code);
+			model.addAttribute("email", email);
+			
+			//response.addCookie(cookie);
+			//this.user = user;
+		} catch (MessagingException e) {
+			System.out.println("Error : " + e);
+		}
+
+		return "userAccount/options/changeEmail";
+
+
+//		System.out.println("USER");
+//		System.out.println(this.user.getLogin());
+//		System.out.println(this.user.getPassword());
+//		System.out.println(this.user.geteMail());
+	}
 
 }

@@ -33,6 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
  protected void configure(HttpSecurity http) throws Exception {
      http
      .authorizeRequests().antMatchers("/t4").access("hasRole('ROLE_ADMIN')");
+     //and().exceptionHandling().accessDeniedPage("/start.jsp");
  }
  
  @Bean(name="passwordEncoder")

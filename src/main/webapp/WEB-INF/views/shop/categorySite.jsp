@@ -10,7 +10,9 @@
 </head>
 <body>
 
-
+<div align="right">
+<a href="http://localhost:8080/CRUD/shop/basket"><h1>Basket</h1></a>
+</div>
 
 	<center>
 			
