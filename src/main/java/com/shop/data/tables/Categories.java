@@ -13,9 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.Hibernate;
-import org.hibernate.annotations.Cascade;
-
 @Entity
 @Table(name = "categories")
 public class Categories {
@@ -35,11 +32,11 @@ public class Categories {
 	public Categories() {
 		books = new LinkedHashSet<Books>();
 	}
-	
+
 	public Categories(String name) {
 		this.name = name;
 	}
-	
+
 	public Categories(String name, Collection<Books> books) {
 		super();
 		this.name = name;

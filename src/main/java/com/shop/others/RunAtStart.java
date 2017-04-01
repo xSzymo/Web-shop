@@ -4,12 +4,10 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashSet;
-import java.util.LinkedList;
 
 import javax.annotation.PostConstruct;
 
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 
 import com.shop.data.enums.EnumPayments;
 import com.shop.data.tables.Address;
@@ -73,7 +71,7 @@ public class RunAtStart {
 		o.setBooks(booksCollection);
 		RepositoriesAccess.ordersRepository.save(o);
 		
-		Collection<Books> books123 = new ArrayList();
+		Collection<Books> books123 = new ArrayList<Books>();
 		books123.add(new Books("halohalo123123"));
 		books123.add(new Books("vczx"));
 		books123.add(new Books("halohaldrehr123o123123"));

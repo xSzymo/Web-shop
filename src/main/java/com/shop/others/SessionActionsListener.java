@@ -16,28 +16,26 @@ import com.shop.data.tables.Books;
 @Component
 public class SessionActionsListener implements javax.servlet.http.HttpSessionListener, ApplicationContextAware {
 
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        if (applicationContext instanceof WebApplicationContext) 
-            ((WebApplicationContext) applicationContext).getServletContext().addListener(this);
-         else 
-            throw new RuntimeException("Must be inside a web application context");
-        
-    }
+	@Override
+	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+		if (applicationContext instanceof WebApplicationContext)
+			((WebApplicationContext) applicationContext).getServletContext().addListener(this);
+		else
+			throw new RuntimeException("Must be inside a web application context");
+
+	}
 
 	@Override
 	public void sessionCreated(HttpSessionEvent session) {
-		HashSet<Books> shopBasket  = new HashSet<Books>();
-		LinkedList<Books> shopBasketUno  = new LinkedList<Books>();
-		
+		HashSet<Books> shopBasket = new HashSet<Books>();
+		LinkedList<Books> shopBasketUno = new LinkedList<Books>();
+
 		session.getSession().setAttribute("basket", shopBasket);
 		session.getSession().setAttribute("basketWithAllBooks", shopBasketUno);
-		//System.out.println(session.getSession().getId());
-		
+
 	}
 
 	@Override
 	public void sessionDestroyed(HttpSessionEvent se) {
-		//System.out.println(se.getSession().getId());
-	} 
+	}
 }

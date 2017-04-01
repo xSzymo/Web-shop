@@ -25,7 +25,7 @@ import com.shop.data.tables.Users;
 import com.shop.others.RepositoriesAccess;
 
 @Controller
-public class ResetPasswdActions {
+public class ResetPasswordActions {
 	
 	public static Users user;
 	

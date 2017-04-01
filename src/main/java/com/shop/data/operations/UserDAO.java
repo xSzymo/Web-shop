@@ -1,24 +1,14 @@
 package com.shop.data.operations;
 
-import java.security.Permission;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
 
-import com.shop.data.repositories.UsersRepository;
-import com.shop.data.tables.Address;
 import com.shop.data.tables.UserRole;
 import com.shop.data.tables.Users;
 import com.shop.others.RepositoriesAccess;
@@ -29,27 +19,28 @@ public class UserDAO {
 		Iterable<UserRole> found = RepositoriesAccess.userRolesRepository.findAll();
 		List<String> userRoles = new ArrayList<>();
 
-		   for(UserRole x: found)
+		for (UserRole x : found)
 			for (Iterator<Users> iterator = x.getUser().iterator(); iterator.hasNext();) {
 				Users a = iterator.next();
-				if(a.getId() == admin.getId()) {
+				if (a.getId() == admin.getId()) {
 					userRoles.add(x.getRole());
 				}
 			}
-		   
-		   if(userRoles.isEmpty()) {
-			   System.out.println("Anonymous user");
-			   return false;
-		   }
-			
-			SecurityContextHolder.createEmptyContext();
-			CustomUserDetails customUserDetails = new CustomUserDetails(admin, userRoles);
-			UserDetails userDetails = customUserDetails;
-			Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
-			SecurityContextHolder.getContext().setAuthentication(authentication);
-			return true;
+
+		if (userRoles.isEmpty()) {
+			System.out.println("Anonymous user");
+			return false;
+		}
+
+		SecurityContextHolder.createEmptyContext();
+		CustomUserDetails customUserDetails = new CustomUserDetails(admin, userRoles);
+		UserDetails userDetails = customUserDetails;
+		Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(),
+				userDetails.getAuthorities());
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+		return true;
 	}
-	
+
 	public static void logout() {
 		SecurityContextHolder.getContext().setAuthentication(null);
 	}

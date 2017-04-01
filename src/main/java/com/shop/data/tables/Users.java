@@ -6,8 +6,6 @@ import java.util.LinkedHashSet;
 
 import javax.persistence.*;
 
-import org.springframework.security.core.GrantedAuthority;
-
 @Entity
 @Table(name = "users")
 public class Users {
@@ -72,7 +70,6 @@ public class Users {
 		this.setOrders(user.orders);
 	}
 
-
 	public Users(String login, String password, String name, String surname, String eMail) {
 		super();
 		this.login = login;
@@ -85,8 +82,8 @@ public class Users {
 	@Override
 	public String toString() {
 		return "Users [id=" + id + ", login=" + login + ", password=" + password + ", name=" + name + ", surname="
-				+ surname + ", eMail=" + eMail + ", dateBirth=" + dateBirth +  ", address="
-				+ getAddress() + ", orders=" + getOrders() + "]";
+				+ surname + ", eMail=" + eMail + ", dateBirth=" + dateBirth + ", address=" + getAddress() + ", orders="
+				+ getOrders() + "]";
 	}
 
 	public Long getId() {
@@ -102,7 +99,7 @@ public class Users {
 	}
 
 	public String getPassword() {
-        return password;
+		return password;
 	}
 
 	public void setPassword(String password) {
@@ -140,7 +137,6 @@ public class Users {
 	public void setDateBirth(Date dateBirth) {
 		this.dateBirth = dateBirth;
 	}
-
 
 	public Address getAddress() {
 		return address;

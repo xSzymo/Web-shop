@@ -1,15 +1,5 @@
 package com.shop.others;
 
-import java.sql.Date;
-import java.util.Collection;
-import java.util.LinkedHashSet;
-
-import javax.annotation.PostConstruct;
-import javax.transaction.Transactional;
-
-import org.hibernate.Hibernate;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,9 +11,6 @@ import com.shop.data.repositories.OrdersRepository;
 import com.shop.data.repositories.PicturesRepository;
 import com.shop.data.repositories.UserRolesRepository;
 import com.shop.data.repositories.UsersRepository;
-import com.shop.data.tables.Books;
-import com.shop.data.tables.Categories;
-import com.shop.data.tables.Users;
 
 @Component
 public class RepositoriesAccess {

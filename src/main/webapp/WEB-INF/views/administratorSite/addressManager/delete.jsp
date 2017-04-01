@@ -17,7 +17,7 @@
 		<c:out value="${msg}"></c:out>
 	</c:if>
 	<center>
-			<c:forEach items="${allAdress}" var="address">
+			<c:forEach items="${address}" var="address">
 			<table border="0" width="13%">
 			--------------------------------------------<br>
 			<tr><c:out value="id : ${address.id}"></c:out><br></tr>

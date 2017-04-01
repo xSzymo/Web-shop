@@ -23,7 +23,7 @@
                     	</tr>	  	  
 				 <tr>
                         <td>e-mail</td>
-                        <td><input type="text" name="email" value="${user.geteMail()}"/><c:out value="${user.geteMail()}" /></td>
+                        <td><input type="text" name="email" value="${user.geteMail()}"/></td>
                     	</tr>
 			<tr><td></td></tr>
 			  	  <tr>

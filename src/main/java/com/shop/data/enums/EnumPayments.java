@@ -12,5 +12,4 @@ public enum EnumPayments {
 	public String getPaymentType() {
 		return type;
 	}
-
 }

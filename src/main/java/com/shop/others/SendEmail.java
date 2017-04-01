@@ -13,26 +13,24 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.shop.data.tables.Users;
 
 public class SendEmail {
-	
-	public static void sendCode(String text, HttpServletRequest request) {
-		Users user = RepositoriesAccess.usersRepository.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
+
+	public static void sendEmailWithOrderFromUser(String text, HttpServletRequest request) {
+		Users user = RepositoriesAccess.usersRepository
+				.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
 
 		if ((RepositoriesAccess.usersRepository.findByeMail(user.geteMail()) == null)) {
-			//model.addAttribute("msg", "Wrong e-mail");
-			//return "loginAndRegistration/reset/forgotPassword";
+			// model.addAttribute("msg", "Wrong e-mail");
+			// return "loginAndRegistration/reset/forgotPassword";
 		} else if (RepositoriesAccess.usersRepository.findByLogin(user.getLogin()) == null) {
-			//model.addAttribute("msg", "Wrong login");
-			//return "loginAndRegistration/reset/forgotPassword";
+			// model.addAttribute("msg", "Wrong login");
+			// return "loginAndRegistration/reset/forgotPassword";
 		}
 
 		final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
@@ -57,8 +55,6 @@ public class SendEmail {
 
 			String code = Long.toHexString(Double.doubleToLongBits(Math.random()));
 			Cookie cookie = new Cookie("code", code);
-			// cookie.setPath("/WebShop");
-			// cookie.setHttpOnly(true);
 			cookie.setMaxAge(300);
 
 			Message msg = new MimeMessage(session);
@@ -70,21 +66,12 @@ public class SendEmail {
 			msg.setText(text);
 			msg.setSentDate(new Date());
 			Transport.send(msg);
-			
-			//response.addCookie(cookie);
-			//this.user = user;
 		} catch (MessagingException e) {
 			System.out.println("Error : " + e);
-		}		
-
-//		System.out.println("USER");
-//		System.out.println(this.user.getLogin());
-//		System.out.println(this.user.getPassword());
-//		System.out.println(this.user.geteMail());
+		}
 	}
-	
-	
-	public static void whatAmIDoing(String text) {
+
+	public static void sendEmailWithOrderFromAnonymous(String text) {
 
 		final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
 		Properties props = System.getProperties();
@@ -121,29 +108,21 @@ public class SendEmail {
 			msg.setText(text);
 			msg.setSentDate(new Date());
 			Transport.send(msg);
-			
-			//response.addCookie(cookie);
-			//this.user = user;
+
+			// response.addCookie(cookie);
+			// this.user = user;
 		} catch (MessagingException e) {
 			System.out.println("Error : " + e);
-		}		
+		}
 
-//		System.out.println("USER");
-//		System.out.println(this.user.getLogin());
-//		System.out.println(this.user.getPassword());
-//		System.out.println(this.user.geteMail());
+		// System.out.println("USER");
+		// System.out.println(this.user.getLogin());
+		// System.out.println(this.user.getPassword());
+		// System.out.println(this.user.geteMail());
 	}
-	
+
 	public static String sendCode123(Users user, Model model, String newPassword) {
 
-		if ((RepositoriesAccess.usersRepository.findByeMail(user.geteMail()) == null)) {
-			model.addAttribute("msg", "Wrong e-mail");
-			return "userAccount/options/changePassword";
-		} else if (RepositoriesAccess.usersRepository.findByLogin(user.getLogin()) == null) {
-			model.addAttribute("msg", "Wrong login");
-			return "userAccount/options/changePassword";
-		}
-
 		final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
 		Properties props = System.getProperties();
 		props.setProperty("mail.smtp.host", "smtp.gmail.com");
@@ -171,7 +150,7 @@ public class SendEmail {
 			// msg.setRecipients(Message.RecipientType.TO,
 			// InternetAddress.parse(user.geteMail(), false));
 			msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse("szymeksss@wp.pl", false));
-			msg.setSubject("Reset password");
+			msg.setSubject("New password");
 			msg.setText("New password : " + newPassword);
 			msg.setSentDate(new Date());
 			Transport.send(msg);
@@ -179,21 +158,21 @@ public class SendEmail {
 			Users user1 = RepositoriesAccess.usersRepository.findByLogin(user.getLogin());
 			user1.setPassword(newPassword);
 			RepositoriesAccess.usersRepository.save(user1);
-			
+
 		} catch (MessagingException e) {
 			System.out.println("Error : " + e);
-		}		
+		}
 
 		return "userAccount/options/changePassword";
 	}
-	
+
 	public static String sendEmail(Users user, String email, Model model, HttpServletRequest request) {
 		if ((RepositoriesAccess.usersRepository.findByeMail(user.geteMail()) == null)) {
-			//model.addAttribute("msg", "Wrong e-mail");
-			//return "loginAndRegistration/reset/forgotPassword";
+			// model.addAttribute("msg", "Wrong e-mail");
+			// return "loginAndRegistration/reset/forgotPassword";
 		} else if (RepositoriesAccess.usersRepository.findByLogin(user.getLogin()) == null) {
-			//model.addAttribute("msg", "Wrong login");
-			//return "loginAndRegistration/reset/forgotPassword";
+			// model.addAttribute("msg", "Wrong login");
+			// return "loginAndRegistration/reset/forgotPassword";
 		}
 		final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
 		Properties props = System.getProperties();
@@ -230,20 +209,19 @@ public class SendEmail {
 			Transport.send(msg);
 			request.getSession().setAttribute("code", code);
 			model.addAttribute("email", email);
-			
-			//response.addCookie(cookie);
-			//this.user = user;
+
+			// response.addCookie(cookie);
+			// this.user = user;
 		} catch (MessagingException e) {
 			System.out.println("Error : " + e);
 		}
 
 		return "userAccount/options/changeEmail";
 
-
-//		System.out.println("USER");
-//		System.out.println(this.user.getLogin());
-//		System.out.println(this.user.getPassword());
-//		System.out.println(this.user.geteMail());
+		// System.out.println("USER");
+		// System.out.println(this.user.getLogin());
+		// System.out.println(this.user.getPassword());
+		// System.out.println(this.user.geteMail());
 	}
 
 }

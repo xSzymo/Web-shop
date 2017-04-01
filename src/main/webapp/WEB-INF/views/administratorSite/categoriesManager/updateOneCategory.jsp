@@ -20,7 +20,7 @@
                     </tr>
                     <tr>
                         <td>id</td>
-                        <td><input type="text" name="id" value="<c:out value="${category.id}"/>"/></td>
+                        <td><input type="hidden" name="id" value="<c:out value="${category.id}"/>"/><c:out value="${category.id}"/></td>
                     </tr>
                     <tr>
                         <td>name</td>

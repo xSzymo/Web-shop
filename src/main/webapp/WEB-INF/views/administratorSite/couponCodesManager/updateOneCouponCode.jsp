@@ -20,7 +20,7 @@
                     </tr>
                     <tr>
                         <td>id</td>
-                        <td><input type="text" name="id" value="<c:out value="${couponCode.id}"/>"/></td>
+                        <td><input type="hidden" name="id" value="<c:out value="${couponCode.id}"/>"/><c:out value="${couponCode.id}"/></td>
                     </tr>
                     <tr>
                         <td>codeDiscount</td>

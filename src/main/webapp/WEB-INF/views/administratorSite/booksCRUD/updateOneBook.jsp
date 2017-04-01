@@ -13,7 +13,7 @@
 				<c:set var="book" scope="page" value="${book}"/>
 			</c:if>
 						
-        <form action="update">
+        <form action="update?${_csrf.parameterName}=${_csrf.token}">
             <table border="0" width="20%" cellpadding="3">
                     <tr>
                         <th colspan="2">Registration</th>
@@ -77,7 +77,7 @@
 <tr><td>
 
 <br><br>
-	<form method="POST" action="uploadFilePictureWithId" enctype="multipart/form-data">
+	<form method="POST" action="uploadFilePictureWithId?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data">
         <input type="hidden" name="bookId" value="${book.id}"/>
 		File to upload: <input type="file" name="file"><br /><br>
 		 Name:<br> <input type="text" name="name"><br /><br>
@@ -89,7 +89,7 @@
 	</td>
 	<td>
 <br><br>
-	<form action="uploadFileLinkId">
+	<form action="uploadFileLinkId?${_csrf.parameterName}=${_csrf.token}">
         <input type="hidden" name="bookId" value="${book.id}"/>
 		Link: <input type="text" name="link"><br /> <br /> 
 		Name: <input type="text" name="name"><br /> <br /> 

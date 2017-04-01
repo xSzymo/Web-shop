@@ -17,6 +17,5 @@
 		<form action="/CRUD/administratorSite/couponCodes/delete" method="GET"><input type="submit" value="Delete" /></form><br>
 		</h2>
 	</center>
-COPU
 </body>
 </html>

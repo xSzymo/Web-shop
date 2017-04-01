@@ -2,7 +2,7 @@ package com.shop.data.tables;
 
 import java.math.BigDecimal;
 import java.util.Collection;
-import java.util.LinkedHashSet;
+import java.util.LinkedList;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,7 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.transaction.Transactional;
 
 @Entity
 @Table(name = "books")
@@ -34,13 +33,11 @@ public class Books {
 	private String description;
 	@Column(name = "book_price")
 	private BigDecimal price;
-
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinColumn(name = "book_id")
-	private Collection<Pictures> pictures = new LinkedHashSet<Pictures>();
+	private Collection<Pictures> pictures = new LinkedList<Pictures>();
 	
-
 	public Books() {
 		
 	}

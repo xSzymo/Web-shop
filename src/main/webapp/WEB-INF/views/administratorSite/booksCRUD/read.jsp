@@ -45,7 +45,6 @@
 
 <c:if test="${book == null}">
 	<center>
-			
 			<c:forEach items="${books}" var="book">
 			<table border="0" width="13%">
 			--------------------------------------------<br>

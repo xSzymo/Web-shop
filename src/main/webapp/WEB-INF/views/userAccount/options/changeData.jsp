@@ -10,7 +10,6 @@
 
 
 <center>
-
     <form action="update">
             <table border="0" width="20%" cellpadding="3">
                     <tr>
