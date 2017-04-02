@@ -43,7 +43,7 @@ public class Basket {
 		Books book = RepositoriesAccess.booksRepository.findById(id);
 
 		if (book == null)
-			return new RedirectView(ApplicationConfig.projectName + "shop/basket");
+			return new RedirectView(ApplicationConfig.PROJECT_NAME + "shop/basket");
 
 		boolean is = false;
 		int howMany = 1;
@@ -82,7 +82,7 @@ public class Basket {
 
 		model.addAttribute("basketWithAllBooks", basketWithAllBooks);
 		model.addAttribute("basket", basket);
-		return new RedirectView(ApplicationConfig.projectName + "shop/basket");
+		return new RedirectView(ApplicationConfig.PROJECT_NAME + "shop/basket");
 	}
 
 	@RequestMapping("continue")

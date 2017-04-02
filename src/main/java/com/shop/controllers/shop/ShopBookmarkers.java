@@ -42,7 +42,7 @@ public class ShopBookmarkers {
 			}
 		}
 		if (number == null || number.equals(""))
-			return new RedirectView(ApplicationConfig.projectName + "shop/" + category.getName());
+			return new RedirectView(ApplicationConfig.PROJECT_NAME + "shop/" + category.getName());
 
 		LinkedList<Books> basketWithAllBooks = Shop.getBasketWithAllBooks(request);
 		HashSet<Books> basket = Shop.getBasket(request);
@@ -63,6 +63,6 @@ public class ShopBookmarkers {
 		request.getSession().setAttribute("basketWithAllBooks", basketWithAllBooks);
 		request.getSession().setAttribute("basket", basket);
 
-		return new RedirectView(ApplicationConfig.projectName + "shop/" + category.getName());
+		return new RedirectView(ApplicationConfig.PROJECT_NAME + "shop/" + category.getName());
 	}
 }

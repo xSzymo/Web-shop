@@ -9,7 +9,6 @@
 </head>
 <body>
 
-					<%-- <c:out value="${cookie.code.value}"></c:out></center> --%>
 
  <center>
  <c:choose>

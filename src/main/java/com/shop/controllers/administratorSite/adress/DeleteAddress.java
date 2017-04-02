@@ -58,7 +58,7 @@ public class DeleteAddress {
 		Iterable<Address> allAddress = RepositoriesAccess.addressRepository.findAll();
 		model.addAttribute("address", allAddress);
 
-		return new RedirectView(ApplicationConfig.projectName + "administratorSite/address/delete");
+		return new RedirectView(ApplicationConfig.PROJECT_NAME + "administratorSite/address/delete");
 	}
 
 	@RequestMapping(value = "deleteAddress")

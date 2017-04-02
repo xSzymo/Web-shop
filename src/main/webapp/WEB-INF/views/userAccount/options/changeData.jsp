@@ -20,7 +20,7 @@
                         <td><input type="hidden" name="login" value="<c:out value="${user.getLogin()}"/>" /><c:out value="${user.getLogin()}"/></td>
                     </tr>
                         <td>password</td>
-                        <td><a href="http://localhost:8080/CRUD/account/changePasswd?">Click here</a></td>
+                        <td><a href="${sessionScope.URL}${sessionScope.PROJECT_NAME}account/changePasswd?">Click here</a></td>
                     </tr>
 					<tr>
                         <td>name</td>
@@ -32,7 +32,7 @@
                     </tr>
 					<tr>
                         <td>eMail</td>
-                        <td><a href="http://localhost:8080/CRUD/account/changeEmail?">Click here</a></td>
+                        <td><a href="${sessionScope.URL}${sessionScope.PROJECT_NAME}account/changeEmail?">Click here</a></td>
                     </tr>
                         <td>Country</td>
                         <td><input type="text" name="country" value="<c:out value="${address.getCountry()}"/>"/></td>
@@ -58,7 +58,7 @@
 
 
 
-		<form action="/CRUD/administratorSite/users/update">
+		<form action="${sessionScope.PROJECT_NAME}administratorSite/users/update">
     		<input type="submit" value="Back" />
 		</form>
 

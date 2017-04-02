@@ -40,7 +40,7 @@ public class DeleteUsers {
 		Iterable<Users> users = RepositoriesAccess.usersRepository.findAll();
 		model.addAttribute("users", users);
 
-		return new RedirectView(ApplicationConfig.projectName + "administratorSite/users/delete");
+		return new RedirectView(ApplicationConfig.PROJECT_NAME + "administratorSite/users/delete");
 	}
 
 	@RequestMapping(value = "deleteUser")

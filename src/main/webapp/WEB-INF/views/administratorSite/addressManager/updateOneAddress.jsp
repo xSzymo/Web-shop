@@ -46,7 +46,7 @@
 
 
 
-		<form action="/CRUD/administratorSite/address/update">
+		<form action="${sessionScope.PROJECT_NAME}administratorSite/address/update">
     		<input type="submit" value="Back" />
 		</form>
 

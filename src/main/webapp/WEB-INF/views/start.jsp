@@ -41,10 +41,10 @@
 	<h2>
 		This is my little web shop project, currently in progress. Enjoy clicking :)<br><br>
 		Actually modules : <h3>
-			- administrator site here (you have to login on admin acc before (try admin, admin) : <a href="http://localhost:8080/CRUD/administratorSite">click</a><br>
-			- login/logout with click to remember(reset) password or e-mail here : <a href="http://localhost:8080/CRUD/login">click</a><br>
-			- user site where you can change your data or see orders/account informations (you have to login on acc before) here : <a href="http://localhost:8080/CRUD/login">click</a><br>
-			- shop with shopping basket here : <a href="http://localhost:8080/CRUD/shop">click</a><br>
+			- administrator site here (you have to login on admin acc before (try admin, admin) : <a href="${sessionScope.URL}${sessionScope.PROJECT_NAME}administratorSite">click</a><br>
+			- login/logout with click to remember(reset) password or e-mail here : <a href="${sessionScope.URL}${sessionScope.PROJECT_NAME}login">click</a><br>
+			- user site where you can change your data or see orders/account informations (you have to login on acc before) here : <a href="${sessionScope.URL}${sessionScope.PROJECT_NAME}login">click</a><br>
+			- shop with shopping basket here : <a href="${sessionScope.URL}${sessionScope.PROJECT_NAME}shop">click</a><br>
 		</h3>
 		<h4>
 		<br><a href="http://www.xSzymo.com">My site</a>

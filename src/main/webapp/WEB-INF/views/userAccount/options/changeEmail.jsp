@@ -28,7 +28,7 @@
 
 
 
-		<form action="/CRUD/administratorSite/users/update">
+		<form action="${sessionScope.PROJECT_NAME}administratorSite/users/update">
     		<input type="submit" value="Back" />
 		</form>
 

@@ -19,26 +19,22 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableGlobalMethodSecurity(securedEnabled = true)
 @ComponentScan(basePackageClasses = com.shop.data.operations.CustomUserDetailsService.class)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-   	
- @Autowired
- private UserDetailsService userDetailsService;
- 
- @Autowired
- public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {    
-	 auth.userDetailsService(userDetailsService);
- } 
- 
 
- 
- @Override
- protected void configure(HttpSecurity http) throws Exception {
-     http
-     .authorizeRequests().antMatchers("/t4").access("hasRole('ROLE_ADMIN')");
-     //and().exceptionHandling().accessDeniedPage("/start.jsp");
- }
- 
- @Bean(name="passwordEncoder")
-    public PasswordEncoder passwordencoder(){
-     return new BCryptPasswordEncoder();
-    }
+	@Autowired
+	private UserDetailsService userDetailsService;
+
+	@Autowired
+	public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(userDetailsService);
+	}
+
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http.authorizeRequests().antMatchers("/t4").access("hasRole('ROLE_ADMIN')");
+	}
+
+	@Bean(name = "passwordEncoder")
+	public PasswordEncoder passwordencoder() {
+		return new BCryptPasswordEncoder();
+	}
 }

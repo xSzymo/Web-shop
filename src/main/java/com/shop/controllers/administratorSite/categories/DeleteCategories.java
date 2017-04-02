@@ -38,7 +38,7 @@ public class DeleteCategories {
 		 Iterable<Categories> categories = RepositoriesAccess.categoriesRepository.findAll();
 		model.addAttribute("categories", categories);
 
-		return new RedirectView(ApplicationConfig.projectName + "administratorSite/categories/delete");
+		return new RedirectView(ApplicationConfig.PROJECT_NAME + "administratorSite/categories/delete");
 	}
 
 	@RequestMapping(value = "deleteCategory")

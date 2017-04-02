@@ -26,8 +26,14 @@
 		<c:choose>
 			<c:when test="${msg != null}">
 				<center>
+				<c:if test="${msg.equals(Success)}">
+				<c:out value="${msg}"></c:out><br>
+					<a href="${sessionScope.URL}${sessionScope.PROJECT_NAME}"><font size="3">Back</font>
+					</c:if>
+					<c:if test="${!msg.equals(Success)}">
 					<c:out value="${msg}"></c:out><br>
 					<a href="codePassword"><font size="3">Back</font>
+					</a></c:if>
 				</center>
 			</c:when>
 		</c:choose>

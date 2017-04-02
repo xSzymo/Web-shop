@@ -56,7 +56,7 @@
 
 
 
-		<form action="/CRUD/administratorSite/books/update">
+		<form action="${sessionScope.PROJECT_NAME}administratorSite/books/update">
     		<input type="submit" value="Back" />
 		</form>
 
@@ -124,7 +124,7 @@
 				
 				<td>
 						&nbsp;<input align="top" type="submit" value="Delete" /><br>
-							<IMG HEIGHT="100" WIDTH="100" SRC="/CRUD/getImage/${picture.name}">
+							<IMG HEIGHT="100" WIDTH="100" SRC="${sessionScope.PROJECT_NAME}getImage/${picture.name}">
 				</td>
   			 </form>
 			</c:forEach>

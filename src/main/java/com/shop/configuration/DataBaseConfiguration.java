@@ -20,44 +20,44 @@ import javax.sql.DataSource;
 @ComponentScan("com")
 @Configuration
 public class DataBaseConfiguration {
-	
-    @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory () {
-        LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
-        factoryBean.setDataSource(dataSource());
-        factoryBean.setPackagesToScan("com");
-        factoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
-        factoryBean.setJpaProperties(getJpaProperties());
-        return factoryBean;
-    }
 
-    @Bean
-    public Properties getJpaProperties() {
-        Properties properties = new Properties();
-        properties.setProperty("hibernate.hbm2ddl.auto", "create");
-        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
-        return properties;
-    }
+	@Bean
+	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+		LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
+		factoryBean.setDataSource(dataSource());
+		factoryBean.setPackagesToScan("com");
+		factoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
+		factoryBean.setJpaProperties(getJpaProperties());
+		return factoryBean;
+	}
 
-    @Bean
-    public DataSource dataSource() {
-        MysqlDataSource dataSource = new MysqlDataSource();
-        dataSource.setServerName("localhost");
-        dataSource.setPort(3306);
-        dataSource.setDatabaseName("crud");
-        dataSource.setUser("root");
-        dataSource.setPassword("admin");
-        return dataSource;
-    }
+	@Bean
+	public Properties getJpaProperties() {
+		Properties properties = new Properties();
+		properties.setProperty("hibernate.hbm2ddl.auto", "create");
+		properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
+		return properties;
+	}
 
-    @Bean
-    public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
-        return new JpaTransactionManager(entityManagerFactory);
-    }
+	@Bean
+	public DataSource dataSource() {
+		MysqlDataSource dataSource = new MysqlDataSource();
+		dataSource.setServerName("localhost");
+		dataSource.setPort(3306);
+		dataSource.setDatabaseName(ApplicationConfig.DATABASE_NAME);
+		dataSource.setUser(ApplicationConfig.USER);
+		dataSource.setPassword(ApplicationConfig.PASSWORD);
+		return dataSource;
+	}
 
-    @Bean
-    public PersistenceExceptionTranslationPostProcessor exceptionTranslator() {
-        return new PersistenceExceptionTranslationPostProcessor();
-    }
+	@Bean
+	public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
+		return new JpaTransactionManager(entityManagerFactory);
+	}
+
+	@Bean
+	public PersistenceExceptionTranslationPostProcessor exceptionTranslator() {
+		return new PersistenceExceptionTranslationPostProcessor();
+	}
 
 }

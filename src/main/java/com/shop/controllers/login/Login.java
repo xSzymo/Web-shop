@@ -14,7 +14,7 @@ import com.shop.data.tables.Users;
 import com.shop.others.RepositoriesAccess;
 
 @Controller("log")
-public class LoginActions {
+public class Login {
 
 	@RequestMapping("login")
 	public String loginSite() {

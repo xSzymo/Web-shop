@@ -11,6 +11,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.shop.configuration.ApplicationConfig;
 import com.shop.data.tables.Books;
 
 @Component
@@ -32,7 +33,8 @@ public class SessionActionsListener implements javax.servlet.http.HttpSessionLis
 
 		session.getSession().setAttribute("basket", shopBasket);
 		session.getSession().setAttribute("basketWithAllBooks", shopBasketUno);
-
+		session.getSession().setAttribute("PROJECT_NAME", ApplicationConfig.PROJECT_NAME);
+		session.getSession().setAttribute("URL", ApplicationConfig.URL);
 	}
 
 	@Override

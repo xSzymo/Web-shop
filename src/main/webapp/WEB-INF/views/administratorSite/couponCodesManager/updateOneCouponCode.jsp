@@ -39,7 +39,7 @@
 
 
 
-		<form action="/CRUD/administratorSite/categoryManagaer/update">
+		<form action="${sessionScope.PROJECT_NAME}administratorSite/categoryManagaer/update">
     		<input type="submit" value="Back" />
 		</form>
 

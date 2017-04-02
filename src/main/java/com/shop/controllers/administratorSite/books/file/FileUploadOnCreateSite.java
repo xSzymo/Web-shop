@@ -3,6 +3,7 @@ package com.shop.controllers.administratorSite.books.file;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,36 +13,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.shop.data.tables.Books;
+import com.shop.configuration.ApplicationConfig;
 import com.shop.data.tables.Categories;
 import com.shop.data.tables.Pictures;
 import com.shop.others.RepositoriesAccess;
 
 @Controller
 @RequestMapping("administratorSite/books")
-public class FileUploadController {
-
-	public static final String picturePath = "E:/WebShopPictures/";
-	private static final Logger logger = LoggerFactory.getLogger(FileUploadController.class);
-
-	@RequestMapping("upload")
-	public String hey() {
-		return "upload";
-	}
-
-	@RequestMapping("uploadF")
-	public String heey() {
-		return "uploadMultiple";
-	}
-
-	@RequestMapping("uploadFil")
-	public String heey(@RequestParam("name") String name) {
-		System.out.println(name);
-		return "upload";
-	}
+public class FileUploadOnCreateSite {
+	private static final Logger logger = LoggerFactory.getLogger(FileUploadOnCreateSite.class);
 
 	@RequestMapping(value = "/uploadFilePicture", method = RequestMethod.POST)
 	public String uploadFileHandlerPicture(@RequestParam(name = "name") String name,
@@ -62,7 +43,7 @@ public class FileUploadController {
 				byte[] bytes = file.getBytes();
 
 				// String rootPath = System.getProperty("catalina.home");
-				File dir = new File(picturePath);
+				File dir = new File(ApplicationConfig.PICTURE_PATH);
 				System.out.println("File : " + dir.getPath());
 				if (!dir.exists())
 					dir.mkdirs();
@@ -93,64 +74,33 @@ public class FileUploadController {
 		}
 		return "administratorSite/booksCRUD/create";
 	}
+	
+	@RequestMapping(value = "/uploadFileLink")
+	public String uploadFileHandlerLink(@RequestParam(name = "name") String name, @RequestParam("link") String link,
+			Model model) throws IOException {
 
-	@RequestMapping(value = "updateBook/uploadFilePictureWithId")
-	public ModelAndView uploadFileHandlerPictureId(@RequestParam(name = "bookId") Long id,
-			@RequestParam(name = "name") String name, @RequestParam("file") MultipartFile file, Model model,
-			RedirectAttributes redir) {
 		Iterable<Categories> categories = RepositoriesAccess.categoriesRepository.findAll();
 		model.addAttribute("categories", categories);
 
 		Pictures found = RepositoriesAccess.picturesRepository.findByName(name);
-		Books foundBook = RepositoriesAccess.booksRepository.findById(id);
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("redirect:http://localhost:8080/CRUD/administratorSite/books/updateBook/" + id);
 
 		if (found != null) {
-			redir.addFlashAttribute("msg", "This picture already exist");
-			return modelAndView;
+			model.addAttribute("msgLink", "This picture already exist");
+			return "administratorSite/booksCRUD/create";
+		}
+		try {
+			FileUploadActions.downloadImage(link, new File(ApplicationConfig.PICTURE_PATH).getAbsolutePath(), name);
+
+		} catch (IOException ex) {
+			model.addAttribute("msgLink", "error");
+			return "administratorSite/booksCRUD/create";
 		}
 
-		if (foundBook == null) {
-			redir.addFlashAttribute("msg", "error book not found");
-			return modelAndView;
-		}
+		Pictures picture = new Pictures(name, new File(ApplicationConfig.PICTURE_PATH).getAbsolutePath() + File.separator + name);
+		RepositoriesAccess.picturesRepository.save(picture);
 
-		if (!file.isEmpty()) {
-			try {
-				byte[] bytes = file.getBytes();
-
-				// String rootPath = System.getProperty("catalina.home");
-				File dir = new File(picturePath);
-				System.out.println("File : " + dir.getPath());
-				if (!dir.exists())
-					dir.mkdirs();
-
-				File serverFile = new File(dir.getAbsolutePath() + File.separator + name);
-				System.out.println("Server : " + serverFile.getAbsolutePath());
-				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-				stream.write(bytes);
-				stream.close();
-
-				Pictures picture = new Pictures();
-				picture.setName(name);
-				picture.setPath(dir.getPath());
-
-				foundBook.getPictures().add(picture);
-				RepositoriesAccess.booksRepository.save(foundBook);
-
-				logger.info("Server File Location=" + serverFile.getAbsolutePath());
-
-				redir.addFlashAttribute("msg", "Success");
-				redir.addFlashAttribute("pictureName", name);
-				return modelAndView;
-			} catch (Exception e) {
-				redir.addFlashAttribute("msg", "Success");
-				return modelAndView;
-			}
-		} else {
-			redir.addFlashAttribute("msg", "error");
-		}
-		return modelAndView;
+		model.addAttribute("pictureLinkName", name);
+		model.addAttribute("msgLink", "Success");
+		return "administratorSite/booksCRUD/create";
 	}
 }

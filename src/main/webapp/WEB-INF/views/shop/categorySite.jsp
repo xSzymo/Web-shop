@@ -11,7 +11,7 @@
 <body>
 
 <div align="right">
-<a href="http://localhost:8080/CRUD/shop/basket"><h1>Basket</h1></a>
+<a href="${sessionScope.URL}${sessionScope.PROJECT_NAME}shop/basket"><h1>Basket</h1></a>
 </div>
 
 	<center>
@@ -31,7 +31,7 @@
 			<tr><c:out value="Description :${book.description}" /><br><br><br></tr>
 			
 			<c:forEach items="${book.pictures}" var="picture">
-			<IMG HEIGHT="100" WIDTH="100" SRC="/CRUD/getImage/${picture.name}">
+			<IMG HEIGHT="100" WIDTH="100" SRC="${sessionScope.PROJECT_NAME}getImage/${picture.name}">
 			</c:forEach>
 			<form action="categorySite/${book.getId()}"><tr><td>
 			<input align="top" type="submit" value="add" />

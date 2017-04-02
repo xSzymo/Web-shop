@@ -213,7 +213,7 @@
 					<artifactId>tomcat7-maven-plugin</artifactId>
 					<version>2.2</version>
 					<configuration>
-						<path>/CRUD</path><!-- name of your path -> do not change -->
+						<path>/WebShop</path><!-- name of your path -> do not change -->
 					</configuration>
 				</plugin>
 				<plugin>
@@ -239,4 +239,3 @@
 		</pluginManagement>
 	</build>
 </project>
-

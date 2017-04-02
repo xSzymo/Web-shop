@@ -8,14 +8,14 @@
 </head>
 <body>
 <center>
-		<form id="books" action="/CRUD/administratorSite/books" method="get"></form>
-		<form id="users" action="/CRUD/administratorSite/users" method="get"></form>
+		<form id="books" action="${sessionScope.PROJECT_NAME}administratorSite/books" method="get"></form>
+		<form id="users" action="${sessionScope.PROJECT_NAME}administratorSite/users" method="get"></form>
 		
-		<form id="categories" action="/CRUD/administratorSite/categories" method="get"></form>
-		<form id="couponCodes" action="/CRUD/administratorSite/couponCodes" method="get"></form>
-		<form id="orders" action="/CRUD/administratorSite/orders" method="get"></form>
+		<form id="categories" action="${sessionScope.PROJECT_NAME}administratorSite/categories" method="get"></form>
+		<form id="couponCodes" action="${sessionScope.PROJECT_NAME}administratorSite/couponCodes" method="get"></form>
+		<form id="orders" action="${sessionScope.PROJECT_NAME}administratorSite/orders" method="get"></form>
 		
-		<form id="address" action="/CRUD/administratorSite/address" method="get"></form>
+		<form id="address" action="${sessionScope.PROJECT_NAME}administratorSite/address" method="get"></form>
 		
 		<input type="submit" value="Books" form="books" />&nbsp;
 		<input type="submit" value="Users" form="users" />&nbsp;

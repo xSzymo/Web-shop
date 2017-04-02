@@ -1,11 +1,11 @@
 package com.shop.controllers.shop;
 
-
 import java.util.HashSet;
 import java.util.LinkedList;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +20,11 @@ public class Shop {
 	
 	@RequestMapping
 	public String start(Model model) {
+		if (!(SecurityContextHolder.getContext().getAuthentication().getName().equals("anonymousUser")))
+			model.addAttribute("logged", true);
+		else
+			model.addAttribute("logged", false);
+		
 		Iterable<Categories> categories = RepositoriesAccess.categoriesRepository.findAll();
 		model.addAttribute("categories", categories);
 		return "shopStartPage";

@@ -37,7 +37,7 @@ public class DeleteOrders {
 		Iterable<Orders> orders = RepositoriesAccess.ordersRepository.findAll();
 		model.addAttribute("orders", orders);
 
-		return new RedirectView(ApplicationConfig.projectName + "administratorSite/orders/delete");
+		return new RedirectView(ApplicationConfig.PROJECT_NAME + "administratorSite/orders/delete");
 	}
 
 	@RequestMapping(value = "deleteOrder")

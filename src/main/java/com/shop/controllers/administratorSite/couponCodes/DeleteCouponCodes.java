@@ -49,7 +49,7 @@ public class DeleteCouponCodes {
 		Iterable<CouponCodes> couponCodesAll = RepositoriesAccess.couponCodesRepository.findAll();
 		red.addFlashAttribute("couponCodes", couponCodesAll);
 
-		return new RedirectView(ApplicationConfig.projectName + "administratorSite/couponCodes/delete");
+		return new RedirectView(ApplicationConfig.PROJECT_NAME + "administratorSite/couponCodes/delete");
 	}
 
 	@RequestMapping(value = "deleteCouponCodes")

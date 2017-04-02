@@ -11,10 +11,10 @@
 	<center>
 		<h2>Users </h2>
 		<h2>
-		<form action="/CRUD/administratorSite/users/read" method="GET"><input type="submit" value="Read" /></form><br>
-		<form action="/CRUD/administratorSite/users/delete" method="GET"><input type="submit" value="Delete/Ban" /></form><br>
-		<form action="/CRUD/administratorSite/users/update" method="GET"><input type="submit" value="Update" /></form><br>
-		<form action="/CRUD/administratorSite/users/create" method="GET"><input type="submit" value="Create" /></form><br>
+		<form action="${sessionScope.PROJECT_NAME}administratorSite/users/read" method="GET"><input type="submit" value="Read" /></form><br>
+		<form action="${sessionScope.PROJECT_NAME}administratorSite/users/delete" method="GET"><input type="submit" value="Delete/Ban" /></form><br>
+		<form action="${sessionScope.PROJECT_NAME}administratorSite/users/update" method="GET"><input type="submit" value="Update" /></form><br>
+		<form action="${sessionScope.PROJECT_NAME}administratorSite/users/create" method="GET"><input type="submit" value="Create" /></form><br>
 	</h2>
 	</center>
 		</body>

@@ -33,7 +33,7 @@
 	<img scr="FileServet?path=E:/test111/45"> 
 <img src="https://i.stack.imgur.com/GsDIl.jpg" width="100" height="100">
 
- <img src="/CRUD/getImage/45" alt="myImage"/>
+ <img src="${sessionScope.PROJECT_NAME}getImage/45" alt="myImage"/>
 
 	
 	

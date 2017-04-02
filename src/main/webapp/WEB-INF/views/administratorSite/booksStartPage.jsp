@@ -11,10 +11,10 @@
 	<center>
 		<h2>Books CRUD</h2>
 		<h2>
-		<form action="/CRUD/administratorSite/books/create" method="GET"><input type="submit" value="Create" /></form><br>
-		<form action="/CRUD/administratorSite/books/read" method="GET"><input type="submit" value="Read" /></form><br>
-		<form action="/CRUD/administratorSite/books/update" method="GET"><input type="submit" value="Update" /></form><br>
-		<form action="/CRUD/administratorSite/books/delete" method="GET"><input type="submit" value="Delete" /></form><br>
+		<form action="${sessionScope.PROJECT_NAME}administratorSite/books/create" method="GET"><input type="submit" value="Create" /></form><br>
+		<form action="${sessionScope.PROJECT_NAME}administratorSite/books/read" method="GET"><input type="submit" value="Read" /></form><br>
+		<form action="${sessionScope.PROJECT_NAME}administratorSite/books/update" method="GET"><input type="submit" value="Update" /></form><br>
+		<form action="${sessionScope.PROJECT_NAME}administratorSite/books/delete" method="GET"><input type="submit" value="Delete" /></form><br>
 		</h2>
 	</center>
 

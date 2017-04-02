@@ -8,8 +8,9 @@
 <title>Insert title here</title>
 </head>
 
+
 <c:choose>
-	<c:when test="${logged == true || logged == null}">
+	<c:when test="${logged == false || logged == null}">
 		<form id="saveForm" action="userLogin" method="get"></form>
 		<form id="deleteForm" action="registration" method="get"></form>
 
@@ -24,14 +25,14 @@
 		<a href="login">Go to login page</a>
 	</c:when>
 
-	<c:when test="${logged == false}">
-		<form id="goToAccount" action="/CRUD/account" method="get"></form>
+	<c:when test="${logged == true}">
+		<form id="goToAccount" action="${sessionScope.PROJECT_NAME}account" method="get"></form>
 		<input type="submit" value="go to account" form="goToAccount" />&nbsp;
 	</c:when>
 </c:choose>
 
 <div align="right">
-<a href="http://localhost:8080/CRUD/shop/basket"><h1>Basket</h1></a>
+<a href="${sessionScope.URL}${sessionScope.PROJECT_NAME}shop/basket"><h1>Basket</h1></a>
 </div>
 
 

@@ -36,7 +36,7 @@ public class DeleteBooks {
 			Iterable<Books> books = RepositoriesAccess.booksRepository.findAll();
 			model.addAttribute("books", books);
 
-			return new RedirectView(ApplicationConfig.projectName + "administratorSite/books/delete");
+			return new RedirectView(ApplicationConfig.PROJECT_NAME + "administratorSite/books/delete");
 		}
 
 		Iterable<Orders> orders = RepositoriesAccess.ordersRepository.findAll();
@@ -70,7 +70,7 @@ public class DeleteBooks {
 		Iterable<Books> books = RepositoriesAccess.booksRepository.findAll();
 		model.addAttribute("books", books);
 
-		return new RedirectView(ApplicationConfig.projectName + "administratorSite/books/delete");
+		return new RedirectView(ApplicationConfig.PROJECT_NAME + "administratorSite/books/delete");
 	}
 
 	@RequestMapping(value = "deleteBook")

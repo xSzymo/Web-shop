@@ -19,7 +19,6 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 @ComponentScan(basePackages = "com")
 public class AppConfig extends WebMvcConfigurerAdapter {
 
-
 	@Bean
 	public ViewResolver viewResolver() {
 		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
@@ -28,25 +27,24 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 		viewResolver.setSuffix(".jsp");
 		return viewResolver;
 	}
-	
+
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
-	    registry.addViewController("/").setViewName("/start");
+		registry.addViewController("/").setViewName("/start");
 	}
-
 
 	@Override
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 		configurer.enable();
 	}
-	
+
 	@Bean
 	public CommonsMultipartResolver multipartResolver() {
-	    CommonsMultipartResolver resolver=new CommonsMultipartResolver();
-	    resolver.setDefaultEncoding("utf-8");
-	    return resolver;
+		CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+		resolver.setDefaultEncoding("utf-8");
+		return resolver;
 	}
-	
+
 	@Override
 	public void addResourceHandlers(final ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/resources/**").addResourceLocations("/WEB-INF/resources/");

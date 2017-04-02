@@ -81,7 +81,7 @@
 			
 			
 			<c:forEach items="${book.pictures}" var="picture">
-			<IMG HEIGHT="100" WIDTH="100" SRC="/CRUD/getImage/${picture.name}">
+			<IMG HEIGHT="100" WIDTH="100" SRC="${sessionScope.PROJECT_NAME}getImage/${picture.name}">
 			</c:forEach>
 			
 			 <form action="updateBook/${book.id}">
