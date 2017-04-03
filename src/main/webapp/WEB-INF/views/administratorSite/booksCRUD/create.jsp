@@ -7,26 +7,9 @@
 <title>Create</title>
 </head>
 <body>
+		<form id="Back" action="${sessionScope.PROJECT_NAME}administratorSite/books" method="get"></form>
+		<input type="submit" value="Back" form="Back" />
 
-<%-- <script>
-static int HALO = 0;
-function increment() {
-	HALO++;
-}
-
-function check() {
-	if(HALO % 2 == 0)
-		return true;
-	else
-		return false;
-}
-
-</script>
-
-			<c:forEach items="${categories}" var="category"  >
-		 <script type="text/javascript">
- 			   increment();
-  		  </script> --%>
 <center>
 <h2>Create book :</h2>
 		        <form method="get" action="createBook">
@@ -84,6 +67,7 @@ function check() {
         </form>
          <table border="0" width="20%" cellpadding="3">
 <tr><td>
+
 
 
 

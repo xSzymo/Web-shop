@@ -5,12 +5,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>anonymous order</title>
 
 </head>
 <body>
+<form id="Back123" action="${sessionScope.PROJECT_NAME}shop" method="get"></form>
 
-Register here 
+		<a href="${sessionScope.PROJECT_NAME}registration"><font size="2"><h2>Register here</h2></font></a><br>
 
 		<form method="get" action="acceptAnonymous">
 			<table border="0" width="25%">
@@ -72,11 +73,11 @@ Register here
                         <td>coupon code</td>
                         <td><input type="text" name="couponCode" value="" /></td>
                     </tr>
-			<tr><td><input align="top" type="submit" value="accept" /></td></tr>
+			<tr><td><input align="top" type="submit" value="accept" /></td>
+			<td><input type="submit" value="Back" form="Back123" /></td></tr>
+			</tr>
 				<input type="hidden" name="price" value="${price}"/>
-			
-				<br>
-				<br>
+		
 			
 			
 			

@@ -5,13 +5,15 @@
 
 <html>
 <head>
-<title>Update</title>
+<title>Delete</title>
 </head>
 <body>
   <form method="get" action="deleteAddress">
   id :  <input type="text" name="id" value="" />
 		<input align="top" type="submit" value="Delete" />
    </form> 
+		<form id="Back" action="${sessionScope.PROJECT_NAME}administratorSite/address" method="get"></form>
+		<input type="submit" value="Back" form="Back" />
 
 	<c:if test="${msg != null}">
 		<c:out value="${msg}"></c:out>

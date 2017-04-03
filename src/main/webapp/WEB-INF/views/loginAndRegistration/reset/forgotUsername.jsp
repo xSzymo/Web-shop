@@ -5,9 +5,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>CRUD</title>
+<title>forgot username</title>
 </head>
 <body>
+		<form id="Back" action="${sessionScope.PROJECT_NAME}shop" method="get"></form>
  <center>
         <form method="get" action="sendUsername">
             <table border="1" width="20%" cellpadding="3">
@@ -23,7 +24,9 @@
                     </tr>
                 </tbody>
             </table>
-			<br><input align="top" type="submit"  value="Send" /><br><br>
+			<br><tr><td><input align="top" type="submit"  value="Send" /><td>
+		<td>
+		<input type="submit" value="Shop" form="Back" /></td></tr><br><br>
 
 				<a href="login"><font size="2">Login</font></a><br>
 				<a href="forgotPassword"><font size="2">Forgot password</font></a><br>

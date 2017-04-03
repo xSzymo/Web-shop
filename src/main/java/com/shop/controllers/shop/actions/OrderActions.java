@@ -55,7 +55,7 @@ public class OrderActions {
 		RepositoriesAccess.ordersRepository.save(order);
 
 		String text = null;
-		
+
 		if (!SecurityContextHolder.getContext().getAuthentication().getName().equals("anonymousUser")) {
 			Users user = RepositoriesAccess.usersRepository
 					.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());

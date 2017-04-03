@@ -5,46 +5,23 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>CRUD</title>
+<title>codePassword</title>
 </head>
 <body>
-			<center><h2>Code from e-mail</h2>				         
-				<form method="get" action="resetPassword">
-				 <br> <input type="text" name="code" value="input code" /><br>
-					<br> <input align="right" type="submit" value="Send" />
-			</center> </form>
-
-	<c:choose>
-		<c:when test="${msg != null}"><center>
-			<c:out value="${msg}"></c:out></center>
-		</c:when>
-	</c:choose>	 
-	
-	
-	
-<%-- 	
-	<c:out value="${cookie.code.value}"></c:out></center> 
-
-	<c:choose>
-			<c:when test="${cookie.code.value == null}">
-			<center><h2>Code repository is empty</h2>
-			</center> 
-		</c:when>
+		<form id="Back" action="${sessionScope.PROJECT_NAME}shop" method="get"></form>
 		
-		<c:when test="${cookie.code.value != null}">
 			<center><h2>Code from e-mail</h2>				         
 				<form method="get" action="resetPassword">
 				 <br> <input type="text" name="code" value="input code" /><br>
 					<br> <input align="right" type="submit" value="Send" />
+					<br><br><input type="submit" value="Shop" form="Back" />
 			</center> </form>
-		</c:when>
-	</c:choose>
+			
 
 	<c:choose>
 		<c:when test="${msg != null}"><center>
 			<c:out value="${msg}"></c:out></center>
 		</c:when>
 	</c:choose>	 
-	 --%>
 </body>
 </html>

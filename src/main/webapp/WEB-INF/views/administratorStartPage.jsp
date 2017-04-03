@@ -4,9 +4,17 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>administrator site</title>
 </head>
 <body>
+<left>
+		<form id="goToAccount" action="${sessionScope.PROJECT_NAME}account" method="get"></form>
+		<input type="submit" value="Account" form="goToAccount" /></br></br>
+		<form id="shop" action="${sessionScope.PROJECT_NAME}shop" method="get"></form>
+		<input type="submit" value="Shop" form="shop" /></br></br>
+		<form id="Back" action="${sessionScope.PROJECT_NAME}start" method="get"></form>
+		<input type="submit" value="Back" form="Back" />
+</left>
 <center>
 		<form id="books" action="${sessionScope.PROJECT_NAME}administratorSite/books" method="get"></form>
 		<form id="users" action="${sessionScope.PROJECT_NAME}administratorSite/users" method="get"></form>
@@ -25,7 +33,6 @@
 		<input type="submit" value="orders" form="orders" />&nbsp;
 		
 		<input type="submit" value="address" form="address" />&nbsp;
-		
 	</center>
 </body>
 </html>

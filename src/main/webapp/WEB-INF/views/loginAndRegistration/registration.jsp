@@ -5,12 +5,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>CRUD</title>
+<title>registration</title>
 </head>
 <body>
-<center>123
+<center>
         <form method="post" action="userRegistration">
-            <table border="1" width="20%" cellpadding="3">
+            <table border="0" width="24%" cellpadding="3">
                 <thead>
                     <tr>
                         <th colspan="2">Registration</th>
@@ -59,17 +59,19 @@
                     <tr>
                         <td><input type="submit" value="Register" /></td>
                         <td><input type="reset" value="Reset" /></td>
+                        <td><input type="submit" value="Back" form="Back" /></td>
                     </tr>
                 </tbody>
             </table>
-            </center>
         </form>
+ 		<form id="Back" action="${sessionScope.PROJECT_NAME}shop" method="get"></form>
 
 			<c:choose>
 				<c:when test="${msg != null}"><center>
 					<c:out value="${msg}"></c:out></center>
 					</c:when>
 				</c:choose>
+            </center>
 
 </body>
 </html>

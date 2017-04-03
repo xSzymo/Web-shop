@@ -5,10 +5,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>orders</title>
 </head>
-
-
+<body>
+		<form id="Back" action="${sessionScope.PROJECT_NAME}account" method="get"></form>
+		<input type="submit" value="Back" form="Back" />
 	<center>
 		<h2>Orders history</h2>
 			<c:forEach items="${orders}" var="order">

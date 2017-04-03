@@ -5,9 +5,10 @@
 
 <html>
 <head>
-<title>Update</title>
+<title>Update one</title>
 </head>
 <body>
+
 <center>
 			<c:if test="${book != null}">
 				<c:set var="book" scope="page" value="${book}"/>
@@ -56,6 +57,7 @@
 
 
 
+
 		<form action="${sessionScope.PROJECT_NAME}administratorSite/books/update">
     		<input type="submit" value="Back" />
 		</form>
@@ -65,13 +67,6 @@
 	</c:if>
 	
 	
-	
-	
-	
-	
-	
-	
-
 
             <table border="0" width="20%" cellpadding="3">
 <tr><td>

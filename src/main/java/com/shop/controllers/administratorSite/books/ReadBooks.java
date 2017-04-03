@@ -31,8 +31,10 @@ public class ReadBooks {
 		Books book = RepositoriesAccess.booksRepository.findByName(name);
 
 		if (book == null) {
+			Iterable<Categories> categories = RepositoriesAccess.categoriesRepository.findAll();
 			model.addAttribute("msg", "not found");
 			model.addAttribute("books", books);
+			model.addAttribute("categories", categories);
 			return "administratorSite/booksCRUD/read";
 		}
 		

@@ -8,7 +8,8 @@
 </head>
 <!-- how to make order with books (something about add books to order  -->
 	<center>
-
+		<form id="Back" action="${sessionScope.PROJECT_NAME}administratorSite/orders" method="get"></form>
+		
 
 		<h2>Create order :</h2>
 
@@ -100,7 +101,9 @@
 				</tr>
 				<tr>
 				<td><input type="submit" value="send" />
-				</td></tr>
+				</td>
+				<td>		
+		<input type="submit" value="Back" form="Back" /></td></tr>
         <input type="hidden" name="billingAddress" value="${billingAddress.getId()}" />
          <input type="hidden" name="shippingAddress" value="${shippingAddress.getId()}" />
          <input type="hidden" name="couponCodeId" value="${couponCode.getId()}" />

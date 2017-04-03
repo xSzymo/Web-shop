@@ -7,6 +7,8 @@
 <title>Create</title>
 </head>
 <body>
+		<form id="Back" action="${sessionScope.PROJECT_NAME}administratorSite/couponCodes" method="get"></form>
+		<input type="submit" value="Back" form="Back" />
 <center>
 
 

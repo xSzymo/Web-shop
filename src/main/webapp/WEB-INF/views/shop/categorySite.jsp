@@ -5,13 +5,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>bookmarks</title>
 
 </head>
 <body>
 
 <div align="right">
 <a href="${sessionScope.URL}${sessionScope.PROJECT_NAME}shop/basket"><h1>Basket</h1></a>
+<a href="${sessionScope.URL}${sessionScope.PROJECT_NAME}shop"><h2>Back</h2></a>
 </div>
 
 	<center>
@@ -39,6 +40,10 @@
 			</td></tr></form>
 			</table>
 			</c:forEach>
+			<br><br>
+					<form id="Back" action="${sessionScope.PROJECT_NAME}shop" method="get"></form>
+		<input type="submit" value="Back" form="Back" />
+		
 		</center>
 		
 		

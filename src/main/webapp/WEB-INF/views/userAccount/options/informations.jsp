@@ -5,11 +5,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>informations</title>
 </head>
-
-
-
 	<center>
 	<h2>Account informations</h2>
 			<table border="1" width="15%">			
@@ -26,7 +23,9 @@
 			<tr><td>Date of birth </td><td><c:out value="${user.dateBirth}" /></td></tr>
 			
 			<tr><td>Role </td><td><c:out value="${role.getRole()}" /></td></tr>
-				</table>
+				</table><br>
+						<form id="Back" action="${sessionScope.PROJECT_NAME}account" method="get"></form>
+		<input type="submit" value="Back" form="Back" />
 		</center>
 </body>
 </html>

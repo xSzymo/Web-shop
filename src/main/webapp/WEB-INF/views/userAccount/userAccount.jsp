@@ -5,10 +5,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>account</title>
 </head>
 <body>
-
             <table border="0" width="14%" cellpadding="1">
                     <tr>
                         <td>Orders</td>
@@ -33,7 +32,7 @@
                     </tr>
                     <tr>
                         <td>Change password</td>
-                  	      <td>        <form method="get" action="account/changePasswd">
+                  	      <td>        <form method="get" action="account/changePasswd"> 
 							<input align="top" type="submit"  value="Click" />
         				</form></td>
                     </tr>
@@ -43,7 +42,21 @@
 							<input align="top" type="submit"  value="Click" />
         				</form></td>
                     </tr>
+                    <tr>
+                        <td>Shop</td>
+                  	      <td>       <form id="Back" action="${sessionScope.PROJECT_NAME}shop" method="get"></form>
+								<input type="submit" value="Back" form="Back" />
+        				</form></td>
+                    </tr>
+					<c:if test="${isAdmin}">
+                    <tr>
+                        <td>Administrator site</td>
+                  	      <td>       
+						 		<form id="administratorSite" action="${sessionScope.PROJECT_NAME}administratorSite" method="get"></form>
+								<input type="submit" value="Go" form="administratorSite" />
+						</td>
+                    </tr>
+					</c:if>
        		 </table>
-
 </body>
 </html>

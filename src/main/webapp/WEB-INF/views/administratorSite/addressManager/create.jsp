@@ -8,6 +8,8 @@
 </head>
 <body>
 <center>
+		<form id="Back" action="${sessionScope.PROJECT_NAME}administratorSite/address" method="get"></form>
+		
 <h2>Create book :</h2>
 		        <form method="get" action="createAddress">
             <table border="0" width="20%" cellpadding="3">
@@ -37,7 +39,9 @@
 					<c:out value="${msgSuccess}"></c:out><br>
 				</c:if>
 			
-			<br><input align="top" type="submit"  value="Save" /><br><br>
+			<tr><td><input align="top" type="submit"  value="Save" /></td>
+			<td>		
+		<input type="submit" value="Back" form="Back" /></td></tr>
         </form>
          <table border="0" width="20%" cellpadding="3">
 <tr><td>

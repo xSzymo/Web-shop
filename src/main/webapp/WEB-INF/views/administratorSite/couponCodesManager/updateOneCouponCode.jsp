@@ -5,7 +5,7 @@
 
 <html>
 <head>
-<title>Update</title>
+<title>Update one</title>
 </head>
 <body>
 <center>
@@ -39,8 +39,8 @@
 
 
 
-		<form action="${sessionScope.PROJECT_NAME}administratorSite/categoryManagaer/update">
-    		<input type="submit" value="Back" />
+		<form id="Back" action="${sessionScope.PROJECT_NAME}administratorSite/couponCodes/update" method="get"></form>
+		<input type="submit" value="Back" form="Back" />
 		</form>
 
 	<c:if test="${msg != null}">

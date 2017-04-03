@@ -2,7 +2,6 @@ package com.shop.controllers.usersAccount;
 
 import java.util.Iterator;
 
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,13 +11,18 @@ import com.shop.data.tables.UserRole;
 import com.shop.data.tables.Users;
 import com.shop.others.RepositoriesAccess;
 
-@Secured(value = { "ROLE_ADMIN", "ROLE_USER" })
 @Controller
 @RequestMapping("/account")
 public class userAccountBookmarkers {
 
 	@RequestMapping
-	public String start() {
+	public String start(Model model) {
+		String roleName = SecurityContextHolder.getContext().getAuthentication().getName();
+		if(roleName.equals("admin"))
+			model.addAttribute("isAdmin", true);
+		else
+			model.addAttribute("isAdmin", false);
+		
 		return "userAccount/userAccount";
 	}
 

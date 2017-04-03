@@ -5,7 +5,7 @@
 
 <html>
 <head>
-<title>Update</title>
+<title>Update one</title>
 </head>
 <body>
 <center>
@@ -96,10 +96,6 @@
                     </tr>
                         <input type="hidden" name="userId" value="${user.getId()}" />
             </table>
-			<br><input align="top" type="submit"  value="Save" /><br><br>
-	
-
-	
-	
+			<br><input align="top" type="submit"  value="Save" /><br><br>	
 </body>
 </html>

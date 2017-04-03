@@ -15,6 +15,11 @@
 <title>Upload File Request Page</title>
 </head>
 <body>
+<right>
+		<form id="Back" action="${sessionScope.PROJECT_NAME}books" method="get"></form>
+		<input type="submit" value="Back" form="Back" />
+</right>
+
 
 	<form method="POST" action="uploadFile" enctype="multipart/form-data">
 		File to upload: <input type="file" name="file"><br /> Name: <input
@@ -26,17 +31,6 @@
 	<form action="uploadFil" enctype="multipart/form-data">
 		Name: <input type="text" name="name"><br /> <br /> <input
 			type="submit" value="upload"> Press here to upload the file!
-	</form>
-
-	<img src="E:/test111/45" />
-	<img src='<c:url value="E:/test111/45"/>' class="45" />
-	<img scr="FileServet?path=E:/test111/45"> 
-<img src="https://i.stack.imgur.com/GsDIl.jpg" width="100" height="100">
-
- <img src="${sessionScope.PROJECT_NAME}getImage/45" alt="myImage"/>
-
-	
-	
-	
+	</form>	
 </body>
 </html>

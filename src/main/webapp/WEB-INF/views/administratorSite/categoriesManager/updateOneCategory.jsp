@@ -5,7 +5,7 @@
 
 <html>
 <head>
-<title>Update</title>
+<title>Update one</title>
 </head>
 <body>
 <center>
@@ -35,7 +35,7 @@
 
 
 
-		<form action="${sessionScope.PROJECT_NAME}administratorSite/categoryManagaer/update">
+		<form action="${sessionScope.PROJECT_NAME}administratorSite/categories/update">
     		<input type="submit" value="Back" />
 		</form>
 

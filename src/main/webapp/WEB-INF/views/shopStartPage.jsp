@@ -5,10 +5,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Web shop</title>
 </head>
-
-
+<body>
 <c:choose>
 	<c:when test="${logged == false || logged == null}">
 		<form id="saveForm" action="userLogin" method="get"></form>
@@ -31,10 +30,13 @@
 	</c:when>
 </c:choose>
 
+<br><br>
+		<form id="Back" action="${sessionScope.PROJECT_NAME}" method="get"></form>
+		<input type="submit" value="Back" form="Back" />
+
 <div align="right">
 <a href="${sessionScope.URL}${sessionScope.PROJECT_NAME}shop/basket"><h1>Basket</h1></a>
 </div>
-
 
 
 	<br><br><br><br>
@@ -46,10 +48,5 @@
   				 </form>
 		</c:forEach>
 			</table>
-	
-	
-
-
-
 </body>
 </html>

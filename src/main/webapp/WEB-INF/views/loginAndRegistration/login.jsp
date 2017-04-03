@@ -5,10 +5,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>CRUD</title>
+<title>login</title>
 </head>
 <body>
- <center>
+ <center>		
+ 		<form id="Back" action="${sessionScope.PROJECT_NAME}shop" method="get"></form>
+		
         <form method="get" action="userLogin">
             <table border="1" width="20%" cellpadding="3">
                 <thead>
@@ -23,14 +25,16 @@
                     </tr>
                     <tr>
                         <td>Password</td>
-                        <td><input type="text" name="password" value="" /></td>
+                        <td><input type="password" name="password" value="" /></td>
                     </tr>
                 </tbody>
-            </table>
-			<br><input align="top" type="submit"  value="Login" /><br><br>
+            </table><br>
+			<tr><td><input align="top" type="submit"  value="Login" />
+			<td><input type="submit" value="Shop" form="Back" /></td></tr><br><br>
 
 				<a href="forgotPassword"><font size="2">Forgot password</font></a><br>
 				<a href="forgotUsername"><font size="2">Forgot username</font></a><br>
+				<a href="registration"><font size="2">Register</font></a><br>
         </form>
 
 			<c:choose>

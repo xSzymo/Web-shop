@@ -5,9 +5,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>change data</title>
 </head>
-
 
 <center>
     <form action="update">
@@ -57,8 +56,7 @@
         </form>
 
 
-
-		<form action="${sessionScope.PROJECT_NAME}administratorSite/users/update">
+		<form action="${sessionScope.PROJECT_NAME}account">
     		<input type="submit" value="Back" />
 		</form>
 
@@ -87,16 +85,6 @@
                         <input type="hidden" name="userId" value="${user.getId()}" />
             </table>
 			<br><input align="top" type="submit"  value="Save" /><br><br>
-
-
-
-
-
-
-
-
-
-
 
 </body>
 </html>

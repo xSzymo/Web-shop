@@ -30,7 +30,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/t4").access("hasRole('ROLE_ADMIN')");
+		http.authorizeRequests().antMatchers("/administratorSite/**").access("hasRole('ROLE_ADMIN')")
+		.and()
+		.authorizeRequests().antMatchers("/account/**").access("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+	    .and()
+	    .formLogin().loginPage("/login")
+	    .and()
+	    .logout().logoutSuccessUrl("/login?logout").logoutUrl("start")
+	    .and()
+		.exceptionHandling();
 	}
 
 	@Bean(name = "passwordEncoder")

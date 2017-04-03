@@ -4,18 +4,21 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Coupon codes </title>
 </head>
 <body>
 
 	<center>
-		<h2>Books CRUD</h2>
+		<h2>Coupon codes</h2>
 		<h2>
 		<form action="${sessionScope.PROJECT_NAME}administratorSite/couponCodes/read" method="GET"><input type="submit" value="Read" /></form><br>
 		<form action="${sessionScope.PROJECT_NAME}administratorSite/couponCodes/update" method="GET"><input type="submit" value="Update" /></form><br>
 		<form action="${sessionScope.PROJECT_NAME}administratorSite/couponCodes/create" method="GET"><input type="submit" value="Create" /></form><br>
 		<form action="${sessionScope.PROJECT_NAME}administratorSite/couponCodes/delete" method="GET"><input type="submit" value="Delete" /></form><br>
 		</h2>
+		
+		<form id="Back" action="${sessionScope.PROJECT_NAME}administratorSite" method="get"></form>
+		<input type="submit" value="Back" form="Back" />
 	</center>
 </body>
 </html>

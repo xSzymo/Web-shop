@@ -59,5 +59,4 @@ public class EmailText {
 		text += "\n\tCountry : " + billingAddressCountry;
 		return text;
 	}
-
 }

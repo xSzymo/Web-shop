@@ -8,7 +8,8 @@
 <title>Update</title>
 </head>
 <body>
-
+		<form id="Back" action="${sessionScope.PROJECT_NAME}administratorSite/books" method="get"></form>
+		
 			<c:if test="${book != null}">
 				<c:set var="book" scope="page" value="${book}"/>
 			</c:if>
@@ -49,9 +50,13 @@
 					</c:forEach> 
                     <tr>
                         <td><input type="submit" value="Update" /></td>
-                    </tr>
+                    
+					<td>	
+		<input type="submit" value="Back" form="Back" /></td>
+					</tr>
             </table>
         </form>
+
 				
 
 

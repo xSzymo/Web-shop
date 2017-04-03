@@ -7,7 +7,8 @@
 <head>
 <title>Update</title>
 </head>
-<body>
+<body>		<form id="Back" action="${sessionScope.PROJECT_NAME}administratorSite/orders" method="get"></form>
+		<input type="submit" value="Back" form="Back" />
 
 			<c:if test="${address != null}">
 				<c:set var="user" scope="page" value="${address}"/>

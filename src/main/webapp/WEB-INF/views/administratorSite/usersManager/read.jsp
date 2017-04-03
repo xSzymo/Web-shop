@@ -14,8 +14,11 @@
 		<input align="top" type="submit" value="Find" />
    </form>
  <form method="get" action="read">
-		<input align="top" type="submit" value="Back" />
+		<input align="top" type="submit" value="Read more" />
    </form>
+
+		<form id="Back" action="${sessionScope.PROJECT_NAME}administratorSite/users" method="get"></form>
+		<input type="submit" value="Back" form="Back" />
 
 <c:if test="${user != null}"> 
 			<table border="0" width="13%">

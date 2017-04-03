@@ -7,6 +7,9 @@
 <title>Create</title>
 </head>
 <body>
+		<form id="Back" action="${sessionScope.PROJECT_NAME}administratorSite/categories" method="get"></form>
+		<input type="submit" value="Back" form="Back" />
+		
 <center>
 
 
@@ -31,15 +34,5 @@
         </form>
          <table border="0" width="20%" cellpadding="3">
 <tr><td>
-
-
-
-
-
-
-<!-- <img src="getImage/123" alt="car_image"/> -->
-	
-	
-	
 </body>
 </html>

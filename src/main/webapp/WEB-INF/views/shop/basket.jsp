@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>basket</title>
 
 </head>
 <body>
@@ -44,6 +44,9 @@
 			</td></tr></form>
 			</table>
 			</c:forEach>
+			
+			<br><br><form id="Back" action="${sessionScope.PROJECT_NAME}shop" method="get"></form>
+		<input type="submit" value="Back" form="Back" />
 		</center>
 		
 <%-- 

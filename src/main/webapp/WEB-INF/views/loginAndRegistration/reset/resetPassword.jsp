@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>CRUD</title>
+<title>reset password</title>
 </head>
 <body>
 	
@@ -18,8 +18,10 @@
 			<input type="text" name="password"
 				value="new password" /> <br><br>
 			<input align="top" type="submit" value="Accept" /><br>
-			<br> <a href="forgotPassword"><font size="2">Back</font></a><br>
+			<br> <a href="${sessionScope.PROJECT_NAME}forgotPassword"><font size="2">Back</font></a><br>
 		</form>
+		
+				
 			</c:when>
 		</c:choose>
 

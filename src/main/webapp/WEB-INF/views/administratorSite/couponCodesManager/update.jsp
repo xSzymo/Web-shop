@@ -7,7 +7,7 @@
 <head>
 <title>Update</title>
 </head>
-<body>
+<body>		<form id="Back" action="${sessionScope.PROJECT_NAME}administratorSite/couponCodes" method="get"></form>
 
 			<c:if test="${couponCode != null}">
 				<c:set var="user" scope="page" value="${couponCode}"/>
@@ -34,7 +34,8 @@
 
                     <tr>				
                         <td><input type="submit" value="Update" /></td>
-                    </tr>
+		<td><input type="submit" value="Back" form="Back" /></td>                    
+</tr>
             </table>
         </form>
 				

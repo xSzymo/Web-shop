@@ -7,7 +7,11 @@
 <title>Create</title>
 </head>
 <body>
+		<form id="Back" action="${sessionScope.PROJECT_NAME}administratorSite/users" method="get"></form>
+		<input type="submit" value="Back" form="Back" />
+		
 <center>
+
 
 <h2>Create User :</h2>
 		        <form method="get" action="createUser">
