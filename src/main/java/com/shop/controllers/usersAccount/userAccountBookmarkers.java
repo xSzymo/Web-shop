@@ -6,6 +6,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.shop.data.tables.UserRole;
 import com.shop.data.tables.Users;
@@ -15,7 +16,7 @@ import com.shop.others.RepositoriesAccess;
 @RequestMapping("/account")
 public class userAccountBookmarkers {
 
-	@RequestMapping
+	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String start(Model model) {
 		String roleName = SecurityContextHolder.getContext().getAuthentication().getName();
 		if(roleName.equals("admin"))
@@ -26,7 +27,7 @@ public class userAccountBookmarkers {
 		return "userAccount/userAccount";
 	}
 
-	@RequestMapping("orders")
+	@RequestMapping(value = "orders", method = RequestMethod.GET)
 	public String ordesBookmarker(Model model) {
 		Users user = (Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -34,7 +35,7 @@ public class userAccountBookmarkers {
 		return "userAccount/options/orders";
 	}
 
-	@RequestMapping("changeData")
+	@RequestMapping(value = "changeData", method = RequestMethod.GET)
 	public String changeDataBookmarker(Model model) {
 		Users user1 = (Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Users user = RepositoriesAccess.usersRepository.findByLogin(user1.getLogin());
@@ -43,7 +44,7 @@ public class userAccountBookmarkers {
 		return "userAccount/options/changeData";
 	}
 
-	@RequestMapping("changeEmail")
+	@RequestMapping(value = "changeEmail", method = RequestMethod.GET)
 	public String changeEmailBookmarker(Model model) {
 		Users user = (Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -51,7 +52,7 @@ public class userAccountBookmarkers {
 		return "userAccount/options/changeEmail";
 	}
 
-	@RequestMapping("changePasswd")
+	@RequestMapping(value = "changePasswd", method = RequestMethod.GET)
 	public String changePasswordBookmarker(Model model) {
 		Users user = (Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -59,7 +60,7 @@ public class userAccountBookmarkers {
 		return "userAccount/options/changePassword";
 	}
 	
-	@RequestMapping("informations")
+	@RequestMapping(value = "informations", method = RequestMethod.GET)
 	public String userInformations(Model model) {
 		Users user1 = (Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Users user = RepositoriesAccess.usersRepository.findByLogin(user1.getLogin());

@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.shop.data.tables.Books;
@@ -15,7 +16,7 @@ import com.shop.others.RepositoriesAccess;
 @RequestMapping("administratorSite/books")
 public class ReadBooks {
 
-	@RequestMapping("read")
+	@RequestMapping(value = "read", method = RequestMethod.GET)
 	public String readSite(Model model, HttpServletRequest request) {
 		Iterable<Books> books = RepositoriesAccess.booksRepository.findAll();
 		Iterable<Categories> categories = RepositoriesAccess.categoriesRepository.findAll();
@@ -25,7 +26,7 @@ public class ReadBooks {
 		return "administratorSite/booksCRUD/read";
 	}
 
-	@RequestMapping("readOne")
+	@RequestMapping(value = "read", method = RequestMethod.POST)
 	public String readOne(@RequestParam("name") String name, Model model) {
 		Iterable<Books> books = RepositoriesAccess.booksRepository.findAll();
 		Books book = RepositoriesAccess.booksRepository.findByName(name);
@@ -37,13 +38,13 @@ public class ReadBooks {
 			model.addAttribute("categories", categories);
 			return "administratorSite/booksCRUD/read";
 		}
-		
+
 		Iterable<Categories> categories = RepositoriesAccess.categoriesRepository.findAll();
 		for (Categories x : categories)
 			for (Books x1 : x.getBooks())
-				if (x1.getId() == book.getId()) 
+				if (x1.getId() == book.getId())
 					model.addAttribute("category", x);
-				
+
 		model.addAttribute("book", book);
 		return "administratorSite/booksCRUD/read";
 	}

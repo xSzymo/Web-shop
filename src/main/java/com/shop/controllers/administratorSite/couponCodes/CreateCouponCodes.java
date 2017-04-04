@@ -3,6 +3,7 @@ package com.shop.controllers.administratorSite.couponCodes;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.shop.data.tables.CouponCodes;
@@ -12,12 +13,12 @@ import com.shop.others.RepositoriesAccess;
 @RequestMapping("administratorSite/couponCodes")
 public class CreateCouponCodes {
 
-	@RequestMapping("create")
+	@RequestMapping(value = "create", method = RequestMethod.GET)
 	public String createSite() {
 		return "administratorSite/couponCodesManager/create";
 	}
 
-	@RequestMapping("/createCouponCode")
+	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public String create(@RequestParam("codeDiscount") String codeDiscount, @RequestParam("code") String code,
 			Model model) {
 

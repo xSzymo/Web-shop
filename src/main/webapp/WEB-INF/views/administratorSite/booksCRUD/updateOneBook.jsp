@@ -14,10 +14,10 @@
 				<c:set var="book" scope="page" value="${book}"/>
 			</c:if>
 						
-        <form action="update?${_csrf.parameterName}=${_csrf.token}">
+        <form action="updateOne" method="POST">
             <table border="0" width="20%" cellpadding="3">
                     <tr>
-                        <th colspan="2">Registration</th>
+                        <th colspan="2">Update</th>
                     </tr>
                     <tr>
                         <td>id</td>
@@ -52,6 +52,7 @@
                     <tr>
                         <td><input type="submit" value="Update" /></td>
                     </tr>
+<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
             </table>
         </form>
 
@@ -84,7 +85,8 @@
 	</td>
 	<td>
 <br><br>
-	<form action="uploadFileLinkId?${_csrf.parameterName}=${_csrf.token}">
+	<form action="uploadFileLinkId?" method="POST">
+	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
         <input type="hidden" name="bookId" value="${book.id}"/>
 		Link: <input type="text" name="link"><br /> <br /> 
 		Name: <input type="text" name="name"><br /> <br /> 
@@ -101,11 +103,10 @@
 	
 	
 	
-				 <form action="deletePicture/${book.id}">
+	 		 <form action="deletePicture/${book.id}">
      			 <input type="hidden" name="bookId" value=""/>
        			 <input type="hidden" name="picture" value=""/>
 				</form>
-	
 	
 	
 		<center>		
@@ -113,7 +114,8 @@
 		
             <table border="0" width="20%" cellpadding="3">
 				<c:forEach items="${book.pictures}" var="picture">
-				 <form action="deletePicture">
+				 <form action="deletePicture" method="POST">
+	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
      			 <input type="hidden" name="bookId" value="${book.id}"/>
        			 <input type="hidden" name="pictureId" value="${picture.id}"/>
 				

@@ -8,9 +8,10 @@
 <title>Delete</title>
 </head>
 <body>
-  <form method="get" action="deleteAddress">
+  <form method="post" action="delete">
   id :  <input type="text" name="id" value="" />
 		<input align="top" type="submit" value="Delete" />
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
    </form> 
 		<form id="Back" action="${sessionScope.PROJECT_NAME}administratorSite/address" method="get"></form>
 		<input type="submit" value="Back" form="Back" />
@@ -31,8 +32,9 @@
 			<tr><c:out value="miasto : ${address.city}" /><br></tr>
 						
 			<tr><c:out value="kraj : ${address.country}" /><br></tr>
-			 <form action="deleteAddress/${address.id}">
+			 <form action="delete/${address.id}" method="post">
 				<input align="top" type="submit" value="Delete" />
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
   			 </form>
 			</table>
 			</c:forEach>

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.shop.data.tables.Users;
@@ -14,7 +15,7 @@ import com.shop.others.RepositoriesAccess;
 
 @Controller
 public class ResetPassword {
-	@RequestMapping("reset")
+	@RequestMapping(value = "reset", method = RequestMethod.POST)
 	public String resetPassword(@RequestParam(name = "password") String password, Model model,
 			HttpServletRequest request) {
 		String eMail = (String) request.getSession().getAttribute("email");
@@ -24,17 +25,17 @@ public class ResetPassword {
 			user.setPassword(password);
 			RepositoriesAccess.usersRepository.save(user);
 
-			model.addAttribute("msg", "Success");	
-			model.addAttribute("Success", "Success");			
+			model.addAttribute("msg", "Success");
+			model.addAttribute("Success", "Success");
 			request.getSession().removeAttribute("code");
 			request.getSession().removeAttribute("authorize");
 			request.getSession().removeAttribute("email");
 		} else
-			model.addAttribute("msg", "Something went wrong");						
+			model.addAttribute("msg", "Something went wrong");
 		return "loginAndRegistration/reset/resetPassword";
 	}
 
-	@RequestMapping("resetPassword")
+	@RequestMapping(value = "resetPassword", method = RequestMethod.POST)
 	public String codeSite(@RequestParam(name = "code") String code, HttpServletResponse response,
 			HttpServletRequest request, Model model) {
 

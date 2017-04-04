@@ -9,8 +9,9 @@
 </head>
 <body>
 
-  <form method="get" action="readOne">
+  <form method="POST" action="read">
   Name :  <input type="text" name="name" value="" />
+<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
 		<input align="top" type="submit" value="Find" />
    </form>
  <form method="get" action="read">
@@ -18,6 +19,7 @@
    </form>
 		<form id="Back" action="${sessionScope.PROJECT_NAME}administratorSite/categories" method="get"></form>
 		<input type="submit" value="Back" form="Back" />
+		<br><br>
 
 <c:if test="${category != null}"> 
 			<table border="0" width="13%">

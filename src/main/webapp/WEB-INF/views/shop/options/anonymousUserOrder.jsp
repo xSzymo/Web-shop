@@ -13,7 +13,8 @@
 
 		<a href="${sessionScope.PROJECT_NAME}registration"><font size="2"><h2>Register here</h2></font></a><br>
 
-		<form method="get" action="acceptAnonymous">
+		<form method="POST" action="acceptAnonymous">
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
 			<table border="0" width="25%">
 				<tr>
 				<c:forEach items="${payments}" var="payment">

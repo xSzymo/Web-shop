@@ -9,7 +9,8 @@
 </head>
 
 <center>
-    <form action="update">
+    <form action="update" method="POST">
+<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
             <table border="0" width="20%" cellpadding="3">
                     <tr>
                         <th colspan="2">Update</th>
@@ -28,6 +29,10 @@
 					<tr>
                         <td>surname</td>
                         <td><input type="text" name="surname" value="<c:out value="${user.getSurname()}"/>" /></td>
+                    </tr>
+					<tr>
+                        <td>age</td>
+                        <td><input type="text" name="age" value="<c:out value="${user.getAge()}"/>" /></td>
                     </tr>
 					<tr>
                         <td>eMail</td>
@@ -64,7 +69,8 @@
 		<c:out value="${msg}"></c:out>
 	</c:if>
 	
-	 <form method="get" action="createAddress">
+	 <form method="POST" action="createAddress">
+	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
             <table border="0" width="20%" cellpadding="3">
                     <tr>
                         <td>street</td>

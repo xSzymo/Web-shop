@@ -35,7 +35,7 @@ public class RepositoriesAccess {
 			BooksRepository booksRepository, AdressRepository adressRepository,
 			CouponCodesRepository couponCodesRepository, PicturesRepository picturesRepository,
 			OrdersRepository ordersRepository, UserRolesRepository userRolesRepository) {
-		
+
 		RepositoriesAccess.usersRepository = usersRepository;
 		RepositoriesAccess.categoriesRepository = categoriesRepository;
 		RepositoriesAccess.booksRepository = booksRepository;
@@ -45,6 +45,4 @@ public class RepositoriesAccess {
 		RepositoriesAccess.ordersRepository = ordersRepository;
 		RepositoriesAccess.userRolesRepository = userRolesRepository;
 	}
-	
-
 }

@@ -57,6 +57,13 @@
 						</td>
                     </tr>
 					</c:if>
+                    <tr>
+                        <td>logout</td>
+                  	      <td>        <form method="post" action="logout">
+							<input align="top" type="submit"  value="Click" />
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
+        				</form></td>
+                    </tr>
        		 </table>
 </body>
 </html>

@@ -8,6 +8,8 @@ import com.shop.data.tables.Users;
 public interface UserRolesRepository extends CrudRepository<UserRole, Long> {
 	List<String> findRoleByUserLogin(String login);
 
+	UserRole findRoleByRole(String role);
+
 	UserRole findUserRoleByUserLogin(String login);
 
 	void save(Users user);

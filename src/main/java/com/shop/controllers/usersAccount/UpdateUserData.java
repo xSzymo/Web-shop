@@ -6,6 +6,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.shop.data.tables.Address;
@@ -16,11 +17,12 @@ import com.shop.others.RepositoriesAccess;
 @RequestMapping("/account")
 public class UpdateUserData {
 
-	@RequestMapping("update")
+	@RequestMapping(value = "update", method = RequestMethod.POST)
 	public String updateUserInformations(@RequestParam("name") String name, @RequestParam("surname") String surname,
-			@RequestParam("addressId") Long addressId, @RequestParam("street") String street,
-			@RequestParam("postalCode") String postalCode, @RequestParam("city") String city,
-			@RequestParam("country") String country, Model model, HttpServletRequest request) {
+			@RequestParam("age") String age, @RequestParam("addressId") Long addressId,
+			@RequestParam("street") String street, @RequestParam("postalCode") String postalCode,
+			@RequestParam("city") String city, @RequestParam("country") String country, Model model,
+			HttpServletRequest request) {
 		Users user1 = (Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Users user = RepositoriesAccess.usersRepository.findByLogin(user1.getLogin());
 		Address address = null;
@@ -39,7 +41,7 @@ public class UpdateUserData {
 
 		user.setName(name);
 		user.setSurname(surname);
-		// foundUser.setDateBirth(dateBirth);
+		user.setAge(Integer.parseInt(age));
 		RepositoriesAccess.usersRepository.save(user);
 
 		model.addAttribute("msg", "success");
@@ -47,8 +49,8 @@ public class UpdateUserData {
 		model.addAttribute("address", address);
 		return "userAccount/options/changeData";
 	}
-	
-	@RequestMapping("createAddress")
+
+	@RequestMapping(value = "createAddress", method = RequestMethod.POST)
 	public String createAddress(@RequestParam("street") String street, @RequestParam("postalCode") String postalCode,
 			@RequestParam("city") String city, @RequestParam("country") String country, Model model) {
 		Users user1 = (Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

@@ -8,7 +8,8 @@
 <title>Delete</title>
 </head>
 <body>
-  <form method="get" action="deleteOrder">
+  <form method="POST" action="delete">
+ <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
   id :  <input type="text" name="id" value="" />
 		<input align="top" type="submit" value="Delete" />
    </form> 
@@ -41,7 +42,8 @@
 			<td><c:out value="${book.id} : ${book.name}" /><br></td>
 			</c:forEach>
 			</table>
-			<form action="deleteOrder/${order.id}">
+			<form action="delete/${order.id}" method="POST">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
 				<input align="bot" type="submit" value="Delete" />
   			 </form>
 			</c:forEach>

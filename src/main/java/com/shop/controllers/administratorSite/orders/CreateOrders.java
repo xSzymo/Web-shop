@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.shop.data.enums.EnumPayments;
@@ -22,7 +23,7 @@ import com.shop.others.RepositoriesAccess;
 @RequestMapping("administratorSite/orders")
 public class CreateOrders {
 
-	@RequestMapping("create")
+	@RequestMapping(value = "create", method = RequestMethod.GET)
 	public String createSite(Model model) {
 		EnumPayments[] kindOfPayment = EnumPayments.values();
 		String[] paymentName = new String[kindOfPayment.length];
@@ -39,7 +40,7 @@ public class CreateOrders {
 		return "administratorSite/ordersManager/create";
 	}
 
-	@RequestMapping("createOrder")
+	@RequestMapping(value = "create", method = RequestMethod.POST)
 	public String createOrder(@RequestParam("shippingAddressStreet") String shippingAddressStreet,
 			@RequestParam("shippingAddressPostalCode") String shippingAddressPostalCode,
 			@RequestParam("shippingAddressCity") String shippingAddressCity,
@@ -141,11 +142,11 @@ public class CreateOrders {
 		RepositoriesAccess.ordersRepository.save(order);
 
 		addNeedObjects(model, couponCodeId, billingAddressId, shippingAddressId, books);
-
+		model.addAttribute("msg", "Success");
 		return "administratorSite/ordersManager/create";
 	}
 
-	@RequestMapping("/createAddress")
+	@RequestMapping(value = "/createAddress", method = RequestMethod.POST)
 	public String createAddress(@RequestParam("street") String street, @RequestParam("postalCode") String postalCode,
 			@RequestParam("city") String city, @RequestParam("country") String country,
 			@RequestParam("billingAddress") Long billingAddressId,
@@ -165,7 +166,7 @@ public class CreateOrders {
 		return "administratorSite/ordersManager/create";
 	}
 
-	@RequestMapping("/createCouponCode")
+	@RequestMapping(value = "/createCouponCode", method = RequestMethod.POST)
 	public String createCouponCode(@RequestParam("codeDiscount") String codeDiscount, @RequestParam("code") String code,
 			@RequestParam("billingAddress") Long billingAddressId,
 			@RequestParam("shippingAddress") Long shippingAddressId, @RequestParam("couponCodeId") Long couponCodeId,
@@ -186,7 +187,7 @@ public class CreateOrders {
 		return "administratorSite/ordersManager/create";
 	}
 
-	@RequestMapping("/createBook")
+	@RequestMapping(value = "/createBook", method = RequestMethod.POST)
 	public String createBook(@RequestParam("billingAddress") Long billingAddressId,
 			@RequestParam("shippingAddress") Long shippingAddressId, @RequestParam("couponCodeId") Long couponCodeId,
 			Model model, HttpServletRequest request) {

@@ -9,7 +9,7 @@
 </head>
 <body>
 <center>
-        <form method="post" action="userRegistration">
+        <form method="post" action="registration">
             <table border="0" width="24%" cellpadding="3">
                 <thead>
                     <tr>
@@ -32,13 +32,13 @@
                         <td>Surname</td>
                         <td><input type="text" name="surname" value="optional" /></td>
                     </tr>
+                    <tr>
+                        <td>date of birth </td>
+                        <td><input type="date" name="date" value="" /></td>
+                    </tr>
 					<tr>
                         <td>E-mail</td>
                         <td><input type="text" name="eMail" value="" /></td>
-                    </tr>
-					<tr>
-                        <td>Date birth</td>
-                        <td><input type="date" name="dateBirth" value="optional" /></td>
                     </tr>
 					<tr>
                         <td>Country </td>
@@ -63,6 +63,7 @@
                     </tr>
                 </tbody>
             </table>
+<input type="hidden"  name="${_csrf.parameterName}"   value="${_csrf.token}"/>
         </form>
  		<form id="Back" action="${sessionScope.PROJECT_NAME}shop" method="get"></form>
 

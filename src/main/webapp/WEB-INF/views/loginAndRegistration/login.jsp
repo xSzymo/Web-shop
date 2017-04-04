@@ -11,7 +11,8 @@
  <center>		
  		<form id="Back" action="${sessionScope.PROJECT_NAME}shop" method="get"></form>
 		
-        <form method="get" action="userLogin">
+        <form method="post" action="login">
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
             <table border="1" width="20%" cellpadding="3">
                 <thead>
                     <tr>

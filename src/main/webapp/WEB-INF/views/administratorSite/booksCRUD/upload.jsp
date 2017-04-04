@@ -28,7 +28,7 @@
 	</form>
 
 
-	<form action="uploadFil" enctype="multipart/form-data">
+	<form action="uploadFil" enctype="multipart/form-data" methos="post">
 		Name: <input type="text" name="name"><br /> <br /> <input
 			type="submit" value="upload"> Press here to upload the file!
 	</form>	

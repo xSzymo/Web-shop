@@ -13,7 +13,8 @@
 		        
 		<c:choose>
 			<c:when test="${codeAccepted == true}">
-		<form method="get" action="reset">
+		<form method="POST" action="reset">
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
 			     <h2>Reset password</h2>
 			<input type="text" name="password"
 				value="new password" /> <br><br>

@@ -8,8 +8,9 @@
 <title>Delete</title>
 </head>
 <body>
- <form method="get" action="deleteUser">
+ <form method="POST" action="delete">
   Name :  <input type="text" name="userName"  />
+<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
 		<input align="top" type="submit" value="Delete" />
    </form>
 		<form id="Back" action="${sessionScope.PROJECT_NAME}administratorSite/users" method="get"></form>
@@ -34,7 +35,7 @@
 			
 			<tr><c:out value="E-mail : ${user.eMail}" /><br></tr>
 			
-			<tr><c:out value="Date of birth : ${user.dateBirth}" /><br></tr>
+			<tr><c:out value="Date of birth : ${user.age}" /><br></tr>
 			
 			<tr><c:out value="Country : ${address.getCountry()}" /><br></tr>
 			
@@ -47,7 +48,8 @@
 			</c:forEach> 
 			<br>
 			
-			 <form action="deleteUser/${user.id}">
+			 <form action="delete/${user.id}" method = "POST">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
 				<input align="top" type="submit" value="Delete" />
   			 </form>
 			</table>

@@ -10,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -23,7 +24,7 @@ import com.shop.others.RepositoriesAccess;
 @RequestMapping("shop")
 public class Basket {
 
-	@RequestMapping("basket")
+	@RequestMapping(value = "basket", method = RequestMethod.GET)
 	public String basket(Model model, HttpServletRequest request) {
 		LinkedList<Books> basket = Shop.getBasketWithAllBooks(request);
 		HashSet<Books> basketMain = Shop.getBasket(request);
@@ -35,7 +36,7 @@ public class Basket {
 		return "shop/basket";
 	}
 
-	@RequestMapping("delete")
+	@RequestMapping(value = "delete", method = RequestMethod.GET)
 	public RedirectView deleteItemFromBasket(@RequestParam("id") Long id, @RequestParam("number") int number,
 			HttpServletRequest request, Model model) {
 		LinkedList<Books> basketWithAllBooks = Shop.getBasketWithAllBooks(request);
@@ -85,7 +86,7 @@ public class Basket {
 		return new RedirectView(ApplicationConfig.PROJECT_NAME + "shop/basket");
 	}
 
-	@RequestMapping("continue")
+	@RequestMapping(value = "continue", method = RequestMethod.GET)
 	public String goToAcceptOrder(Model model, HttpServletRequest request) {
 		LinkedList<Books> basket = Shop.getBasketWithAllBooks(request);
 		EnumPayments[] kindOfPayment = EnumPayments.values();

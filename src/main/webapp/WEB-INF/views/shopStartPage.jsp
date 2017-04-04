@@ -10,12 +10,14 @@
 <body>
 <c:choose>
 	<c:when test="${logged == false || logged == null}">
-		<form id="saveForm" action="userLogin" method="get"></form>
+		<form id="saveForm" action="login" method="post">
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
+		</form>
 		<form id="deleteForm" action="registration" method="get"></form>
 
 		<input type="text" name="login" form="saveForm" value="login" />
 		<br>
-		<input type="password" name="password" id="foo2" form="saveForm"
+		<input type="password" name="password"  form="saveForm"
 			value="password" />
 
 		<input type="submit" name="save" value="Login" form="saveForm" />&nbsp;
@@ -37,7 +39,6 @@
 <div align="right">
 <a href="${sessionScope.URL}${sessionScope.PROJECT_NAME}shop/basket"><h1>Basket</h1></a>
 </div>
-
 
 	<br><br><br><br>
 			<table border="0" width="6%">

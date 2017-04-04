@@ -13,8 +13,9 @@
 				<c:set var="user" scope="page" value="${user}"/>
 			</c:if>
 						
-        <form action="update">
+        <form action="updateOne" method="POST">
             <table border="0" width="20%" cellpadding="3">
+<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
                     <tr>
                         <th colspan="2">Update</th>
                     </tr>

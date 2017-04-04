@@ -15,18 +15,18 @@
 			</c:if>
 						
 
-        <form action="updateBook/update">
+        <form action="update/updateOne" method="POST">
             <table border="0" width="20%" cellpadding="3">
                     <tr>
                         <th colspan="2">Update</th>
                     </tr>
                     <tr>
                         <td>id</td>
-                        <td><input type="text" name="id" value="<c:out value="${book.id}"/>"/></td>
+                        <td><input type="text" name="id" value="<c:out value="${book.getId()}"/>"/></td>
                     </tr>
                     <tr>
                         <td>name</td>
-                        <td><input type="text" name="name" value="<c:out value="${book.name}"/>" /></td>
+                        <td><input type="text" name="name" value="<c:out value="${book.getName()}"/>" /></td>
                     </tr>
                         <td>author</td>
                         <td><input type="text" name="author" value="<c:out value="${book.author}"/>" /></td>
@@ -52,6 +52,7 @@
                         <td><input type="submit" value="Update" /></td>
                     
 					<td>	
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
 		<input type="submit" value="Back" form="Back" /></td>
 					</tr>
             </table>
@@ -89,7 +90,7 @@
 			<IMG HEIGHT="100" WIDTH="100" SRC="${sessionScope.PROJECT_NAME}getImage/${picture.name}">
 			</c:forEach>
 			
-			 <form action="updateBook/${book.id}">
+			 <form action="update/${book.id}" method="GET">
 				<br><input align="top" type="submit" value="Update" />
   			 </form>
 			</table>

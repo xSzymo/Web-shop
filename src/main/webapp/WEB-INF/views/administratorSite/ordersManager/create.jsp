@@ -13,7 +13,8 @@
 
 		<h2>Create order :</h2>
 
-		<form method="get" action="createOrder">
+		<form method="POST" action="create">
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
 			<table border="0" width="25%">
 				<tr>
 				<c:forEach items="${payments}" var="payment">
@@ -112,14 +113,17 @@
 		</c:forEach>
 			</table>
 		</form>
-		
+						<c:if test="${msg != null}">
+				<c:out value="${msg}"></c:out>
+				</c:if>
 		
 		
 		
 		<br><br><br>
 		<!--CouponCode  CouponCode  CouponCode  CouponCode  CouponCode  CouponCode  CouponCode  CouponCode  -->
 		<h3>Coupon codes</h3>
-	 <form method="get" action="createCouponCode">
+	 <form method="post" action="createCouponCode">
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
             <table border="0" width="20%" cellpadding="3">
                     <tr>
                         <td>code</td>
@@ -151,7 +155,8 @@
 		<br><br>
 		<!--ADDRESS   ADDRESS   ADDRESS   ADDRESS   ADDRESS   ADDRESS   ADDRESS   ADDRESS   -->
 		<h3>Address</h3>
- <form method="get" action="createAddress">
+ <form method="POST" action="createAddress">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
             <table border="0" width="20%" cellpadding="3">
                     <tr>
                         <td>street</td>
@@ -190,7 +195,8 @@
 <!-- BOOKS BOOKS BOOKS BOOKS BOOKS BOOKS BOOKS BOOKS BOOKS BOOKS BOOKS BOOKS BOOKS BOOKS BOOKS BOOKS BOOKS BOOKS  -->
 
 <h3>Books</h3>
- <form method="get" action="createBook">
+ <form method="POST" action="createBook">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
             <table border="0" width="20%" cellpadding="3">
                 <c:forEach items="${allBooks}" var="book">
 					<tr><td><input type="checkbox" name="${book.getName()}" value="${book.getName()}">${book.getName()}</input></td></tr>

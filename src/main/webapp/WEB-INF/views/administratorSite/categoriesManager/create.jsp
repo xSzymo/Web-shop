@@ -14,8 +14,9 @@
 
 
 <h2>Create book :</h2>
-		        <form method="get" action="createCategory">
+		        <form method="POST" action="create">
             <table border="0" width="20%" cellpadding="3">
+<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
                     <tr>
                         <td>name</td>
                         <td><input type="text" name="name" value="" /></td>

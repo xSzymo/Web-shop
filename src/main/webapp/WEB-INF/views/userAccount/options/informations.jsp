@@ -20,7 +20,7 @@
 			
 			<tr><td>E-mail </td><td><c:out value=" ${user.eMail}" /></td></tr>
 			
-			<tr><td>Date of birth </td><td><c:out value="${user.dateBirth}" /></td></tr>
+			<tr><td>Date of birth </td><td><c:out value="${user.age}" /></td></tr>
 			
 			<tr><td>Role </td><td><c:out value="${role.getRole()}" /></td></tr>
 				</table><br>

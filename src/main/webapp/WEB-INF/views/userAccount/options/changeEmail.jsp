@@ -9,7 +9,8 @@
 </head>
 
 <center>
-    <form action="changeAccEmail">
+    <form action="changeAccEmail" method = "POST">
+<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
             <table border="0" width="20%" cellpadding="3">
                     <tr>
                         <th colspan="2">Update</th>

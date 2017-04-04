@@ -11,7 +11,8 @@
 		<form id="Back" action="${sessionScope.PROJECT_NAME}shop" method="get"></form>
 		
 			<center><h2>Code from e-mail</h2>				         
-				<form method="get" action="resetPassword">
+				<form method="POST" action="resetPassword">
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
 				 <br> <input type="text" name="code" value="input code" /><br>
 					<br> <input align="right" type="submit" value="Send" />
 					<br><br><input type="submit" value="Shop" form="Back" />

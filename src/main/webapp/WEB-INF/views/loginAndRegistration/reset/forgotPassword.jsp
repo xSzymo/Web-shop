@@ -12,9 +12,8 @@
 		<form id="Back" action="${sessionScope.PROJECT_NAME}shop" method="get"></form>
 
  <center>
- <c:choose>
- 	<c:when test="${code == null }">
-        <form method="get" action="sendCode">
+        <form method="POST" action="sendCode">
+<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
             <table border="1" width="20%" cellpadding="3">
                 <thead>
                     <tr>
@@ -41,9 +40,6 @@
 				<a href="login"><font size="2">Login</font></a><br>
 				<a href="forgotUsername"><font size="2">Forgot username</font></a><br>
         </form>
-	</c:when>
-
-</c:choose>
 
 		<c:choose>
 			<c:when test="${msg != null}"><center>

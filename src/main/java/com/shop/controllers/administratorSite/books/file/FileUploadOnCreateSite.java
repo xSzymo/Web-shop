@@ -75,7 +75,7 @@ public class FileUploadOnCreateSite {
 		return "administratorSite/booksCRUD/create";
 	}
 	
-	@RequestMapping(value = "/uploadFileLink")
+	@RequestMapping(value = "/uploadFileLink", method = RequestMethod.POST)
 	public String uploadFileHandlerLink(@RequestParam(name = "name") String name, @RequestParam("link") String link,
 			Model model) throws IOException {
 

@@ -13,7 +13,8 @@
 				<c:set var="user" scope="page" value="${user}"/>
 			</c:if>
 						
-        <form action="update">
+        <form action="updateOne" method = "POST">
+<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
             <table border="0" width="20%" cellpadding="3">
                     <tr>
                         <th colspan="2">Update</th>
@@ -36,6 +37,10 @@
 					<tr>
                         <td>surname</td>
                         <td><input type="text" name="surname" value="<c:out value="${user.surname}"/>" /></td>
+                    </tr>
+					<tr>
+                        <td>date of birth</td>
+                        <td><input type="date" name="date" value="<c:out value="${user.age}"/>" /></td>
                     </tr>
 					<tr>
                         <td>eMail</td>
@@ -76,7 +81,7 @@
 		<c:out value="${msg}"></c:out>
 	</c:if>
 	
-	 <form method="get" action="createAddress">
+	 <form method="POST" action="createAddress?${_csrf.parameterName}=${_csrf.token}">
             <table border="0" width="20%" cellpadding="3">
                     <tr>
                         <td>street</td>
@@ -96,6 +101,7 @@
                     </tr>
                         <input type="hidden" name="userId" value="${user.getId()}" />
             </table>
+                        <input type="hidden" name="addressId" value="${address.getId()}" />
 			<br><input align="top" type="submit"  value="Save" /><br><br>	
 </body>
 </html>

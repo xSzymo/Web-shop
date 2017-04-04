@@ -45,8 +45,8 @@ public class DataBaseConfiguration {
 		dataSource.setServerName("localhost");
 		dataSource.setPort(3306);
 		dataSource.setDatabaseName(ApplicationConfig.DATABASE_NAME);
-		dataSource.setUser(ApplicationConfig.USER);
-		dataSource.setPassword(ApplicationConfig.PASSWORD);
+		dataSource.setUser(ApplicationConfig.DATABASE_USER_NANE);
+		dataSource.setPassword(ApplicationConfig.DATABASE_USER_PASSWORD);
 		return dataSource;
 	}
 

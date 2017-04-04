@@ -14,7 +14,8 @@
 			</c:if>
 						
 
-        <form action="updateCouponCodes/update">
+        <form action="update/updateOne" method="POST">
+<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
             <table border="0" width="20%" cellpadding="3">
                     <tr>
                         <th colspan="2">Update</th>
@@ -43,8 +44,6 @@
 
 
 
-
-
 	<c:if test="${msg != null}">
 		<c:out value="${msg}"></c:out>
 	</c:if>
@@ -59,7 +58,7 @@
 			
 			<tr><c:out value="login : ${couponCode.code}" /><br></tr>
 			
-			 <form action="updateCouponCodes/${couponCode.id}">
+			 <form action="update/${couponCode.id}">
 				<br><input align="top" type="submit" value="Update" />
   			 </form>
 			</table>

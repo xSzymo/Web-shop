@@ -10,7 +10,8 @@
 </head>
 <body>
 <form id="Back123" action="${sessionScope.PROJECT_NAME}shop" method="get"></form>
-		<form method="get" action="accept">
+		<form method="POST" action="accept">
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
 			<table border="0" width="25%">
 				<tr>
 				<c:forEach items="${payments}" var="payment">

@@ -1,12 +1,16 @@
 package com.shop.controllers.administratorSite.users;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.shop.data.operations.UserDAO;
 import com.shop.data.tables.Address;
 import com.shop.data.tables.UserRole;
 import com.shop.data.tables.Users;
@@ -16,17 +20,16 @@ import com.shop.others.RepositoriesAccess;
 @RequestMapping("administratorSite/users")
 public class CreateUsers {
 
-	@RequestMapping("create")
+	@RequestMapping(value = "create", method = RequestMethod.GET)
 	public String createSite() {
 		return "administratorSite/usersManager/create";
 	}
 
-	@RequestMapping("/createUser")
+	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public String create(@RequestParam("login") String login, @RequestParam("password") String password,
 			@RequestParam("name") String name, @RequestParam("surname") String surname,
-			@RequestParam("eMail") String eMail, @RequestParam("address") Long addressId, Model model,
-			HttpServletRequest request) {
-
+			@RequestParam("date") String date, @RequestParam("eMail") String eMail,
+			@RequestParam("address") Long addressId, Model model, HttpServletRequest request) {
 		Users foundUser = RepositoriesAccess.usersRepository.findByLogin(login);
 
 		Address address = null;
@@ -40,7 +43,15 @@ public class CreateUsers {
 			model.addAttribute("msgError", "That user already exist");
 			return "administratorSite/usersManager/create";
 		}
+		if (login.equals("") || login.length() < 2) {
+			model.addAttribute("msgError", "Wrong login");
+			return "administratorSite/usersManager/create";
+		}
 		Users user = new Users(login, password, name, surname, eMail);
+		if(date.equals(""))
+			user.setAge(0);
+		else
+			user.setAge(UserDAO.convertDateIntoYears(date));
 
 		if (address == null) {
 			model.addAttribute("msgError", "No address found(optional)");
@@ -58,7 +69,7 @@ public class CreateUsers {
 		return "administratorSite/usersManager/create";
 	}
 
-	@RequestMapping("/createAddress")
+	@RequestMapping(value = "/createAddress", method = RequestMethod.POST)
 	public String createAddress(@RequestParam("street") String street, @RequestParam("postalCode") String postalCode,
 			@RequestParam("city") String city, @RequestParam("country") String country, Model model) {
 		Address address = new Address(street, postalCode, city, country);
@@ -83,5 +94,14 @@ public class CreateUsers {
 				RepositoriesAccess.userRolesRepository.save(x);
 				return;
 			}
+	}
+
+	@SuppressWarnings("deprecation")
+	public static Date getDate(String date) {
+		String year = date.substring(0, 4);
+		String month = date.substring(5, 7);
+		String day = date.substring(8, 10);
+		Date newDate = new Date(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
+		return newDate;
 	}
 }

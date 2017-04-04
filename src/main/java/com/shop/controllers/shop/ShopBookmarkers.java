@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -21,14 +22,14 @@ import com.shop.others.RepositoriesAccess;
 @RequestMapping("shop")
 public class ShopBookmarkers {
 
-	@RequestMapping("{categoryName}")
+	@RequestMapping(value = "{categoryName}", method = RequestMethod.GET)
 	public String shopBookmarker(@PathVariable String categoryName, Model model) {
 		Categories category = RepositoriesAccess.categoriesRepository.findByName(categoryName);
 		model.addAttribute("books", category.getBooks());
 		return "shop/categorySite";
 	}
 
-	@RequestMapping("categorySite/{id}")
+	@RequestMapping(value = "categorySite/{id}", method = RequestMethod.GET)
 	public RedirectView addItemToBasket(@PathVariable Long id, @RequestParam("number") String number,
 			HttpServletRequest request, Model model) {
 		Books book = RepositoriesAccess.booksRepository.findById(id);

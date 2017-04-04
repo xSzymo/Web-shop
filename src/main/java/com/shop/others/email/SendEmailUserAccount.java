@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 
+import com.shop.configuration.ApplicationConfig;
 import com.shop.data.tables.Users;
 import com.shop.others.RepositoriesAccess;
 
@@ -22,8 +23,8 @@ public class SendEmailUserAccount {
 			Session session = EmailActions.authorizeWebShopEmail();
 
 			Message msg = new MimeMessage(session);
-			msg.setFrom(new InternetAddress("examplewebshop@gmail.com"));
-			msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(eMail, false));//set your eMail
+			msg.setFrom(new InternetAddress(ApplicationConfig.SHOP_EMAIL));
+			msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(eMail, false));
 			msg.setSubject("Shop order");
 			msg.setText(text);
 			msg.setSentDate(new Date());
@@ -43,8 +44,8 @@ public class SendEmailUserAccount {
 
 			if (newPassword != null && email.equals("")) {
 				Message msg = new MimeMessage(session);
-				msg.setFrom(new InternetAddress("examplewebshop@gmail.com"));
-				msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(user.getLogin(), false));//set your eMail
+				msg.setFrom(new InternetAddress(ApplicationConfig.SHOP_EMAIL));
+				msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(user.geteMail(), false));
 				
 				msg.setSubject("New password");
 				msg.setText("New password : " + newPassword);
@@ -57,8 +58,8 @@ public class SendEmailUserAccount {
 			} else {
 				String code = Long.toHexString(Double.doubleToLongBits(Math.random()));
 				Message msg = new MimeMessage(session);
-				msg.setFrom(new InternetAddress("examplewebshop@gmail.com"));
-				msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(user.getLogin(), false));//set your eMail
+				msg.setFrom(new InternetAddress(ApplicationConfig.SHOP_EMAIL));
+				msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(user.geteMail(), false));
 				
 				msg.setSubject("Change Email");
 				msg.setText("Your code : " + code);

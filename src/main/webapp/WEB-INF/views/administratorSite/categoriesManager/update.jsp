@@ -15,7 +15,8 @@
 			</c:if>
 						
 
-        <form action="updateCategory/update">
+        <form action="update/updateOne" method="POST">
+<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
             <table border="0" width="20%" cellpadding="3">
                     <tr>
                         <th colspan="2">Update</th>
@@ -55,7 +56,7 @@
 			
 			<tr><c:out value="login : ${category.name}" /><br></tr>
 			
-			 <form action="updateCategory/${category.id}">
+			 <form action="update/${category.id}">
 				<br><input align="top" type="submit" value="Update" />
   			 </form>
 			</table>

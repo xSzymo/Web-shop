@@ -1,6 +1,5 @@
 package com.shop.data.tables;
 
-import java.sql.Date;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 
@@ -25,8 +24,8 @@ public class Users {
 	private String surname;
 	@Column(name = "user_e_mail")
 	private String eMail;
-	@Column(name = "user_date_birth")
-	private Date dateBirth;
+	@Column(name = "age")
+	private int age;
 
 	@OneToOne
 	@JoinColumn(name = "address_id")
@@ -47,14 +46,14 @@ public class Users {
 		this.eMail = eMail;
 	}
 
-	public Users(String login, String password, String name, String surname, String eMail, Date dateBirth,
+	public Users(String login, String password, String name, String surname, String eMail, int old,
 			boolean isAdmin, Address address, Collection<Orders> orders) {
 		this.login = login;
 		this.password = password;
 		this.name = name;
 		this.surname = surname;
 		this.eMail = eMail;
-		this.dateBirth = dateBirth;
+		this.age = old;
 		this.setAddress(address);
 		this.setOrders(orders);
 	}
@@ -65,7 +64,7 @@ public class Users {
 		this.name = user.name;
 		this.surname = user.surname;
 		this.eMail = user.eMail;
-		this.dateBirth = user.dateBirth;
+		this.age = user.age;
 		this.setAddress(user.address);
 		this.setOrders(user.orders);
 	}
@@ -82,7 +81,7 @@ public class Users {
 	@Override
 	public String toString() {
 		return "Users [id=" + id + ", login=" + login + ", password=" + password + ", name=" + name + ", surname="
-				+ surname + ", eMail=" + eMail + ", dateBirth=" + dateBirth + ", address=" + getAddress() + ", orders="
+				+ surname + ", eMail=" + eMail + ", old=" + age + ", address=" + getAddress() + ", orders="
 				+ getOrders() + "]";
 	}
 
@@ -130,12 +129,12 @@ public class Users {
 		this.eMail = eMail;
 	}
 
-	public Date getDateBirth() {
-		return dateBirth;
+	public int getAge() {
+		return this.age;
 	}
 
-	public void setDateBirth(Date dateBirth) {
-		this.dateBirth = dateBirth;
+	public void setAge(int age) {
+		this.age = age;
 	}
 
 	public Address getAddress() {

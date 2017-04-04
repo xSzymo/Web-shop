@@ -7,6 +7,8 @@ import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 
+import com.shop.configuration.ApplicationConfig;
+
 public class EmailActions {
 	public static Session authorizeWebShopEmail() throws MessagingException {
 		Session session = null;
@@ -21,8 +23,8 @@ public class EmailActions {
 		props.put("mail.debug", "true");
 		props.put("mail.store.protocol", "pop3");
 		props.put("mail.transport.protocol", "smtp");
-		final String username = "examplewebshop@gmail.com";
-		final String password = "ZAQ!2wsx";
+		final String username = ApplicationConfig.SHOP_EMAIL;
+		final String password = ApplicationConfig.SHOP_EMAIL_PASSWORD;
 		session = Session.getDefaultInstance(props, new Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(username, password);

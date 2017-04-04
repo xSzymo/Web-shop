@@ -8,8 +8,9 @@
 <title>Delete</title>
 </head>
 <body>
- <form method="get" action="deleteBook">
+ <form action="delete" method = "POST">
   Name :  <input type="text" name="bookName" value="" />
+<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
 		<input align="top" type="submit" value="Delete" />
    </form>
 		<form id="Back" action="${sessionScope.PROJECT_NAME}administratorSite/books" method="get"></form>
@@ -34,14 +35,15 @@
 			
 			<tr><c:out value="category :${cateogries.name}" /><br></tr>
 			
-			<tr><c:out value="Description :${book.description}" /><br><br><br></tr>
+			<tr><c:out value="Description :${book.description}" /><br><br></tr>
 			
 			
 			<c:forEach items="${book.pictures}" var="picture">
 			<IMG HEIGHT="100" WIDTH="100" SRC="${sessionScope.PROJECT_NAME}getImage/${picture.name}">
-			</c:forEach>
+			</c:forEach><br>
 			
-			 <form action="deleteBook/${book.id}">
+			 <form action="delete/${book.id}" method="POST">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
 				<input align="top" type="submit" value="Delete" />
   			 </form>
 			</table>

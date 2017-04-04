@@ -6,8 +6,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.shop.data.operations.UserDAO;
 import com.shop.data.tables.Address;
 import com.shop.data.tables.UserRole;
 import com.shop.data.tables.Users;
@@ -17,7 +19,7 @@ import com.shop.others.RepositoriesAccess;
 @RequestMapping("administratorSite/users")
 public class UpdateUsers {
 
-	@RequestMapping("/update")
+	@RequestMapping(value = "/update", method = RequestMethod.GET)
 	public String update(Model model) {
 		Iterable<Users> users = RepositoriesAccess.usersRepository.findAll();
 		Iterable<UserRole> roles = RepositoriesAccess.userRolesRepository.findAll();
@@ -29,9 +31,9 @@ public class UpdateUsers {
 		return "administratorSite/usersManager/update";
 	}
 
-	@RequestMapping(value = "updateUser/{userId}")
-	public String updateBook(@PathVariable Long userId, Model model, HttpServletRequest request) {
-		Users foundUser = RepositoriesAccess.usersRepository.findById(userId);
+	@RequestMapping(value = "update/{id}", method = RequestMethod.GET)
+	public String updateBook(@PathVariable Long id, Model model, HttpServletRequest request) {
+		Users foundUser = RepositoriesAccess.usersRepository.findById(id);
 
 		if (foundUser == null)
 			model.addAttribute("msg", "not found");
@@ -41,13 +43,12 @@ public class UpdateUsers {
 		return "/administratorSite/usersManager/updateOneUser";
 	}
 
-	@RequestMapping("updateUser/update")
+	@RequestMapping(value = "update/update", method = RequestMethod.POST)
 	public String updateBook(@RequestParam("id") String id, @RequestParam("login") String login,
 			@RequestParam("password") String password, @RequestParam("name") String name,
-			@RequestParam("surname") String surname, @RequestParam("eMail") String eMail,
-			@RequestParam(name = "addressId", required = false) Long addressId, Model model,
-			HttpServletRequest request) {
-
+			@RequestParam("surname") String surname, @RequestParam("date") String date,
+			@RequestParam("eMail") String eMail, @RequestParam(name = "addressId", required = false) Long addressId,
+			Model model, HttpServletRequest request) {
 		Address address = null;
 
 		if (addressId != null)
@@ -73,7 +74,10 @@ public class UpdateUsers {
 		foundUser.setName(name);
 		foundUser.setSurname(surname);
 		foundUser.seteMail(eMail);
-		// foundUser.setDateBirth(dateBirth);
+		if(date.equals(""))
+			foundUser.setAge(0);
+		else
+			foundUser.setAge(UserDAO.convertDateIntoYears(date));
 		if (request.getParameter("Admin") != null)
 			addUserWithRoles(adminRole, foundUser);
 		else if (request.getParameter("User") != null)
@@ -86,7 +90,7 @@ public class UpdateUsers {
 		return "administratorSite/usersManager/updateOneUser";
 	}
 
-	@RequestMapping("updateUser/createAddress")
+	@RequestMapping(value = "update/createAddress", method = RequestMethod.POST)
 	public String createAddress(@RequestParam("street") String street, @RequestParam("postalCode") String postalCode,
 			@RequestParam("city") String city, @RequestParam("country") String country,
 			@RequestParam("userId") Long userId, Model model) {

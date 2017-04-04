@@ -13,23 +13,40 @@ import java.net.URL;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.shop.configuration.ApplicationConfig;
+import com.shop.data.tables.Pictures;
+import com.shop.others.RepositoriesAccess;
 
 @Controller
 @RequestMapping("administratorSite/books")
 public class FileUploadActions {
-	
+
 	@RequestMapping("upload")
-	public String hey() {
+	public String upload() {
 		return "upload";
 	}
 
-	@RequestMapping("uploadFil")
-	public String heey(@RequestParam("name") String name) {
-		System.out.println(name);
+	@RequestMapping(value = "uploadFil", method = RequestMethod.POST)
+	public String uploadFIle(@RequestParam("name") String name) {
 		return "upload";
 	}
-	
+
+	public static void deletePicture(String name) {
+		try {
+			Pictures picture = RepositoriesAccess.picturesRepository.findByName(name);
+			if (picture != null)
+				RepositoriesAccess.picturesRepository.delete(picture.getId());
+
+			File file = new File(ApplicationConfig.PICTURE_PATH + name);
+			file.delete();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	public static void downloadImage(String sourceUrl, String targetDirectory, String name)
 			throws MalformedURLException, IOException, FileNotFoundException {
 		URL imageUrl = new URL(sourceUrl);
@@ -43,5 +60,5 @@ public class FileUploadActions {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-	}	
+	}
 }

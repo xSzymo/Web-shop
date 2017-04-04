@@ -14,7 +14,7 @@
 
 
 <h2>Create User :</h2>
-		        <form method="get" action="createUser">
+		        <form method="POST" action="create">
             <table border="0" width="20%" cellpadding="3">
                     <tr>
                         <td>login</td>
@@ -31,6 +31,10 @@
                     <tr>
                         <td>surname</td>
                         <td><input type="text" name="surname" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td>date of birth </td>
+                        <td><input type="date" name="date" value="" /></td>
                     </tr>
                     <tr>
                         <td>eMail</td>
@@ -57,6 +61,7 @@
                         <td>  <input type="checkbox" name="User" value="ROLE_USER" checked="checked">user<br></td>
                     </tr>
                         <input type="hidden" name="address" value="${address.getId()}" />
+<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
             </table>
 			
 			
@@ -74,7 +79,8 @@
 
 
 
-		        <form method="get" action="createAddress">
+		        <form method="POST" action="createAddress">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
             <table border="0" width="20%" cellpadding="3">
                     <tr>
                         <td>street</td>

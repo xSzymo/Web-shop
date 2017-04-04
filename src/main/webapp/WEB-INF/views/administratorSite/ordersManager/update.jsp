@@ -91,7 +91,7 @@
 			<tr><c:out value="PaymentMethod : ${order.getPaymentMethod()}"></c:out><br></tr> 
 			
 			
-			 <form action="updateOrder/${order.getId()}">
+			 <form action="update/${order.getId()}" method="GET">
 				<br><input align="top" type="submit" value="Update" />
   			 </form>
 			</table>

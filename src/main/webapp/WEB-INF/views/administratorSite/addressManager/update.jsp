@@ -15,7 +15,7 @@
 			</c:if>
 						
 
-        <form action="updateAddress/update">
+        <form action="update/update" method="post">
             <table border="0" width="20%" cellpadding="3">
                     <tr>
                         <th colspan="2">Update</th>
@@ -43,6 +43,7 @@
                     <tr>				
                         <td><input type="submit" value="Update" /></td>
                     <td>	
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
 		<input type="submit" value="Back" form="Back" /></td></tr>
             </table>
         </form>
@@ -71,8 +72,9 @@
 						
 			<tr><c:out value="kraj : ${address.country}" /><br></tr>
 			
-			 <form action="updateAddress/${address.id}">
+			 <form action="update/${address.id}" method="GET">
 				<br><input align="top" type="submit" value="Update" />
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
   			 </form>
 			</table>
 			</c:forEach>

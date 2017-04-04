@@ -14,14 +14,16 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.shop.configuration.ApplicationConfig;
 import com.shop.data.tables.Users;
 import com.shop.others.RepositoriesAccess;
 
 @Controller
 public class SendEmailForgetPasswordLogin {
-	@RequestMapping("sendCode")
+	@RequestMapping(value = "sendCode", method = RequestMethod.POST)
 	public String sendCode(@RequestParam("login") String login, @RequestParam("email") String email, Model model,
 			HttpServletResponse response, HttpServletRequest request) {
 
@@ -41,9 +43,8 @@ public class SendEmailForgetPasswordLogin {
 			request.getSession().setAttribute("email", email);
 
 			Message msg = new MimeMessage(session);
-			msg.setFrom(new InternetAddress("examplewebshop@gmail.com"));
-			msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse("szymeksss@wp.pl", false));
-			//msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(user.geteMail(), false));
+			msg.setFrom(new InternetAddress(ApplicationConfig.SHOP_EMAIL));
+			msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email, false));
 			msg.setSubject("Reset password");
 			msg.setText("After 5 min code will be delete\n" + code);
 			msg.setSentDate(new Date());
@@ -55,7 +56,7 @@ public class SendEmailForgetPasswordLogin {
 		return "loginAndRegistration/reset/codePassword";
 	}
 	
-	@RequestMapping("sendUsername")
+	@RequestMapping(value = "sendUsername", method = RequestMethod.POST)
 	public String sendUsername(@RequestParam("email") String email, Model model, HttpServletResponse response,
 			HttpServletRequest request) {
 
@@ -69,8 +70,8 @@ public class SendEmailForgetPasswordLogin {
 			Session session = EmailActions.authorizeWebShopEmail();
 
 			Message msg = new MimeMessage(session);
-			msg.setFrom(new InternetAddress("examplewebshop@gmail.com"));
-			msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse("szymeksss@wp.pl", false));
+			msg.setFrom(new InternetAddress(ApplicationConfig.SHOP_EMAIL));
+			msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email, false));
 			msg.setSubject("Your login");
 			msg.setText("Login : " + user.getLogin());
 			msg.setSentDate(new Date());

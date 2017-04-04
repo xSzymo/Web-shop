@@ -8,8 +8,9 @@
 <title>Delete</title>
 </head>
 <body>
- <form method="get" action="deleteCategory">
+ <form method="POST" action="delete">
   Name :  <input type="text" name="categoryName" value="" />
+<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
 		<input align="top" type="submit" value="Delete" />
    </form>
 		<form id="Back" action="${sessionScope.PROJECT_NAME}administratorSite/categories" method="get"></form>
@@ -26,7 +27,8 @@
 			
 			<tr><c:out value="Description :${category.name}" /><br><br><br></tr>
 			
-			 <form action="deleteCategory/${category.id}">
+			 <form action="delete/${category.id}" method="POST">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
 				<input align="top" type="submit" value="Delete" />
   			 </form>
 			</table>

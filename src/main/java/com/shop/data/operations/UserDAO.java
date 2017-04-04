@@ -1,6 +1,8 @@
 package com.shop.data.operations;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -9,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.shop.data.tables.Address;
 import com.shop.data.tables.UserRole;
 import com.shop.data.tables.Users;
 import com.shop.others.RepositoriesAccess;
@@ -54,18 +57,42 @@ public class UserDAO {
 	}
 
 	public static void register(String login, String password, String eMail, String name, String surname, String street,
-			String dateBirth, String country, String city, String postalCode) {
-
+			String country, String city, String postalCode, String date) {
 		Users user = new Users();
 		user.setLogin(login);
 		user.setPassword(password);
-		user.setName(surname);
+		user.seteMail(eMail);
+		user.setName(name);
 		user.setSurname(surname);
-		// u.setDateBirth(new Date()); // add later
-		// Address address = new Address(street, postalCode, city, country);
-		// user.setAddress(address);
+		if (date.equals(""))
+			user.setAge(0);
+		else
+			user.setAge(UserDAO.convertDateIntoYears(date));
 
+		Address address = new Address(street, postalCode, city, country);
+		RepositoriesAccess.addressRepository.save(address);
+
+		user.setAddress(address);
 		RepositoriesAccess.usersRepository.save(user);
+
+		UserRole role = RepositoriesAccess.userRolesRepository.findRoleByRole("ROLE_USER");
+		role.getUser().add(user);
+		RepositoriesAccess.userRolesRepository.save(role);
 	}
 
+	// inexact algorithm
+	@SuppressWarnings("deprecation")
+	public static int convertDateIntoYears(String date) {
+		String year = date.substring(0, 4);
+		String month = date.substring(5, 7);
+		String day = date.substring(8, 10);
+
+		ZonedDateTime a = ZonedDateTime.now();
+		Date newDate = new Date(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
+		Date newDate1 = new Date(a.getYear(), a.getMonthValue(), a.getDayOfMonth());
+
+		long time = newDate1.getTime() - newDate.getTime();
+		int years = (int) ((time / (1000 * 60 * 60 * 24)) / 31 / 12);
+		return years;
+	}
 }

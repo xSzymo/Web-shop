@@ -9,7 +9,8 @@
 </head>
 <body>
 
-  <form method="get" action="readOne">
+  <form method="POST" action="read">
+ <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
   Name :  <input type="text" name="login" value="" />
 		<input align="top" type="submit" value="Find" />
    </form>
@@ -19,7 +20,7 @@
 
 		<form id="Back" action="${sessionScope.PROJECT_NAME}administratorSite/users" method="get"></form>
 		<input type="submit" value="Back" form="Back" />
-
+<br><br>
 <c:if test="${user != null}"> 
 			<table border="0" width="13%">
 			<tr><c:out value="User id : ${user.id}"></c:out><br></tr>
@@ -34,7 +35,7 @@
 			
 			<tr><c:out value="E-mail : ${user.eMail}" /><br></tr>
 			
-			<tr><c:out value="Date of birth : ${user.dateBirth}" /><br></tr>
+			<tr><c:out value="Date of birth : ${user.age}" /><br></tr>
 			
 			<tr><c:out value="Country : ${address.getCountry()}" /><br></tr>
 						
@@ -69,7 +70,7 @@
 			
 			<tr><c:out value="E-mail : ${user.eMail}" /><br></tr>
 			
-			<tr><c:out value="Date of birth : ${user.dateBirth}" /><br></tr>
+			<tr><c:out value="Date of birth : ${user.age}" /><br></tr>
 			
 			 <c:forEach items="${address}" var="address">
 					<c:if test="${address.getId() == user.getAddress().getId()}">

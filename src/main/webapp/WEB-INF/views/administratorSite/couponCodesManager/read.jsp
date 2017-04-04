@@ -9,7 +9,8 @@
 </head>
 <body>
 
-  <form method="get" action="readOne">
+  <form method="POST" action="read">
+ <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
   id :  <input type="text" name="id" value="" />
 		<input align="top" type="submit" value="Find" />
    </form>
@@ -18,7 +19,7 @@
    </form>
 		<form id="Back" action="${sessionScope.PROJECT_NAME}administratorSite/couponCodes" method="get"></form>
 		<input type="submit" value="Back" form="Back" />
-
+<br><br>
 <c:if test="${couponCode != null}"> 
 			<table border="0" width="13%">
 			<tr><c:out value="id : ${couponCode.id}"></c:out><br></tr>

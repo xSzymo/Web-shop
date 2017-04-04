@@ -12,7 +12,8 @@
 
 <center>
 <h2>Create book :</h2>
-		        <form method="get" action="createBook">
+		        <form method="post" action="create">
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
             <table border="0" width="20%" cellpadding="3">
                     <tr>
                         <td>Name</td>
@@ -75,7 +76,6 @@
 
 
 
-
 <br><br>
 	<form method="POST" action="uploadFilePicture?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data">
 		File to upload: <input type="file" name="file"><br /><br>
@@ -86,10 +86,13 @@
 		 </c:if>
 	</form>
 	
+	
+	
 	</td>
 	<td>
 <br><br>
-	<form action="uploadFileLink">
+	<form action="uploadFileLink" method="POST">
+	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
 		Link: <input type="text" name="link"><br /> <br /> 
 		Name: <input type="text" name="name"><br /> <br /> 
 		<input type="submit" value="upload"> 
@@ -100,8 +103,6 @@
 	
 	</table>
 	<td></td><tr>
-	
-	
 	
 <!-- <img src="getImage/123" alt="car_image"/> -->
 	

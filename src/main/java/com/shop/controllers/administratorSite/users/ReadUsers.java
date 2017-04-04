@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.shop.data.tables.Address;
@@ -16,7 +17,7 @@ import com.shop.others.RepositoriesAccess;
 @RequestMapping("administratorSite/users")
 public class ReadUsers {
 
-	@RequestMapping("read")
+	@RequestMapping(value = "read", method = RequestMethod.GET)
 	public String readSite(Model model, HttpServletRequest request) {
 		Iterable<Users> users = RepositoriesAccess.usersRepository.findAll();
 		Iterable<UserRole> roles = RepositoriesAccess.userRolesRepository.findAll();
@@ -28,7 +29,7 @@ public class ReadUsers {
 		return "administratorSite/usersManager/read";
 	}
 
-	@RequestMapping("readOne")
+	@RequestMapping(value = "read", method = RequestMethod.POST)
 	public String readOne(@RequestParam("login") String login, Model model) {
 		Users users = RepositoriesAccess.usersRepository.findByLogin(login);
 		Iterable<UserRole> roles = RepositoriesAccess.userRolesRepository.findAll();

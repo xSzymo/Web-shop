@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
@@ -19,7 +20,7 @@ import com.shop.others.RepositoriesAccess;
 @RequestMapping("administratorSite/couponCodes")
 public class DeleteCouponCodes {
 
-	@RequestMapping("delete")
+	@RequestMapping(value = "delete", method = RequestMethod.GET)
 	public String deleteSite(Model model) {
 		Iterable<CouponCodes> couponCodes = RepositoriesAccess.couponCodesRepository.findAll();
 
@@ -27,9 +28,9 @@ public class DeleteCouponCodes {
 		return "administratorSite/couponCodesManager/delete";
 	}
 
-	@RequestMapping(value = "deleteCouponCodes/{couponCodeId}")
-	public RedirectView deleteFromButton(@PathVariable Long couponCodeId, Model model, RedirectAttributes red) {
-		CouponCodes couponCodes = RepositoriesAccess.couponCodesRepository.findById(couponCodeId);
+	@RequestMapping(value = "delete/{id}", method = RequestMethod.POST)
+	public RedirectView deleteFromButton(@PathVariable Long id, Model model, RedirectAttributes red) {
+		CouponCodes couponCodes = RepositoriesAccess.couponCodesRepository.findById(id);
 
 		if (couponCodes == null)
 			red.addFlashAttribute("msg", "not found");
@@ -44,7 +45,7 @@ public class DeleteCouponCodes {
 					}
 			}
 			RepositoriesAccess.couponCodesRepository.delete(couponCodes);
-			red.addFlashAttribute("msg", "Succes, back to delete more");
+			red.addFlashAttribute("msg", "Succes");
 		}
 		Iterable<CouponCodes> couponCodesAll = RepositoriesAccess.couponCodesRepository.findAll();
 		red.addFlashAttribute("couponCodes", couponCodesAll);
@@ -52,7 +53,7 @@ public class DeleteCouponCodes {
 		return new RedirectView(ApplicationConfig.PROJECT_NAME + "administratorSite/couponCodes/delete");
 	}
 
-	@RequestMapping(value = "deleteCouponCodes")
+	@RequestMapping(value = "delete", method = RequestMethod.POST)
 	public String deleteFromInputText(@RequestParam("id") Long id, Model model) {
 		CouponCodes couponCodes = RepositoriesAccess.couponCodesRepository.findById(id);
 

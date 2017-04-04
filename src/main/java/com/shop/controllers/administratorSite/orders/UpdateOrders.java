@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.shop.data.enums.EnumPayments;
@@ -23,16 +24,16 @@ import com.shop.others.RepositoriesAccess;
 @RequestMapping("administratorSite/orders")
 public class UpdateOrders {
 
-	@RequestMapping("/update")
+	@RequestMapping(value = "/update", method = RequestMethod.GET)
 	public String updateSite(Model model) {
 		Iterable<Orders> orders = RepositoriesAccess.ordersRepository.findAll();
 		model.addAttribute("orders", orders);
 		return "administratorSite/ordersManager/update";
 	}
 
-	@RequestMapping(value = "updateOrder/{orderId}")
-	public String updateOne(@PathVariable Long orderId, Model model) {
-		Orders foundOrder = RepositoriesAccess.ordersRepository.findById(orderId);
+	@RequestMapping(value = "update/{id}", method = RequestMethod.GET)
+	public String updateOne(@PathVariable Long id, Model model) {
+		Orders foundOrder = RepositoriesAccess.ordersRepository.findById(id);
 
 		if (foundOrder == null)
 			model.addAttribute("msg", "not found");
@@ -54,7 +55,7 @@ public class UpdateOrders {
 		return "/administratorSite/ordersManager/updateOneOrder";
 	}
 
-	@RequestMapping("updateOrder/update")
+	@RequestMapping(value = "update/updateOne", method = RequestMethod.POST)
 	public String updateOrder(@RequestParam("shippingAddressStreet") String shippingAddressStreet,
 			@RequestParam("shippingAddressPostalCode") String shippingAddressPostalCode,
 			@RequestParam("shippingAddressCity") String shippingAddressCity,
@@ -79,10 +80,6 @@ public class UpdateOrders {
 		for (EnumPayments x : kindOfPayment)
 			if (x.name().equals(payment))
 				paymentType = x;
-
-		System.out.println(paymentType);
-
-		// System.out.println(payment);
 
 		Orders order = RepositoriesAccess.ordersRepository.findById(orderId);
 		Address billingAddress = order.getBillingAddress();
@@ -151,11 +148,12 @@ public class UpdateOrders {
 		// if(order.getPaymentMethod() != null)
 		// model.addAttribute("orderPayment",
 		// order.getPaymentMethod().toString());
+		model.addAttribute("msg", "Success");
 		return updateOne(order.getId(), model);
 	}
 
-	@RequestMapping("updateOrder/createBooks123")
-	public String createBook(@RequestParam("orderId") Long orderId, Model model, HttpServletRequest request) {
+	@RequestMapping(value = "update/createBooks", method = RequestMethod.POST)
+	public String createBook(@RequestParam("orderId") Long id, Model model, HttpServletRequest request) {
 
 		Iterable<Books> allBooks = RepositoriesAccess.booksRepository.findAll();
 		LinkedList<Books> chosenBooks = new LinkedList<Books>();
@@ -165,11 +163,11 @@ public class UpdateOrders {
 			if (request.getParameter(x.getName()) != null)
 				chosenBooks.add(x);
 
-		Orders order = RepositoriesAccess.ordersRepository.findById(orderId);
+		Orders order = RepositoriesAccess.ordersRepository.findById(id);
 		order.setBooks(chosenBooks);
 
 		RepositoriesAccess.ordersRepository.save(order);
 
-		return updateOne(orderId, model);
+		return updateOne(id, model);
 	}
 }

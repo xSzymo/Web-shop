@@ -16,7 +16,8 @@
 			</c:if>
 						
 
-        <form action="updateUser/update">
+        <form action="update/updateOne" method="POST">
+<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
             <table border="0" width="20%" cellpadding="3">
                     <tr>
                         <th colspan="2">Update</th>
@@ -43,6 +44,10 @@
 					<tr>
                         <td>eMail</td>
                         <td><input type="text" name="eMail" value="<c:out value="${user.eMail}"/>" /></td>
+                    </tr>
+					<tr>
+                        <td>date</td>
+                        <td><input type="date" name="date" value="" /></td>
                     </tr>
 <!-- 					                    <tr>
                         <td>  <input type="checkbox" name="Admin" value="ROLE_ADMIN">admin<br></td>
@@ -96,7 +101,7 @@
 				</c:forEach>
 				</c:forEach>
 							
-			 <form action="updateUser/${user.id}">
+			 <form action="update/${user.id}">
 				<br><input align="top" type="submit" value="Update" />
   			 </form>
 			</table>

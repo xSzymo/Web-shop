@@ -11,9 +11,9 @@
 		<input type="submit" value="Back" form="Back" />
 <center>
 
-
 <h2>Create book :</h2>
-		        <form method="get" action="createCouponCode">
+		        <form method="POST" action="create">
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
             <table border="0" width="20%" cellpadding="3">
                     <tr>
                         <td>code</td>

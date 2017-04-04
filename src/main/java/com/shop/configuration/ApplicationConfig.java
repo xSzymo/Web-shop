@@ -16,11 +16,20 @@ public class ApplicationConfig {
 	 * Picture path
 	 */
 	public static final String PICTURE_PATH = "E:/WebShopPictures/";
-
+	
+	/*
+	 * Shop email address
+	 */
+	public static final String SHOP_EMAIL = "examplewebshop@gmail.com";
+	
+	/*
+	 * Shop email password
+	 */
+	public static final String SHOP_EMAIL_PASSWORD = "ZAQ!2wsx";
 	/*
 	 * Access to Data base
 	 */
 	public static final String DATABASE_NAME = "crud";
-	public static final String USER = "root";
-	public static final String PASSWORD = "admin";
+	public static final String DATABASE_USER_NANE = "root";
+	public static final String DATABASE_USER_PASSWORD = "admin";
 }

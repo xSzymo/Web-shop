@@ -10,7 +10,8 @@
 <body>
 		<form id="Back" action="${sessionScope.PROJECT_NAME}shop" method="get"></form>
  <center>
-        <form method="get" action="sendUsername">
+        <form method="POST" action="sendUsername">
+<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
             <table border="1" width="20%" cellpadding="3">
                 <thead>
                     <tr>

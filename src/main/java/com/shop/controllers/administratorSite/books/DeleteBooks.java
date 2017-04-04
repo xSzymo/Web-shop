@@ -6,30 +6,35 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.shop.configuration.ApplicationConfig;
+import com.shop.controllers.administratorSite.books.file.FileUploadActions;
 import com.shop.data.tables.Books;
 import com.shop.data.tables.Categories;
 import com.shop.data.tables.Orders;
+import com.shop.data.tables.Pictures;
 import com.shop.others.RepositoriesAccess;
 
 @Controller
 @RequestMapping("administratorSite/books")
 public class DeleteBooks {
-
-	@RequestMapping("delete")
+	
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public String deleteSite(Model model) {
+		System.out.println("halo");
 		Iterable<Books> books = RepositoriesAccess.booksRepository.findAll();
 
 		model.addAttribute("books", books);
 		return "administratorSite/booksCRUD/delete";
 	}
 
-	@RequestMapping(value = "deleteBook/{bookId}")
-	public RedirectView deleteFromButton(@PathVariable Long bookId, Model model) {
-		Books foundBook = RepositoriesAccess.booksRepository.findById(bookId);
+
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
+	public RedirectView deleteFromButton(@PathVariable Long id, Model model) {
+		Books foundBook = RepositoriesAccess.booksRepository.findById(id);
 
 		if (foundBook == null) {
 			model.addAttribute("msg", "not found");
@@ -65,6 +70,9 @@ public class DeleteBooks {
 			}
 		}
 
+		for (Pictures x : foundBook.getPictures())
+			FileUploadActions.deletePicture(x.getName());
+
 		RepositoriesAccess.booksRepository.delete(foundBook.getId());
 
 		Iterable<Books> books = RepositoriesAccess.booksRepository.findAll();
@@ -73,7 +81,7 @@ public class DeleteBooks {
 		return new RedirectView(ApplicationConfig.PROJECT_NAME + "administratorSite/books/delete");
 	}
 
-	@RequestMapping(value = "deleteBook")
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public String deleteFromInputText(@RequestParam("bookName") String bookName, Model model) {
 		Books foundBook = RepositoriesAccess.booksRepository.findByName(bookName);
 
@@ -110,6 +118,9 @@ public class DeleteBooks {
 				}
 			}
 		}
+
+		for (Pictures x : foundBook.getPictures())
+			FileUploadActions.deletePicture(x.getName());
 
 		RepositoriesAccess.booksRepository.delete(foundBook.getId());
 

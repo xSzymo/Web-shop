@@ -8,7 +8,8 @@
 <title>Delete</title>
 </head>
 <body>
-  <form method="get" action="deleteCouponCodes">
+  <form method="post" action="delete">
+ <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
   id :  <input type="text" name="id" value="" />
 		<input align="top" type="submit" value="Delete" />
    </form> 
@@ -22,11 +23,12 @@
 			<c:forEach items="${couponCodes}" var="couponCode">
 			<table border="0" width="13%">
 			--------------------------------------------<br>
-			<tr>couponCode<c:out value="${couponCode.id}"></c:out><br></tr>
+			<tr>couponCode <c:out value="${couponCode.id}"></c:out><br></tr>
 			
-			<tr><c:out value="couponCode :${couponCode.code}" /><br><br></tr>
+			<tr><c:out value="couponCode : ${couponCode.code}" /><br><br></tr>
 			
-			 <form action="deleteCouponCodes/${couponCode.id}">
+			 <form action="delete/${couponCode.id}" method="POST">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
 				<input align="top" type="submit" value="Delete" />
   			 </form>
 			</table>

@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
@@ -17,7 +18,7 @@ import com.shop.others.RepositoriesAccess;
 @RequestMapping("administratorSite/users")
 public class DeleteUsers {
 
-	@RequestMapping("delete")
+	@RequestMapping(value = "delete", method = RequestMethod.GET)
 	public String deleteSite(Model model) {
 		Iterable<Users> users = RepositoriesAccess.usersRepository.findAll();
 		Iterable<UserRole> roles = RepositoriesAccess.userRolesRepository.findAll();
@@ -27,9 +28,9 @@ public class DeleteUsers {
 		return "administratorSite/usersManager/delete";
 	}
 
-	@RequestMapping(value = "deleteUser/{userId}")
-	public RedirectView deleteFromButton(@PathVariable Long userId, Model model, RedirectAttributes red) {
-		Users foundUser = RepositoriesAccess.usersRepository.findById(userId);
+	@RequestMapping(value = "delete/{id}", method = RequestMethod.POST)
+	public RedirectView deleteFromButton(@PathVariable Long id, Model model, RedirectAttributes red) {
+		Users foundUser = RepositoriesAccess.usersRepository.findById(id);
 
 		if (foundUser == null)
 			red.addFlashAttribute("msg", "not found");
@@ -43,7 +44,7 @@ public class DeleteUsers {
 		return new RedirectView(ApplicationConfig.PROJECT_NAME + "administratorSite/users/delete");
 	}
 
-	@RequestMapping(value = "deleteUser")
+	@RequestMapping(value = "delete", method = RequestMethod.POST)
 	public String deleteFromInputText(@RequestParam("userName") String userName, Model model) {
 		Users foundUser = RepositoriesAccess.usersRepository.findByLogin(userName);
 

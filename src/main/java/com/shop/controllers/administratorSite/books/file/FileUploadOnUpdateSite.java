@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -25,7 +26,7 @@ import com.shop.others.RepositoriesAccess;
 public class FileUploadOnUpdateSite {
 	private static final Logger logger = LoggerFactory.getLogger(FileUploadOnUpdateSite.class);
 
-	@RequestMapping(value = "updateBook/uploadFileLinkId")
+	@RequestMapping(value = "update/uploadFileLinkId", method = RequestMethod.POST)
 	public ModelAndView uploadFileHandlerLinkWithId(@RequestParam(name = "bookId") Long id,
 			@RequestParam(name = "name") String name, @RequestParam("link") String link, Model model,
 			RedirectAttributes redir) throws IOException {
@@ -35,7 +36,7 @@ public class FileUploadOnUpdateSite {
 		Pictures found = RepositoriesAccess.picturesRepository.findByName(name);
 		Books foundBook = RepositoriesAccess.booksRepository.findById(id);
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("redirect:http://localhost:8080" + ApplicationConfig.PROJECT_NAME + "administratorSite/books/updateBook/" + id);
+		modelAndView.setViewName("redirect:http://localhost:8080" + ApplicationConfig.PROJECT_NAME + "administratorSite/books/update/" + id);
 
 		if (found != null) {
 			redir.addFlashAttribute("msgLink", "This picture already exist");
@@ -59,7 +60,7 @@ public class FileUploadOnUpdateSite {
 		return modelAndView;
 	}
 	
-	@RequestMapping(value = "updateBook/uploadFilePictureWithId")
+	@RequestMapping(value = "update/uploadFilePictureWithId", method = RequestMethod.POST)
 	public ModelAndView uploadFileHandlerPictureId(@RequestParam(name = "bookId") Long id,
 			@RequestParam(name = "name") String name, @RequestParam("file") MultipartFile file, Model model,
 			RedirectAttributes redir) {
@@ -69,7 +70,7 @@ public class FileUploadOnUpdateSite {
 		Pictures found = RepositoriesAccess.picturesRepository.findByName(name);
 		Books foundBook = RepositoriesAccess.booksRepository.findById(id);
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("redirect:http://localhost:8080" + ApplicationConfig.PROJECT_NAME + "administratorSite/books/updateBook/" + id);
+		modelAndView.setViewName("redirect:http://localhost:8080" + ApplicationConfig.PROJECT_NAME + "administratorSite/books/update/" + id);
 
 		if (found != null) {
 			redir.addFlashAttribute("msg", "This picture already exist");
@@ -87,12 +88,10 @@ public class FileUploadOnUpdateSite {
 
 				// String rootPath = System.getProperty("catalina.home");
 				File dir = new File(ApplicationConfig.PICTURE_PATH);
-				System.out.println("File : " + dir.getPath());
 				if (!dir.exists())
 					dir.mkdirs();
 
 				File serverFile = new File(dir.getAbsolutePath() + File.separator + name);
-				System.out.println("Server : " + serverFile.getAbsolutePath());
 				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 				stream.write(bytes);
 				stream.close();

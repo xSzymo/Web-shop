@@ -15,7 +15,8 @@
 			
 		<h2>Create order :</h2>
 
-		<form method="get" action="update">
+		<form method="POST" action="updateOne">
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
 			<table border="0" width="25%">
 				<tr>
 				<c:forEach items="${payments}" var="payment">
@@ -26,9 +27,9 @@
 					<td><input type="radio" name="payment" value="${payment}">${payment}</input></td>
 				</c:if> 
 				</c:forEach>
-				</tr>			  	  
-				 <tr>
-                        <td>price</td>
+				</tr><tr>
+
+				                         <td>price</td>
                         <td><input type="text" name="price" value="${order.getPrice()}"/></td>
                     </tr>
 			<tr><td></td></tr>
@@ -136,7 +137,8 @@
 	
 	
 	
-	 <form method="get" action="createBooks123">
+	 <form method="POST" action="createBooks">
+	 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
             <table border="0" width="20%" cellpadding="3">
 <%--          <c:forEach items="${order.getBooks()}" var="book">
 					<tr><td><input type="checkbox" name="${book.getName()}" value="${book.getName()}" checked="checked">${book.getName()}</input></td></tr>

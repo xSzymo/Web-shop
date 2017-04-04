@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.shop.data.tables.Books;
 import com.shop.data.tables.Categories;
@@ -17,7 +18,7 @@ import com.shop.others.RepositoriesAccess;
 @RequestMapping("administratorSite/books")
 public class CreateBooks {
 
-	@RequestMapping("create")
+	@RequestMapping(value = "create", method = RequestMethod.GET)
 	public String createSite(Model model) {
 		Iterable<Categories> categories = RepositoriesAccess.categoriesRepository.findAll();
 		model.addAttribute("categories", categories);
@@ -25,12 +26,12 @@ public class CreateBooks {
 		return "administratorSite/booksCRUD/create";
 	}
 
-	@RequestMapping("/createBook")
+	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public String create(@RequestParam("name") String name, @RequestParam("author") String author,
 			@RequestParam("description") String description, @RequestParam("langauge") String langauge,
 			@RequestParam("price") String price, @RequestParam("pictureName") String pictureName, Model model,
 			HttpServletRequest request) {
-			
+
 		Iterable<Categories> categories = RepositoriesAccess.categoriesRepository.findAll();
 		model.addAttribute("categories", categories);
 

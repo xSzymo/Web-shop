@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -17,7 +18,7 @@ import com.shop.others.RepositoriesAccess;
 @RequestMapping("administratorSite/address")
 public class DeleteAddress {
 
-	@RequestMapping("delete")
+	@RequestMapping(value = "delete", method = RequestMethod.GET)
 	public String deleteSite(Model model) {
 		Iterable<Address> address = RepositoriesAccess.addressRepository.findAll();
 
@@ -25,9 +26,9 @@ public class DeleteAddress {
 		return "administratorSite/addressManager/delete";
 	}
 
-	@RequestMapping(value = "deleteAddress/{addressId}")
-	public RedirectView deleteFromButton(@PathVariable Long addressId, Model model) {
-		Address address = RepositoriesAccess.addressRepository.findById(addressId);
+	@RequestMapping(value = "delete/{id}", method = RequestMethod.POST)
+	public RedirectView deleteFromButton(@PathVariable Long id, Model model) {
+		Address address = RepositoriesAccess.addressRepository.findById(id);
 
 		if (address != null) {
 			Iterable<Orders> orders = RepositoriesAccess.ordersRepository.findAll();
@@ -61,7 +62,7 @@ public class DeleteAddress {
 		return new RedirectView(ApplicationConfig.PROJECT_NAME + "administratorSite/address/delete");
 	}
 
-	@RequestMapping(value = "deleteAddress")
+	@RequestMapping(value = "delete", method = RequestMethod.POST)
 	public String deleteFromInputText(@RequestParam("id") Long id, Model model) {
 		Address address = RepositoriesAccess.addressRepository.findById(id);
 
@@ -95,7 +96,7 @@ public class DeleteAddress {
 		}
 		Iterable<Address> allAdress = RepositoriesAccess.addressRepository.findAll();
 		model.addAttribute("address", allAdress);
-		
+
 		return "/administratorSite/addressManager/delete";
 	}
 }

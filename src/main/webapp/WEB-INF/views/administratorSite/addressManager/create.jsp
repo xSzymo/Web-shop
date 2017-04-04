@@ -10,8 +10,8 @@
 <center>
 		<form id="Back" action="${sessionScope.PROJECT_NAME}administratorSite/address" method="get"></form>
 		
-<h2>Create book :</h2>
-		        <form method="get" action="createAddress">
+<h2>Create address :</h2>
+		        <form action="create" method="post">
             <table border="0" width="20%" cellpadding="3">
                     <tr>
                         <td>street</td>
@@ -29,6 +29,7 @@
                         <td>country</td>
                         <td><input type="text" name="country" value="" /></td>
                     </tr>
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
             </table>
 			
 				<c:if test="${msgError != null}">
@@ -44,6 +45,8 @@
 		<input type="submit" value="Back" form="Back" /></td></tr>
         </form>
          <table border="0" width="20%" cellpadding="3">
+
+
 <tr><td>
 </body>
 </html>

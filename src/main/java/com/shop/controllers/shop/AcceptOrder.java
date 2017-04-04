@@ -7,6 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.shop.controllers.shop.actions.OrderActions;
@@ -20,7 +21,7 @@ import com.shop.others.email.SendEmailUserAccount;
 public class AcceptOrder {
 
 	@Secured(value = { "ROLE_ADMIN", "ROLE_USER" })
-	@RequestMapping("accept")
+	@RequestMapping(value = "accept", method = RequestMethod.POST)
 	public String acceptForUser(HttpServletRequest request, Model model,
 			@RequestParam("shippingAddressStreet") String shippingAddressStreet,
 			@RequestParam("shippingAddressPostalCode") String shippingAddressPostalCode,
@@ -40,14 +41,18 @@ public class AcceptOrder {
 		String text = OrderActions.saveOrderAndReturnMessage(shippingAddressStreet, shippingAddressPostalCode, shippingAddressCity,
 				shippingAddressCountry, billingAddressStreet, billingAddressPostalCode, billingAddressCity,
 				billingAddressCountry, payment, couponCode, user.geteMail(), request);
-
+		
 		SendEmailUserAccount.sendEmailWithOrder(text, user.geteMail(), request);
 
+		if (!(SecurityContextHolder.getContext().getAuthentication().getName().equals("anonymousUser")))
+			model.addAttribute("logged", true);
+		else
+			model.addAttribute("logged", false);
 		model.addAttribute("success", "success");
-		return "shop/options/userOrder";
+		return "shopStartPage";
 	}
 
-	@RequestMapping("acceptAnonymous")
+	@RequestMapping(value = "acceptAnonymous", method = RequestMethod.POST)
 	public String acceptForAnonymous(HttpServletRequest request, Model model,
 			@RequestParam("shippingAddressStreet") String shippingAddressStreet,
 			@RequestParam("shippingAddressPostalCode") String shippingAddressPostalCode,
@@ -67,7 +72,11 @@ public class AcceptOrder {
 
 		SendEmailUserAccount.sendEmailWithOrder(text, email, request);
 
+		if (!(SecurityContextHolder.getContext().getAuthentication().getName().equals("anonymousUser")))
+			model.addAttribute("logged", true);
+		else
+			model.addAttribute("logged", false);
 		model.addAttribute("success", "success");
-		return "shop/options/userOrder";
+		return "shopStartPage";
 	}
 }
