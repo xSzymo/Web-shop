@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import com.shop.data.repositories.AdressRepository;
 import com.shop.data.repositories.BooksRepository;
 import com.shop.data.repositories.CategoriesRepository;
+import com.shop.data.repositories.CookiesRepository;
 import com.shop.data.repositories.CouponCodesRepository;
 import com.shop.data.repositories.OrdersRepository;
 import com.shop.data.repositories.PicturesRepository;
@@ -30,11 +31,13 @@ public class RepositoriesAccess {
 	public static OrdersRepository ordersRepository;
 	@Autowired
 	public static UserRolesRepository userRolesRepository;
+	@Autowired
+	public static CookiesRepository cookiesRepository;
 
 	private RepositoriesAccess(UsersRepository usersRepository, CategoriesRepository categoriesRepository,
 			BooksRepository booksRepository, AdressRepository adressRepository,
 			CouponCodesRepository couponCodesRepository, PicturesRepository picturesRepository,
-			OrdersRepository ordersRepository, UserRolesRepository userRolesRepository) {
+			OrdersRepository ordersRepository, UserRolesRepository userRolesRepository, CookiesRepository cookiesRepository) {
 
 		RepositoriesAccess.usersRepository = usersRepository;
 		RepositoriesAccess.categoriesRepository = categoriesRepository;
@@ -44,5 +47,6 @@ public class RepositoriesAccess {
 		RepositoriesAccess.picturesRepository = picturesRepository;
 		RepositoriesAccess.ordersRepository = ordersRepository;
 		RepositoriesAccess.userRolesRepository = userRolesRepository;
+		RepositoriesAccess.cookiesRepository = cookiesRepository;
 	}
 }

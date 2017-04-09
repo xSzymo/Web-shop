@@ -43,6 +43,12 @@
         				</form></td>
                     </tr>
                     <tr>
+                        <td>Delete account</td>
+                  	      <td>        <form method="get" action="account/delete">
+							<input align="top" type="submit"  value="Click" />
+        				</form></td>
+                    </tr>
+                    <tr>
                         <td>Shop</td>
                   	      <td>       <form id="Back" action="${sessionScope.PROJECT_NAME}shop" method="get"></form>
 								<input type="submit" value="Back" form="Back" />
@@ -53,15 +59,14 @@
                         <td>Administrator site</td>
                   	      <td>       
 						 		<form id="administratorSite" action="${sessionScope.PROJECT_NAME}administratorSite" method="get"></form>
-								<input type="submit" value="Go" form="administratorSite" />
+								<input type="submit" value="Click" form="administratorSite" />
 						</td>
                     </tr>
 					</c:if>
                     <tr>
                         <td>logout</td>
-                  	      <td>        <form method="post" action="logout">
+                  	      <td>        <form method="get" action="logout">
 							<input align="top" type="submit"  value="Click" />
-							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
         				</form></td>
                     </tr>
        		 </table>

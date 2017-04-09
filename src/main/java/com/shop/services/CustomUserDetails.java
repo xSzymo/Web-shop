@@ -1,4 +1,4 @@
-package com.shop.data.operations;
+package com.shop.services;
 
 import java.util.Collection;
 import java.util.List;

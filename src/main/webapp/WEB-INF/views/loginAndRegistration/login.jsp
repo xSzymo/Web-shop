@@ -11,7 +11,7 @@
  <center>		
  		<form id="Back" action="${sessionScope.PROJECT_NAME}shop" method="get"></form>
 		
-        <form method="post" action="login">
+        <form method="post" action="userLogin">
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
             <table border="1" width="20%" cellpadding="3">
                 <thead>
@@ -28,6 +28,10 @@
                         <td>Password</td>
                         <td><input type="password" name="password" value="" /></td>
                     </tr>
+                    <tr>
+                        <td>remember me</td>
+                        <td><input type="checkbox" name="remember-me"></td>
+                    </tr>
                 </tbody>
             </table><br>
 			<tr><td><input align="top" type="submit"  value="Login" />
@@ -43,7 +47,6 @@
 					<c:out value="${msg}"></c:out>
 				</c:when>
 				</c:choose>
-				
 			</center>
 </body>
 </html>

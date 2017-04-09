@@ -4,8 +4,11 @@ import java.util.HashSet;
 import java.util.LinkedList;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,9 +21,14 @@ import com.shop.others.RepositoriesAccess;
 @Controller
 @RequestMapping("shop")
 public class Shop {
+	@Autowired
+	private RememberMeServices rememberMeService;
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public String start(Model model) {
+	public String start(HttpServletRequest request, HttpServletResponse response, Model model) {
+		if (request.getRequestedSessionId() != null)
+			rememberMeService.autoLogin(request, response);
+
 		if (!(SecurityContextHolder.getContext().getAuthentication().getName().equals("anonymousUser")))
 			model.addAttribute("logged", true);
 		else

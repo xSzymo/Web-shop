@@ -37,7 +37,7 @@ public class ShopBookmarkers {
 		Categories category = null;
 		for (Categories x : categories) {
 			for (Books x1 : x.getBooks()) {
-				if (x1.getId() == x1.getId()) {
+				if (book.getId() == x1.getId()) {
 					category = x;
 				}
 			}

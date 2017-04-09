@@ -26,6 +26,8 @@ public class Users {
 	private String eMail;
 	@Column(name = "age")
 	private int age;
+	@Column(name = "cookie_code")
+	private String cookieCode;
 
 	@OneToOne
 	@JoinColumn(name = "address_id")
@@ -151,5 +153,13 @@ public class Users {
 
 	public void setOrders(Collection<Orders> orders) {
 		this.orders = orders;
+	}
+
+	public String getCookieCode() {
+		return cookieCode;
+	}
+
+	public void setCookieCode(String cookieCode) {
+		this.cookieCode = cookieCode;
 	}
 }

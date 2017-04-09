@@ -10,7 +10,7 @@
 <body>
 <c:choose>
 	<c:when test="${logged == false || logged == null}">
-		<form id="saveForm" action="login" method="post">
+		<form id="saveForm" action="userLogin" method="post">
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
 		</form>
 		<form id="deleteForm" action="registration" method="get"></form>

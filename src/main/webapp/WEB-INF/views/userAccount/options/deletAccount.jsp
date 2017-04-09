@@ -5,15 +5,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>change password</title>
+<title>orders</title>
 </head>
-<center>
-    <form action="changePassword" method = "POST">
+<body>
+		<form id="Back" action="${sessionScope.PROJECT_NAME}account" method="get"></form>
+		<input type="submit" value="Back" form="Back" />
+	<center>
+		<h2>Delete account</h2>
+		    <form action="deleteAccount" method = "POST">
 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
             <table border="0" width="20%" cellpadding="3">
-                    <tr>
-                        <th colspan="2">Update</th>
-                    </tr>
                     <tr>
                         <td>password</td>
                         <td><input type="text" name="password" value="" /> </td>
@@ -27,12 +28,6 @@
                     </tr>
             </table>
         </form>
-		<form action="${sessionScope.PROJECT_NAME}account">
-    		<input type="submit" value="Back" />
-		</form>
-
-	<c:if test="${msg != null}">
-		<c:out value="${msg}"></c:out>
-	</c:if>
+		</center>
 </body>
 </html>

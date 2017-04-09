@@ -11,8 +11,9 @@
 		<form id="Back" action="${sessionScope.PROJECT_NAME}account" method="get"></form>
 		<input type="submit" value="Back" form="Back" />
 	<center>
-		<h2>Orders history</h2>
+		<h2>New</h2>
 			<c:forEach items="${orders}" var="order">
+			<c:if test="${order.getIsRealized() == true}">
 			<table border="1" width="40%">
 			
 				<tr><td>price </td><td> <c:out value="${order.price}" /><br></td></tr>
@@ -31,8 +32,39 @@
 					<tr><td>Book </td> <td><c:out value="${book.name}" /><br></td></tr>
 				</c:forEach>
 			</table>
-			
 			<br>
+			</c:if>
+			</c:forEach>
+		</center>
+			<br>
+			<br>
+			<br>
+			<br>
+			
+				<center>
+		<h2>Realized</h2>
+			<c:forEach items="${orders}" var="order">
+			<c:if test="${order.getIsRealized() == false}">
+			<table border="1" width="40%">
+			
+				<tr><td>price </td><td> <c:out value="${order.price}" /><br></td></tr>
+				
+				<tr><td>paymentMethod </td><td><c:out value="${order.paymentMethod}" /></td></tr>
+			
+				<tr><td>shipping Address </td><td><c:out value="${order.shippingAddress}" /></td></tr>
+			
+				<tr><td>billing Address</td><td><c:out value="${order.billingAddress}" /></td></tr>
+			
+				<tr><td> couponCodes</td><td><c:out value="${order.couponCodes.code}" /></td></tr>
+			
+				 <tr><td> realized</td><td><c:out value="${order.getIsRealized()}" /></td></tr> 
+				
+				<c:forEach items="${order.books}" var="book">
+					<tr><td>Book </td> <td><c:out value="${book.name}" /><br></td></tr>
+				</c:forEach>
+			</table>
+			<br>
+			</c:if>
 			</c:forEach>
 		</center>
 </body>

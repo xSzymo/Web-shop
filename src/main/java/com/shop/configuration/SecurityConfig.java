@@ -12,16 +12,22 @@ import org.springframework.security.config.annotation.web.servlet.configuration.
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.RememberMeServices;
+
+import com.shop.services.CustomRememberMeServices;
+import com.shop.services.CustomUserDetailsService;
 
 @SuppressWarnings("deprecation")
 @Configuration
 @EnableWebMvcSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
-@ComponentScan(basePackageClasses = com.shop.data.operations.CustomUserDetailsService.class)
+@ComponentScan(basePackageClasses = { CustomUserDetailsService.class, CustomRememberMeServices.class })
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private UserDetailsService userDetailsService;
+	@Autowired
+	private RememberMeServices rememberMeService;
 
 	@Autowired
 	public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
@@ -33,11 +39,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers("/administratorSite/**").access("hasRole('ROLE_ADMIN')")
 		.and()
 		.authorizeRequests().antMatchers("/account/**").access("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
-	    .and()
-	    .formLogin().loginPage("/login")
-	    .and()
-	    .logout().logoutSuccessUrl("/login?logout").logoutUrl("start")
-	    .and()
+		.and()
+		.formLogin().loginPage("/login")
+		.and()
+		.rememberMe().rememberMeServices(rememberMeService)
+		.and()
+		.logout().logoutSuccessUrl("/shop").logoutUrl("/logout")
+		.and()
 		.exceptionHandling();
 	}
 

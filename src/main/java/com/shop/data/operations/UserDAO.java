@@ -15,9 +15,10 @@ import com.shop.data.tables.Address;
 import com.shop.data.tables.UserRole;
 import com.shop.data.tables.Users;
 import com.shop.others.RepositoriesAccess;
+import com.shop.services.CustomUserDetails;
 
 public class UserDAO {
-	public static boolean login(String login, String password) {
+	public static Authentication login(String login, String password) {
 		Users admin = RepositoriesAccess.usersRepository.findByLogin(login);
 		Iterable<UserRole> found = RepositoriesAccess.userRolesRepository.findAll();
 		List<String> userRoles = new ArrayList<>();
@@ -32,7 +33,7 @@ public class UserDAO {
 
 		if (userRoles.isEmpty()) {
 			System.out.println("Anonymous user");
-			return false;
+			return null;
 		}
 
 		SecurityContextHolder.createEmptyContext();
@@ -41,11 +42,7 @@ public class UserDAO {
 		Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(),
 				userDetails.getAuthorities());
 		SecurityContextHolder.getContext().setAuthentication(authentication);
-		return true;
-	}
-
-	public static void logout() {
-		SecurityContextHolder.getContext().setAuthentication(null);
+		return authentication;
 	}
 
 	public static boolean isUser(String login, String password) {
