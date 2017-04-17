@@ -10,7 +10,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.shop.configuration.ApplicationConfig;
-import com.shop.data.tables.Categories;
+import com.shop.data.tables.Category;
 import com.shop.others.RepositoriesAccess;
 
 @Controller
@@ -19,7 +19,7 @@ public class DeleteCategories {
 
 	@RequestMapping(value = "delete", method = RequestMethod.GET)
 	public String deleteSite(Model model) {
-		Iterable<Categories> categories = RepositoriesAccess.categoriesRepository.findAll();
+		Iterable<Category> categories = RepositoriesAccess.categoriesRepository.findAll();
 
 		model.addAttribute("categories", categories);
 		return "administratorSite/categoriesManager/delete";
@@ -27,7 +27,7 @@ public class DeleteCategories {
 
 	@RequestMapping(value = "delete/{id}", method = RequestMethod.POST)
 	public RedirectView deleteFromButton(@PathVariable Long id, Model model, RedirectAttributes red) {
-		Categories category = RepositoriesAccess.categoriesRepository.findById(id);
+		Category category = RepositoriesAccess.categoriesRepository.findById(id);
 
 		if (category == null)
 			red.addFlashAttribute("msg", "not found");
@@ -35,7 +35,7 @@ public class DeleteCategories {
 			RepositoriesAccess.categoriesRepository.delete(category);
 			red.addFlashAttribute("msg", "Succes");
 		}
-		Iterable<Categories> categories = RepositoriesAccess.categoriesRepository.findAll();
+		Iterable<Category> categories = RepositoriesAccess.categoriesRepository.findAll();
 		model.addAttribute("categories", categories);
 
 		return new RedirectView(ApplicationConfig.PROJECT_NAME + "administratorSite/categories/delete");
@@ -43,7 +43,7 @@ public class DeleteCategories {
 
 	@RequestMapping(value = "delete", method = RequestMethod.POST)
 	public String deleteFromInputText(@RequestParam("categoryName") String categoryName, Model model) {
-		Categories categoryFound = RepositoriesAccess.categoriesRepository.findByName(categoryName);
+		Category categoryFound = RepositoriesAccess.categoriesRepository.findByName(categoryName);
 
 		if (categoryFound == null)
 			model.addAttribute("msg", "not found");
@@ -52,7 +52,7 @@ public class DeleteCategories {
 			model.addAttribute("msg", "Succes");
 		}
 
-		Iterable<Categories> categories = RepositoriesAccess.categoriesRepository.findAll();
+		Iterable<Category> categories = RepositoriesAccess.categoriesRepository.findAll();
 
 		model.addAttribute("categories", categories);
 		return "/administratorSite/categoriesManager/delete";

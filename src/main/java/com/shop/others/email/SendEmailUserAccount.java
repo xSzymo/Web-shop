@@ -13,7 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 
 import com.shop.configuration.ApplicationConfig;
-import com.shop.data.tables.Users;
+import com.shop.data.tables.User;
 import com.shop.others.RepositoriesAccess;
 
 public class SendEmailUserAccount {
@@ -35,8 +35,8 @@ public class SendEmailUserAccount {
 	}
 
 	public static boolean sendEmailWithNewPassswordOrEmail(String email, String newPassword, Model model, HttpServletRequest request) {
-		Users user1 = (Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		Users user = RepositoriesAccess.usersRepository.findByLogin(user1.getLogin());
+		User user1 = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = RepositoriesAccess.usersRepository.findByLogin(user1.getLogin());
 
 		boolean success = false;
 		try {

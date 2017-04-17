@@ -11,7 +11,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import com.shop.configuration.ApplicationConfig;
 import com.shop.data.tables.UserRole;
-import com.shop.data.tables.Users;
+import com.shop.data.tables.User;
 import com.shop.others.RepositoriesAccess;
 
 @Controller
@@ -20,7 +20,7 @@ public class DeleteUsers {
 
 	@RequestMapping(value = "delete", method = RequestMethod.GET)
 	public String deleteSite(Model model) {
-		Iterable<Users> users = RepositoriesAccess.usersRepository.findAll();
+		Iterable<User> users = RepositoriesAccess.usersRepository.findAll();
 		Iterable<UserRole> roles = RepositoriesAccess.userRolesRepository.findAll();
 
 		model.addAttribute("users", users);
@@ -30,7 +30,7 @@ public class DeleteUsers {
 
 	@RequestMapping(value = "delete/{id}", method = RequestMethod.POST)
 	public RedirectView deleteFromButton(@PathVariable Long id, Model model, RedirectAttributes red) {
-		Users foundUser = RepositoriesAccess.usersRepository.findById(id);
+		User foundUser = RepositoriesAccess.usersRepository.findById(id);
 
 		if (foundUser == null)
 			red.addFlashAttribute("msg", "not found");
@@ -38,7 +38,7 @@ public class DeleteUsers {
 			RepositoriesAccess.usersRepository.delete(foundUser);
 			red.addFlashAttribute("msg", "Succes, back to delete more");
 		}
-		Iterable<Users> users = RepositoriesAccess.usersRepository.findAll();
+		Iterable<User> users = RepositoriesAccess.usersRepository.findAll();
 		model.addAttribute("users", users);
 
 		return new RedirectView(ApplicationConfig.PROJECT_NAME + "administratorSite/users/delete");
@@ -46,7 +46,7 @@ public class DeleteUsers {
 
 	@RequestMapping(value = "delete", method = RequestMethod.POST)
 	public String deleteFromInputText(@RequestParam("userName") String userName, Model model) {
-		Users foundUser = RepositoriesAccess.usersRepository.findByLogin(userName);
+		User foundUser = RepositoriesAccess.usersRepository.findByLogin(userName);
 
 		if (foundUser == null)
 			model.addAttribute("msg", "not found");
@@ -55,7 +55,7 @@ public class DeleteUsers {
 			model.addAttribute("msg", "Succes");
 		}
 
-		Iterable<Users> users = RepositoriesAccess.usersRepository.findAll();
+		Iterable<User> users = RepositoriesAccess.usersRepository.findAll();
 		model.addAttribute("users", users);
 		return "/administratorSite/usersManager/delete";
 	}

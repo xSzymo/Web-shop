@@ -19,7 +19,7 @@ public class UserRole {
 	
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinColumn(name = "role_id")
-	private Collection<Users> user = new LinkedHashSet<Users>();
+	private Collection<User> user = new LinkedHashSet<User>();
 
 	public String getRole() {
 		return role;
@@ -37,11 +37,11 @@ public class UserRole {
 		this.roleid = roleid;
 	}
 
-	public Collection<Users> getUser() {
+	public Collection<User> getUser() {
 		return user;
 	}
 
-	public void setUser(Collection<Users> user) {
+	public void setUser(Collection<User> user) {
 		this.user = user;
 	}
 }

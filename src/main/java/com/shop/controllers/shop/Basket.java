@@ -16,8 +16,8 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import com.shop.configuration.ApplicationConfig;
 import com.shop.data.enums.EnumPayments;
-import com.shop.data.tables.Books;
-import com.shop.data.tables.Users;
+import com.shop.data.tables.Book;
+import com.shop.data.tables.User;
 import com.shop.others.RepositoriesAccess;
 
 @Controller
@@ -26,8 +26,8 @@ public class Basket {
 
 	@RequestMapping(value = "basket", method = RequestMethod.GET)
 	public String basket(Model model, HttpServletRequest request) {
-		LinkedList<Books> basket = Shop.getBasketWithAllBooks(request);
-		HashSet<Books> basketMain = Shop.getBasket(request);
+		LinkedList<Book> basket = Shop.getBasketWithAllBooks(request);
+		HashSet<Book> basketMain = Shop.getBasket(request);
 		BigDecimal price = toCalculate(basket);
 
 		model.addAttribute("price", price);
@@ -39,9 +39,9 @@ public class Basket {
 	@RequestMapping(value = "delete", method = RequestMethod.GET)
 	public RedirectView deleteItemFromBasket(@RequestParam("id") Long id, @RequestParam("number") int number,
 			HttpServletRequest request, Model model) {
-		LinkedList<Books> basketWithAllBooks = Shop.getBasketWithAllBooks(request);
-		HashSet<Books> basket = Shop.getBasket(request);
-		Books book = RepositoriesAccess.booksRepository.findById(id);
+		LinkedList<Book> basketWithAllBooks = Shop.getBasketWithAllBooks(request);
+		HashSet<Book> basket = Shop.getBasket(request);
+		Book book = RepositoriesAccess.booksRepository.findById(id);
 
 		if (book == null)
 			return new RedirectView(ApplicationConfig.PROJECT_NAME + "shop/basket");
@@ -50,7 +50,7 @@ public class Basket {
 		int howMany = 1;
 		int howManyBooks = 0;
 
-		for (Books x : basketWithAllBooks)
+		for (Book x : basketWithAllBooks)
 			if (x.getId() == book.getId())
 				howManyBooks++;
 
@@ -66,12 +66,12 @@ public class Basket {
 				}
 			}
 
-		for (Books x : basketWithAllBooks)
+		for (Book x : basketWithAllBooks)
 			if (book.getId() == x.getId())
 				is = true;
 
 		if (!is)
-			for (Books x : basket) {
+			for (Book x : basket) {
 				if (x.getId() == book.getId()) {
 					basket.remove(x);
 					break;
@@ -88,7 +88,7 @@ public class Basket {
 
 	@RequestMapping(value = "continue", method = RequestMethod.GET)
 	public String goToAcceptOrder(Model model, HttpServletRequest request) {
-		LinkedList<Books> basket = Shop.getBasketWithAllBooks(request);
+		LinkedList<Book> basket = Shop.getBasketWithAllBooks(request);
 		EnumPayments[] kindOfPayment = EnumPayments.values();
 		String[] paymentName = new String[kindOfPayment.length];
 		int i = 0;
@@ -106,15 +106,15 @@ public class Basket {
 		if (SecurityContextHolder.getContext().getAuthentication().getPrincipal().equals("anonymousUser"))
 			return "shop/options/anonymousUserOrder";
 
-		Users user = RepositoriesAccess.usersRepository
+		User user = RepositoriesAccess.usersRepository
 				.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
 		model.addAttribute("user", user);
 		return "shop/options/userOrder";
 	}
 
-	public static BigDecimal toCalculate(LinkedList<Books> basket) {
+	public static BigDecimal toCalculate(LinkedList<Book> basket) {
 		BigDecimal price = new BigDecimal("0");
-		for (Books x : basket)
+		for (Book x : basket)
 			if (x.getPrice() != null)
 				price = x.getPrice().add(price);
 		return price;

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.shop.data.tables.Address;
 import com.shop.data.tables.UserRole;
-import com.shop.data.tables.Users;
+import com.shop.data.tables.User;
 import com.shop.others.RepositoriesAccess;
 
 @Controller
@@ -19,7 +19,7 @@ public class ReadUsers {
 
 	@RequestMapping(value = "read", method = RequestMethod.GET)
 	public String readSite(Model model, HttpServletRequest request) {
-		Iterable<Users> users = RepositoriesAccess.usersRepository.findAll();
+		Iterable<User> users = RepositoriesAccess.usersRepository.findAll();
 		Iterable<UserRole> roles = RepositoriesAccess.userRolesRepository.findAll();
 		Iterable<Address> address = RepositoriesAccess.addressRepository.findAll();
 
@@ -31,7 +31,7 @@ public class ReadUsers {
 
 	@RequestMapping(value = "read", method = RequestMethod.POST)
 	public String readOne(@RequestParam("login") String login, Model model) {
-		Users users = RepositoriesAccess.usersRepository.findByLogin(login);
+		User users = RepositoriesAccess.usersRepository.findByLogin(login);
 		Iterable<UserRole> roles = RepositoriesAccess.userRolesRepository.findAll();
 
 		if (users == null) {

@@ -11,16 +11,16 @@ import javax.persistence.Table;
 public class Address {
 	@Id
 	@GeneratedValue
-	@Column(name = "address_id")
+	@Column(name = "id")
 	private Long id;
 
-	@Column(name = "address_street")
+	@Column(name = "street")
 	private String street;
-	@Column(name = "address_postal_code")
+	@Column(name = "postal_code")
 	private String postalCode;
-	@Column(name = "address_city")
+	@Column(name = "city")
 	private String city;
-	@Column(name = "address_country")
+	@Column(name = "country")
 	private String country;
 
 	public Address() {
@@ -28,7 +28,6 @@ public class Address {
 	}
 
 	public Address(String street, String postalCode, String city, String country) {
-		super();
 		this.street = street;
 		this.postalCode = postalCode;
 		this.setCity(city);

@@ -13,19 +13,19 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.shop.data.tables.Address;
 import com.shop.data.tables.UserRole;
-import com.shop.data.tables.Users;
+import com.shop.data.tables.User;
 import com.shop.others.RepositoriesAccess;
 import com.shop.services.CustomUserDetails;
 
 public class UserDAO {
 	public static Authentication login(String login, String password) {
-		Users admin = RepositoriesAccess.usersRepository.findByLogin(login);
+		User admin = RepositoriesAccess.usersRepository.findByLogin(login);
 		Iterable<UserRole> found = RepositoriesAccess.userRolesRepository.findAll();
 		List<String> userRoles = new ArrayList<>();
 
 		for (UserRole x : found)
-			for (Iterator<Users> iterator = x.getUser().iterator(); iterator.hasNext();) {
-				Users a = iterator.next();
+			for (Iterator<User> iterator = x.getUser().iterator(); iterator.hasNext();) {
+				User a = iterator.next();
 				if (a.getId() == admin.getId()) {
 					userRoles.add(x.getRole());
 				}
@@ -46,8 +46,8 @@ public class UserDAO {
 	}
 
 	public static boolean isUser(String login, String password) {
-		Iterable<Users> u = RepositoriesAccess.usersRepository.findAll();
-		for (Users x : u)
+		Iterable<User> u = RepositoriesAccess.usersRepository.findAll();
+		for (User x : u)
 			if (x.getLogin().equals(login) && x.getPassword().equals(password))
 				return true;
 		return false;
@@ -55,7 +55,7 @@ public class UserDAO {
 
 	public static void register(String login, String password, String eMail, String name, String surname, String street,
 			String country, String city, String postalCode, String date) {
-		Users user = new Users();
+		User user = new User();
 		user.setLogin(login);
 		user.setPassword(password);
 		user.seteMail(eMail);

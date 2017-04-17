@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.shop.data.tables.CouponCodes;
+import com.shop.data.tables.CouponCode;
 import com.shop.others.RepositoriesAccess;
 
 @Controller
@@ -22,15 +22,15 @@ public class CreateCouponCodes {
 	public String create(@RequestParam("codeDiscount") String codeDiscount, @RequestParam("code") String code,
 			Model model) {
 
-		CouponCodes couponCodeFound = RepositoriesAccess.couponCodesRepository.findByCode(code);
-		Iterable<CouponCodes> couponCodes = RepositoriesAccess.couponCodesRepository.findAll();
+		CouponCode couponCodeFound = RepositoriesAccess.couponCodesRepository.findByCode(code);
+		Iterable<CouponCode> couponCodes = RepositoriesAccess.couponCodesRepository.findAll();
 
 		if (couponCodeFound != null) {
 			model.addAttribute("msgError", "couponCode already exist");
 			model.addAttribute("couponCodes", couponCodes);
 			return "administratorSite/couponCodesManager/create";
 		}
-		CouponCodes couponCode = new CouponCodes(Double.parseDouble(codeDiscount), code);
+		CouponCode couponCode = new CouponCode(Double.parseDouble(codeDiscount), code);
 
 		RepositoriesAccess.couponCodesRepository.save(couponCode);
 		model.addAttribute("msgSuccess", "success");

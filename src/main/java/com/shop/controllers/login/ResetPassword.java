@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.shop.data.tables.Users;
+import com.shop.data.tables.User;
 import com.shop.others.RepositoriesAccess;
 
 @Controller
@@ -21,7 +21,7 @@ public class ResetPassword {
 		String eMail = (String) request.getSession().getAttribute("email");
 
 		if ((boolean) request.getSession().getAttribute("authorize") == true) {
-			Users user = RepositoriesAccess.usersRepository.findByeMail(eMail);
+			User user = RepositoriesAccess.usersRepository.findByeMail(eMail);
 			user.setPassword(password);
 			RepositoriesAccess.usersRepository.save(user);
 

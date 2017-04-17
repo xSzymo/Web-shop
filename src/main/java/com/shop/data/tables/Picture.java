@@ -8,38 +8,35 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "product_pictures")
-public class Pictures {
+public class Picture {
 	@Id
 	@GeneratedValue
-	@Column(name = "picture_id")
+	@Column(name = "id")
 	private Long id;
 
-	@Column(name = "product_picture_name")
+	@Column(name = "name")
 	private String name;
-	@Column(name = "product_picture_path", nullable = true)
+	@Column(name = "path", nullable = true)
 	private String path;
-	@Column(name = "product_picture_file_type")
+	@Column(name = "file_type")
 	private String fileType;
 
-	public Pictures() {
+	public Picture() {
 
 	}
-	
-	public Pictures(String name, String path ) {
-		super();
+
+	public Picture(String name, String path) {
 		this.name = name;
 		this.path = path;
 	}
 
-	public Pictures(String name, String path, String fileType) {
-		super();
+	public Picture(String name, String path, String fileType) {
 		this.name = name;
 		this.path = path;
 		this.fileType = fileType;
 	}
 
-	public Pictures(Long id, String name, String path, String fileType) {
-		super();
+	public Picture(Long id, String name, String path, String fileType) {
 		this.id = id;
 		this.name = name;
 		this.path = path;

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.shop.data.tables.Categories;
+import com.shop.data.tables.Category;
 import com.shop.others.RepositoriesAccess;
 
 @Controller
@@ -17,7 +17,7 @@ public class ReadCategories {
 
 	@RequestMapping(value = "read", method = RequestMethod.GET)
 	public String readSite(Model model, HttpServletRequest request) {
-		Iterable<Categories> categories = RepositoriesAccess.categoriesRepository.findAll();
+		Iterable<Category> categories = RepositoriesAccess.categoriesRepository.findAll();
 
 		model.addAttribute("categories", categories);
 		return "administratorSite/categoriesManager/read";
@@ -25,8 +25,8 @@ public class ReadCategories {
 
 	@RequestMapping(value = "read", method = RequestMethod.POST)
 	public String readOne(@RequestParam("name") String name, Model model) {
-		Iterable<Categories> categories = RepositoriesAccess.categoriesRepository.findAll();
-		Categories category = RepositoriesAccess.categoriesRepository.findByName(name);
+		Iterable<Category> categories = RepositoriesAccess.categoriesRepository.findAll();
+		Category category = RepositoriesAccess.categoriesRepository.findByName(name);
 
 		if (category == null) {
 			model.addAttribute("msg", "not found");

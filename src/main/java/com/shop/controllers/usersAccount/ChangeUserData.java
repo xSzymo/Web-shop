@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.shop.data.tables.Users;
+import com.shop.data.tables.User;
 import com.shop.others.RepositoriesAccess;
 import com.shop.others.email.SendEmailUserAccount;
 
@@ -39,8 +39,8 @@ public class ChangeUserData {
 	public String accepNewEmail(@RequestParam("eMail") String eMail, @RequestParam("code") String code, Model model,
 			HttpServletRequest request) {
 		if (request.getSession().getAttribute("code").equals(code)) {
-			Users user1 = (Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			Users user = RepositoriesAccess.usersRepository.findByLogin(user1.getLogin());
+			User user1 = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			User user = RepositoriesAccess.usersRepository.findByLogin(user1.getLogin());
 			user.seteMail(eMail);
 			RepositoriesAccess.usersRepository.save(user);
 			request.getSession().removeAttribute("code");

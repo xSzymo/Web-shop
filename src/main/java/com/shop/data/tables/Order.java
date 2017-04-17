@@ -19,16 +19,16 @@ import com.shop.data.enums.EnumPayments;
 
 @Entity
 @Table(name = "orders")
-public class Orders {
+public class Order {
 
 	@Id
 	@GeneratedValue
-	@Column(name = "order_id")
+	@Column(name = "id")
 	private Long id;
 
-	@Column(name = "order_price")
+	@Column(name = "price")
 	private BigDecimal price;
-	@Column(name = "order_payment_method")
+	@Column(name = "payment_method")
 	private EnumPayments paymentMethod;
 	@Column(name = "realized")
 	private boolean realized = false;
@@ -43,24 +43,22 @@ public class Orders {
 
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinColumn(name = "coupon_codes_id")
-	private CouponCodes couponCodes;
+	private CouponCode couponCodes;
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-	@Column(name = "books_id")
-	private Collection<Books> books = new ArrayList<Books>();
+	@Column(name = "book_id")
+	private Collection<Book> books = new ArrayList<Book>();
 
-	public Orders() {
+	public Order() {
 	}
 	
-	public Orders(BigDecimal price, boolean realized) {
-		super();
+	public Order(BigDecimal price, boolean realized) {
 		this.price = price;
 		this.realized = realized;
 	}
 
-	public Orders(BigDecimal price, EnumPayments paymentMethod, Address shippingAddressId, Address billingAddressId,
-			CouponCodes couponCodes) {
-		super();
+	public Order(BigDecimal price, EnumPayments paymentMethod, Address shippingAddressId, Address billingAddressId,
+			CouponCode couponCodes) {
 		this.price = price;
 		this.paymentMethod = paymentMethod;
 		this.shippingAddress = shippingAddressId;
@@ -68,9 +66,8 @@ public class Orders {
 		this.couponCodes = couponCodes;
 	}
 
-	public Orders(BigDecimal price, EnumPayments paymentMethod, Address shippingAddressId, Address billingAddressId,
-			CouponCodes couponCodes, Collection<Books> books) {
-		super();
+	public Order(BigDecimal price, EnumPayments paymentMethod, Address shippingAddressId, Address billingAddressId,
+			CouponCode couponCodes, Collection<Book> books) {
 		this.price = price;
 		this.paymentMethod = paymentMethod;
 		this.shippingAddress = shippingAddressId;
@@ -79,8 +76,8 @@ public class Orders {
 		this.books = books;
 	}
 
-	public Orders(Long id, BigDecimal price, EnumPayments paymentMethod, Address shippingAddressId,
-			Address billingAddressId, CouponCodes couponCodes, Collection<Books> books) {
+	public Order(Long id, BigDecimal price, EnumPayments paymentMethod, Address shippingAddressId,
+			Address billingAddressId, CouponCode couponCodes, Collection<Book> books) {
 		this.id = id;
 		this.price = price;
 		this.paymentMethod = paymentMethod;
@@ -90,7 +87,7 @@ public class Orders {
 		this.books = books;
 	}
 	
-	public Orders(Long id, BigDecimal price, boolean realized, Collection<Books> books) {
+	public Order(Long id, BigDecimal price, boolean realized, Collection<Book> books) {
 		this.id = id;
 		this.price = price;
 		this.realized = realized;
@@ -143,19 +140,19 @@ public class Orders {
 		this.billingAddress = billingAddressId;
 	}
 
-	public CouponCodes getCouponCodes() {
+	public CouponCode getCouponCodes() {
 		return this.couponCodes;
 	}
 
-	public void setCouponCodes(CouponCodes couponCodes) {
+	public void setCouponCodes(CouponCode couponCodes) {
 		this.couponCodes = couponCodes;
 	}
 
-	public synchronized Collection<Books> getBooks() {
+	public synchronized Collection<Book> getBooks() {
 		return this.books;
 	}
 
-	public void setBooks(Collection<Books> books) {
+	public void setBooks(Collection<Book> books) {
 		this.books = books;
 	}
 

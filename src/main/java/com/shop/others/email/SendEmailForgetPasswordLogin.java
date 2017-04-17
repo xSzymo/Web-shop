@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.shop.configuration.ApplicationConfig;
-import com.shop.data.tables.Users;
+import com.shop.data.tables.User;
 import com.shop.others.RepositoriesAccess;
 
 @Controller
@@ -64,7 +64,7 @@ public class SendEmailForgetPasswordLogin {
 			model.addAttribute("msg", "Wrong e-mail");
 			return "loginAndRegistration/reset/forgotUsername";
 		}
-		Users user = RepositoriesAccess.usersRepository.findByeMail(email);
+		User user = RepositoriesAccess.usersRepository.findByeMail(email);
 
 		try {
 			Session session = EmailActions.authorizeWebShopEmail();

@@ -15,35 +15,34 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "categories")
-public class Categories {
+public class Category {
 
 	@Id
 	@GeneratedValue
-	@Column(name = "category_id")
+	@Column(name = "id")
 	private Long id;
 
-	@Column(name = "category_name")
+	@Column(name = "name")
 	private String name;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "categories_id") // here sssss
-	private Collection<Books> books = new LinkedHashSet<Books>();
+	private Collection<Book> books = new LinkedHashSet<Book>();
 
-	public Categories() {
-		books = new LinkedHashSet<Books>();
+	public Category() {
+		books = new LinkedHashSet<Book>();
 	}
 
-	public Categories(String name) {
+	public Category(String name) {
 		this.name = name;
 	}
 
-	public Categories(String name, Collection<Books> books) {
-		super();
+	public Category(String name, Collection<Book> books) {
 		this.name = name;
 		this.books = books;
 	}
 
-	public Categories(Long id, String name, Collection<Books> books) {
+	public Category(Long id, String name, Collection<Book> books) {
 		this.id = id;
 		this.name = name;
 		this.books = books;
@@ -70,11 +69,11 @@ public class Categories {
 		this.name = name;
 	}
 
-	public synchronized Collection<Books> getBooks() {
+	public synchronized Collection<Book> getBooks() {
 		return books;
 	}
 
-	public void setBooks(Collection<Books> books) {
+	public void setBooks(Collection<Book> books) {
 		this.books = books;
 	}
 }

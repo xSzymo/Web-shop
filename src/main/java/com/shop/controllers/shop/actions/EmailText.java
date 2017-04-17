@@ -4,16 +4,16 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 
 import com.shop.data.enums.EnumPayments;
-import com.shop.data.tables.Books;
+import com.shop.data.tables.Book;
 
 public class EmailText {
 	public static String textFromAnonymous(BigDecimal price, EnumPayments paymentType, String shippingAddressStreet, String shippingAddressPostalCode, 
 			String shippingAddressCity, String shippingAddressCountry, String billingAddressStreet, String billingAddressPostalCode, 
-			String billingAddressCity, String billingAddressCountry, HashSet<Books> basket) {
+			String billingAddressCity, String billingAddressCountry, HashSet<Book> basket) {
 		String text = "";
 		text += "Price to pay : " + price + "\n";
 		text += "\nBooks in order :\n";
-		for (Books x : basket)
+		for (Book x : basket)
 			text += "\t " + x.getName() + "\n";
 
 		text += "\nPayment type : ";
@@ -35,12 +35,12 @@ public class EmailText {
 	
 	public static String textFromUser(BigDecimal price, EnumPayments paymentType, String shippingAddressStreet, String shippingAddressPostalCode, 
 			String shippingAddressCity, String shippingAddressCountry, String billingAddressStreet, String billingAddressPostalCode, 
-			String billingAddressCity, String billingAddressCountry, String login, HashSet<Books> basket) {
+			String billingAddressCity, String billingAddressCountry, String login, HashSet<Book> basket) {
 		String text = "";
 		text += "Hello user " + login + "\n\n";
 		text += "Price to pay : " + price + "\n";
 		text += "\nBooks in order :\n";
-		for (Books x : basket)
+		for (Book x : basket)
 			text += "\t " + x.getName() + "\n";
 
 		text += "\nPayment type : ";

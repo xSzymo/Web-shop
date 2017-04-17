@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.shop.data.enums.EnumPayments;
 import com.shop.data.tables.Address;
-import com.shop.data.tables.Books;
-import com.shop.data.tables.CouponCodes;
-import com.shop.data.tables.Orders;
+import com.shop.data.tables.Book;
+import com.shop.data.tables.CouponCode;
+import com.shop.data.tables.Order;
 import com.shop.others.RepositoriesAccess;
 
 @Controller
@@ -35,7 +35,7 @@ public class CreateOrders {
 
 		model.addAttribute("books", null);
 
-		Iterable<Books> books = RepositoriesAccess.booksRepository.findAll();
+		Iterable<Book> books = RepositoriesAccess.booksRepository.findAll();
 		model.addAttribute("allBooks", books);
 		return "administratorSite/ordersManager/create";
 	}
@@ -68,10 +68,10 @@ public class CreateOrders {
 
 		// System.out.println(payment);
 
-		Orders order = new Orders();
+		Order order = new Order();
 		Address billingAddress = null;
 		Address shippingAddress = null;
-		CouponCodes couponCodes = null;
+		CouponCode couponCodes = null;
 
 		if (billingAddressId != null)
 			billingAddress = RepositoriesAccess.addressRepository.findById(billingAddressId);
@@ -110,7 +110,7 @@ public class CreateOrders {
 			couponCodes.setCode(couponCode);
 			couponCodes.setCodeDiscount(couponCodeDiscount);
 		} else {
-			couponCodes = new CouponCodes();
+			couponCodes = new CouponCode();
 			couponCodes.setCode(couponCode);
 			couponCodes.setCodeDiscount(couponCodeDiscount);
 		}
@@ -126,7 +126,7 @@ public class CreateOrders {
 		order.setBillingAddress(billingAddress);
 		order.setCouponCodes(couponCodes);
 
-		ArrayList<Books> b = new ArrayList<Books>();
+		ArrayList<Book> b = new ArrayList<Book>();
 
 		if (books != null) {
 			for (int i = 0; i < books.length; i++) {
@@ -173,13 +173,13 @@ public class CreateOrders {
 			Model model, HttpServletRequest request, @RequestParam(name = "books", required = false) String... books) {
 
 		addNeedObjects(model, couponCodeId, billingAddressId, shippingAddressId, books);
-		CouponCodes couponCodeFound = RepositoriesAccess.couponCodesRepository.findByCode(code);
+		CouponCode couponCodeFound = RepositoriesAccess.couponCodesRepository.findByCode(code);
 
 		if (couponCodeFound != null) {
 			model.addAttribute("msgError", "couponCode already exist");
 			return "administratorSite/ordersManager/create";
 		}
-		CouponCodes couponCode = new CouponCodes(Double.parseDouble(codeDiscount), code);
+		CouponCode couponCode = new CouponCode(Double.parseDouble(codeDiscount), code);
 
 		RepositoriesAccess.couponCodesRepository.save(couponCode);
 		model.addAttribute("couponCode", couponCode);
@@ -191,11 +191,11 @@ public class CreateOrders {
 	public String createBook(@RequestParam("billingAddress") Long billingAddressId,
 			@RequestParam("shippingAddress") Long shippingAddressId, @RequestParam("couponCodeId") Long couponCodeId,
 			Model model, HttpServletRequest request) {
-		Iterable<Books> books = RepositoriesAccess.booksRepository.findAll();
-		LinkedList<Books> chosenBooks = new LinkedList<Books>();
+		Iterable<Book> books = RepositoriesAccess.booksRepository.findAll();
+		LinkedList<Book> chosenBooks = new LinkedList<Book>();
 		chosenBooks.clear();
 
-		for (Books x : books)
+		for (Book x : books)
 			if (request.getParameter(x.getName()) != null)
 				chosenBooks.add(x);
 
@@ -212,7 +212,7 @@ public class CreateOrders {
 	public void addNeedObjects(Model model, Long couponCodeId, Long billingAddressId, Long shippingAddressId,
 			String[] bookNames) {
 		if ((couponCodeId != null)) {
-			CouponCodes couponCode = RepositoriesAccess.couponCodesRepository.findById(couponCodeId);
+			CouponCode couponCode = RepositoriesAccess.couponCodesRepository.findById(couponCodeId);
 			model.addAttribute("couponCode", couponCode);
 		}
 		if ((billingAddressId != null)) {
@@ -233,7 +233,7 @@ public class CreateOrders {
 		model.addAttribute("payments", paymentName);
 		model.addAttribute("books", bookNames);
 
-		Iterable<Books> books = RepositoriesAccess.booksRepository.findAll();
+		Iterable<Book> books = RepositoriesAccess.booksRepository.findAll();
 		model.addAttribute("allBooks", books);
 	}
 }

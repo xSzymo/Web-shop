@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.shop.data.tables.Orders;
+import com.shop.data.tables.Order;
 import com.shop.others.RepositoriesAccess;
 
 @Controller
@@ -16,7 +16,7 @@ public class ReadOrders {
 
 	@RequestMapping(value = "read", method = RequestMethod.GET)
 	public String readSite(Model model, HttpServletRequest request) {
-		Iterable<Orders> orders = RepositoriesAccess.ordersRepository.findAll();
+		Iterable<Order> orders = RepositoriesAccess.ordersRepository.findAll();
 
 		model.addAttribute("orders", orders);
 		return "administratorSite/ordersManager/read";
@@ -24,8 +24,8 @@ public class ReadOrders {
 
 	@RequestMapping(value = "read", method = RequestMethod.POST)
 	public String readOne(@RequestParam("id") String id, Model model) {
-		Iterable<Orders> orders = RepositoriesAccess.ordersRepository.findAll();
-		Orders order = RepositoriesAccess.ordersRepository.findOne(Long.parseLong(id));
+		Iterable<Order> orders = RepositoriesAccess.ordersRepository.findAll();
+		Order order = RepositoriesAccess.ordersRepository.findOne(Long.parseLong(id));
 
 		if (order == null) {
 			model.addAttribute("msg", "not found");

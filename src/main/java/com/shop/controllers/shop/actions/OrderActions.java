@@ -12,10 +12,10 @@ import com.shop.controllers.shop.Basket;
 import com.shop.controllers.shop.Shop;
 import com.shop.data.enums.EnumPayments;
 import com.shop.data.tables.Address;
-import com.shop.data.tables.Books;
-import com.shop.data.tables.CouponCodes;
-import com.shop.data.tables.Orders;
-import com.shop.data.tables.Users;
+import com.shop.data.tables.Book;
+import com.shop.data.tables.CouponCode;
+import com.shop.data.tables.Order;
+import com.shop.data.tables.User;
 import com.shop.others.RepositoriesAccess;
 
 public class OrderActions {
@@ -23,8 +23,8 @@ public class OrderActions {
 			String shippingAddressCity, String shippingAddressCountry, String billingAddressStreet,
 			String billingAddressPostalCode, String billingAddressCity, String billingAddressCountry, Object payment,
 			String couponCode, String eMail, HttpServletRequest request) {
-		LinkedList<Books> secondBasket = Shop.getBasketWithAllBooks(request);
-		HashSet<Books> basket = Shop.getBasket(request);
+		LinkedList<Book> secondBasket = Shop.getBasketWithAllBooks(request);
+		HashSet<Book> basket = Shop.getBasket(request);
 		BigDecimal price = Basket.toCalculate(secondBasket);
 
 		EnumPayments[] kindOfPayment = EnumPayments.values();
@@ -40,13 +40,13 @@ public class OrderActions {
 		RepositoriesAccess.addressRepository.save(shippingAddress);
 		RepositoriesAccess.addressRepository.save(billingAddress);
 
-		CouponCodes coupon = RepositoriesAccess.couponCodesRepository.findByCode(couponCode);
+		CouponCode coupon = RepositoriesAccess.couponCodesRepository.findByCode(couponCode);
 		if (coupon != null)
 			RepositoriesAccess.couponCodesRepository.save(coupon);
 		else
 			coupon = null;
 
-		Orders order = new Orders();
+		Order order = new Order();
 		order.setBillingAddress(shippingAddress);
 		order.setShippingAddress(billingAddress);
 		order.setPaymentMethod(paymentType);
@@ -57,7 +57,7 @@ public class OrderActions {
 		String text = null;
 
 		if (!SecurityContextHolder.getContext().getAuthentication().getName().equals("anonymousUser")) {
-			Users user = RepositoriesAccess.usersRepository
+			User user = RepositoriesAccess.usersRepository
 					.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
 			user.getOrders().add(order);
 			RepositoriesAccess.usersRepository.save(user);

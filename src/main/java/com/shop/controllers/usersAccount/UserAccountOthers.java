@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.shop.controllers.login.Login;
 import com.shop.data.tables.UserRole;
-import com.shop.data.tables.Users;
+import com.shop.data.tables.User;
 import com.shop.others.RepositoriesAccess;
 import com.shop.others.email.SendEmailDeleteAccount;
 
@@ -25,15 +25,15 @@ public class UserAccountOthers {
 
 	@RequestMapping(value = "informations", method = RequestMethod.GET)
 	public String userInformations(Model model) {
-		Users user1 = (Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		Users user = RepositoriesAccess.usersRepository.findByLogin(user1.getLogin());
+		User user1 = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = RepositoriesAccess.usersRepository.findByLogin(user1.getLogin());
 		Iterable<UserRole> found = RepositoriesAccess.userRolesRepository.findAll();
 
 		UserRole ROLEPLAYING = null;
 
 		for (UserRole x : found)
-			for (Iterator<Users> iterator = x.getUser().iterator(); iterator.hasNext();) {
-				Users a = iterator.next();
+			for (Iterator<User> iterator = x.getUser().iterator(); iterator.hasNext();) {
+				User a = iterator.next();
 				if (a.getId() == user.getId()) {
 					ROLEPLAYING = x;
 				}
@@ -47,7 +47,7 @@ public class UserAccountOthers {
 	@RequestMapping(value = "deleteAccount", method = RequestMethod.POST)
 	public String deleteAccount(@RequestParam("password") String password, @RequestParam("password1") String password1,
 			Model model, HttpServletRequest request) {
-		Users user = RepositoriesAccess.usersRepository
+		User user = RepositoriesAccess.usersRepository
 				.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
 		if (password.equals(password1))
 			if (user.getPassword().equals(password))
@@ -62,7 +62,7 @@ public class UserAccountOthers {
 		String login = SecurityContextHolder.getContext().getAuthentication().getName();
 		if (request.getSession().getAttribute("userName").equals(login))
 			if (request.getSession().getAttribute("deleteAccountCode").equals(code)) {
-				Users user = RepositoriesAccess.usersRepository.findByLogin(login);
+				User user = RepositoriesAccess.usersRepository.findByLogin(login);
 				RepositoriesAccess.usersRepository.delete(user.getId());
 			}
 		return Login.logout(request, response, model);

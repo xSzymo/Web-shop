@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.shop.data.tables.Cookies;
-import com.shop.data.tables.Users;
+import com.shop.data.tables.User;
 import com.shop.others.RepositoriesAccess;
 
 import java.time.LocalDateTime;
@@ -56,9 +56,9 @@ public class CookiesDAO {
 		return (foundCookie.getId() != null ? foundCookie.getId() : 0);
 	}
 
-	public static Users findConnectUserWithCookie(Cookies cookie) {
-		Iterable<Users> users = RepositoriesAccess.usersRepository.findAll();
-		for (Users x : users)
+	public static User findConnectUserWithCookie(Cookies cookie) {
+		Iterable<User> users = RepositoriesAccess.usersRepository.findAll();
+		for (User x : users)
 			if (x.getCookieCode().equals(cookie.getValue()))
 				return RepositoriesAccess.usersRepository.findById(x.getId());
 
@@ -68,7 +68,7 @@ public class CookiesDAO {
 	public static boolean checkCookiesExistsAndDeleteIfNo(HttpServletRequest request, HttpServletResponse response) {
 		Cookies a = null;
 		Cookies a1 = null;
-		Users user = null;
+		User user = null;
 
 		for (Cookie x : request.getCookies())
 			if (x.getName().equals("remember"))
@@ -106,7 +106,7 @@ public class CookiesDAO {
 
 		Cookies a = null;
 		Cookies a1 = null;
-		Users user = null;
+		User user = null;
 
 		for (Cookie x : request.getCookies())
 			if (x.getName().equals("remember")) {

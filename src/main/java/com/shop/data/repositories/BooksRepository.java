@@ -2,12 +2,12 @@ package com.shop.data.repositories;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.shop.data.tables.Books;
-import com.shop.data.tables.Pictures;
+import com.shop.data.tables.Book;
+import com.shop.data.tables.Picture;
 
-public interface BooksRepository extends CrudRepository<Books, Long> {
-	public Books findById(Long bookId);
-	public Books findByName(String name);
+public interface BooksRepository extends CrudRepository<Book, Long> {
+	public Book findById(Long bookId);
+	public Book findByName(String name);
 
-	public void save(Pictures picture);
+	public void save(Picture picture);
 }

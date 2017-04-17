@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.shop.configuration.ApplicationConfig;
-import com.shop.data.tables.Books;
-import com.shop.data.tables.Categories;
+import com.shop.data.tables.Book;
+import com.shop.data.tables.Category;
 import com.shop.others.RepositoriesAccess;
 
 @Controller
@@ -24,7 +24,7 @@ public class ShopBookmarkers {
 
 	@RequestMapping(value = "{categoryName}", method = RequestMethod.GET)
 	public String shopBookmarker(@PathVariable String categoryName, Model model) {
-		Categories category = RepositoriesAccess.categoriesRepository.findByName(categoryName);
+		Category category = RepositoriesAccess.categoriesRepository.findByName(categoryName);
 		model.addAttribute("books", category.getBooks());
 		return "shop/categorySite";
 	}
@@ -32,11 +32,11 @@ public class ShopBookmarkers {
 	@RequestMapping(value = "categorySite/{id}", method = RequestMethod.GET)
 	public RedirectView addItemToBasket(@PathVariable Long id, @RequestParam("number") String number,
 			HttpServletRequest request, Model model) {
-		Books book = RepositoriesAccess.booksRepository.findById(id);
-		Iterable<Categories> categories = RepositoriesAccess.categoriesRepository.findAll();
-		Categories category = null;
-		for (Categories x : categories) {
-			for (Books x1 : x.getBooks()) {
+		Book book = RepositoriesAccess.booksRepository.findById(id);
+		Iterable<Category> categories = RepositoriesAccess.categoriesRepository.findAll();
+		Category category = null;
+		for (Category x : categories) {
+			for (Book x1 : x.getBooks()) {
 				if (book.getId() == x1.getId()) {
 					category = x;
 				}
@@ -45,11 +45,11 @@ public class ShopBookmarkers {
 		if (number == null || number.equals(""))
 			return new RedirectView(ApplicationConfig.PROJECT_NAME + "shop/" + category.getName());
 
-		LinkedList<Books> basketWithAllBooks = Shop.getBasketWithAllBooks(request);
-		HashSet<Books> basket = Shop.getBasket(request);
+		LinkedList<Book> basketWithAllBooks = Shop.getBasketWithAllBooks(request);
+		HashSet<Book> basket = Shop.getBasket(request);
 
 		boolean is = false;
-		for (Books x : basket)
+		for (Book x : basket)
 			if (x.getId() == book.getId())
 				is = true;
 

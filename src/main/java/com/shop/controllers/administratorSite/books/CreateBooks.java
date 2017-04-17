@@ -9,9 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import com.shop.data.tables.Books;
-import com.shop.data.tables.Categories;
-import com.shop.data.tables.Pictures;
+import com.shop.data.tables.Book;
+import com.shop.data.tables.Category;
+import com.shop.data.tables.Picture;
 import com.shop.others.RepositoriesAccess;
 
 @Controller
@@ -20,7 +20,7 @@ public class CreateBooks {
 
 	@RequestMapping(value = "create", method = RequestMethod.GET)
 	public String createSite(Model model) {
-		Iterable<Categories> categories = RepositoriesAccess.categoriesRepository.findAll();
+		Iterable<Category> categories = RepositoriesAccess.categoriesRepository.findAll();
 		model.addAttribute("categories", categories);
 
 		return "administratorSite/booksCRUD/create";
@@ -32,13 +32,13 @@ public class CreateBooks {
 			@RequestParam("price") String price, @RequestParam("pictureName") String pictureName, Model model,
 			HttpServletRequest request) {
 
-		Iterable<Categories> categories = RepositoriesAccess.categoriesRepository.findAll();
+		Iterable<Category> categories = RepositoriesAccess.categoriesRepository.findAll();
 		model.addAttribute("categories", categories);
 
 		String categoryName = null;
 		boolean moreThanOne = false;
 
-		for (Categories x : categories) {
+		for (Category x : categories) {
 			if (request.getParameter(x.getName()) != null) {
 				categoryName = x.getName();
 
@@ -54,13 +54,13 @@ public class CreateBooks {
 			return "administratorSite/booksCRUD/create";
 		}
 
-		Categories category = RepositoriesAccess.categoriesRepository.findByName(categoryName);
-		Pictures picture = RepositoriesAccess.picturesRepository.findByName(pictureName);
+		Category category = RepositoriesAccess.categoriesRepository.findByName(categoryName);
+		Picture picture = RepositoriesAccess.picturesRepository.findByName(pictureName);
 
 		if (picture == null) {
 			model.addAttribute("msgError", "No category and picture(optional) found");
 		}
-		Books book = new Books(name, author, langauge, description, new BigDecimal(price));
+		Book book = new Book(name, author, langauge, description, new BigDecimal(price));
 		book.getPictures().add(picture);
 		RepositoriesAccess.booksRepository.save(book);
 		category.getBooks().add(book);

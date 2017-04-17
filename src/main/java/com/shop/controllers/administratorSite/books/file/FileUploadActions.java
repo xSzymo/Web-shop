@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.shop.configuration.ApplicationConfig;
-import com.shop.data.tables.Pictures;
+import com.shop.data.tables.Picture;
 import com.shop.others.RepositoriesAccess;
 
 @Controller
@@ -36,7 +36,7 @@ public class FileUploadActions {
 
 	public static void deletePicture(String name) {
 		try {
-			Pictures picture = RepositoriesAccess.picturesRepository.findByName(name);
+			Picture picture = RepositoriesAccess.picturesRepository.findByName(name);
 			if (picture != null)
 				RepositoriesAccess.picturesRepository.delete(picture.getId());
 

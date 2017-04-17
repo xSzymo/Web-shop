@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.shop.configuration.ApplicationConfig;
-import com.shop.data.tables.Categories;
-import com.shop.data.tables.Pictures;
+import com.shop.data.tables.Category;
+import com.shop.data.tables.Picture;
 import com.shop.others.RepositoriesAccess;
 
 /*
@@ -32,10 +32,10 @@ public class FileUploadOnCreateSite {
 	public String uploadFileHandlerPicture(@RequestParam(name = "name") String name,
 			@RequestParam("file") MultipartFile file, Model model) {
 
-		Iterable<Categories> categories = RepositoriesAccess.categoriesRepository.findAll();
+		Iterable<Category> categories = RepositoriesAccess.categoriesRepository.findAll();
 		model.addAttribute("categories", categories);
 
-		Pictures found = RepositoriesAccess.picturesRepository.findByName(name);
+		Picture found = RepositoriesAccess.picturesRepository.findByName(name);
 
 		if (found != null) {
 			model.addAttribute("msg", "This picture already exist");
@@ -58,7 +58,7 @@ public class FileUploadOnCreateSite {
 				stream.write(bytes);
 				stream.close();
 
-				Pictures picture = new Pictures();
+				Picture picture = new Picture();
 				picture.setName(name);
 				picture.setPath(dir.getPath());
 				RepositoriesAccess.picturesRepository.save(picture);
@@ -83,10 +83,10 @@ public class FileUploadOnCreateSite {
 	public String uploadFileHandlerLink(@RequestParam(name = "name") String name, @RequestParam("link") String link,
 			Model model) throws IOException {
 
-		Iterable<Categories> categories = RepositoriesAccess.categoriesRepository.findAll();
+		Iterable<Category> categories = RepositoriesAccess.categoriesRepository.findAll();
 		model.addAttribute("categories", categories);
 
-		Pictures found = RepositoriesAccess.picturesRepository.findByName(name);
+		Picture found = RepositoriesAccess.picturesRepository.findByName(name);
 
 		if (found != null) {
 			model.addAttribute("msgLink", "This picture already exist");
@@ -100,7 +100,7 @@ public class FileUploadOnCreateSite {
 			return "administratorSite/booksCRUD/create";
 		}
 
-		Pictures picture = new Pictures(name, new File(ApplicationConfig.PICTURE_PATH).getAbsolutePath() + File.separator + name);
+		Picture picture = new Picture(name, new File(ApplicationConfig.PICTURE_PATH).getAbsolutePath() + File.separator + name);
 		RepositoriesAccess.picturesRepository.save(picture);
 
 		model.addAttribute("pictureLinkName", name);

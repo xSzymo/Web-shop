@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.shop.data.operations.UserDAO;
 import com.shop.data.tables.Address;
 import com.shop.data.tables.UserRole;
-import com.shop.data.tables.Users;
+import com.shop.data.tables.User;
 import com.shop.others.RepositoriesAccess;
 
 @Controller
@@ -30,7 +30,7 @@ public class CreateUsers {
 			@RequestParam("name") String name, @RequestParam("surname") String surname,
 			@RequestParam("date") String date, @RequestParam("eMail") String eMail,
 			@RequestParam("address") Long addressId, Model model, HttpServletRequest request) {
-		Users foundUser = RepositoriesAccess.usersRepository.findByLogin(login);
+		User foundUser = RepositoriesAccess.usersRepository.findByLogin(login);
 
 		Address address = null;
 		if (addressId != null)
@@ -47,7 +47,7 @@ public class CreateUsers {
 			model.addAttribute("msgError", "Wrong login");
 			return "administratorSite/usersManager/create";
 		}
-		Users user = new Users(login, password, name, surname, eMail);
+		User user = new User(login, password, name, surname, eMail);
 		if(date.equals(""))
 			user.setAge(0);
 		else
@@ -80,11 +80,11 @@ public class CreateUsers {
 		return "administratorSite/usersManager/create";
 	}
 
-	public void addUserWithRoles(String role, Users user) {
+	public void addUserWithRoles(String role, User user) {
 		Iterable<UserRole> users = RepositoriesAccess.userRolesRepository.findAll();
 		for (UserRole x : users)
 			if (x.getRole().equals(role)) {
-				for (Users x1 : x.getUser()) {
+				for (User x1 : x.getUser()) {
 					if (x1.getId() == user.getId()) {
 						RepositoriesAccess.usersRepository.save(user);
 						return;

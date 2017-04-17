@@ -10,8 +10,8 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import com.shop.configuration.ApplicationConfig;
 import com.shop.data.tables.Address;
-import com.shop.data.tables.Orders;
-import com.shop.data.tables.Users;
+import com.shop.data.tables.Order;
+import com.shop.data.tables.User;
 import com.shop.others.RepositoriesAccess;
 
 @Controller
@@ -31,23 +31,23 @@ public class DeleteAddress {
 		Address address = RepositoriesAccess.addressRepository.findById(id);
 
 		if (address != null) {
-			Iterable<Orders> orders = RepositoriesAccess.ordersRepository.findAll();
-			Iterable<Users> users = RepositoriesAccess.usersRepository.findAll();
+			Iterable<Order> orders = RepositoriesAccess.ordersRepository.findAll();
+			Iterable<User> users = RepositoriesAccess.usersRepository.findAll();
 
-			for (Orders x : orders)
+			for (Order x : orders)
 				if (x.getBillingAddress() != null)
 					if (x.getBillingAddress().getId() == address.getId()) {
 						x.setBillingAddress(null);
 						RepositoriesAccess.ordersRepository.save(x);
 					}
 
-			for (Orders x : orders)
+			for (Order x : orders)
 				if (x.getShippingAddress() != null)
 					if (x.getShippingAddress().getId() == address.getId()) {
 						x.setShippingAddress(null);
 						RepositoriesAccess.ordersRepository.save(x);
 					}
-			for (Users x : users)
+			for (User x : users)
 				if (x.getAddress() != null)
 					if (x.getAddress().getId() == address.getId()) {
 						x.setAddress(null);
@@ -67,24 +67,24 @@ public class DeleteAddress {
 		Address address = RepositoriesAccess.addressRepository.findById(id);
 
 		if (address != null) {
-			Iterable<Orders> orders = RepositoriesAccess.ordersRepository.findAll();
-			Iterable<Users> users = RepositoriesAccess.usersRepository.findAll();
+			Iterable<Order> orders = RepositoriesAccess.ordersRepository.findAll();
+			Iterable<User> users = RepositoriesAccess.usersRepository.findAll();
 
-			for (Orders x : orders)
+			for (Order x : orders)
 				if (x.getBillingAddress() != null)
 					if (x.getBillingAddress().getId() == address.getId()) {
 						x.setBillingAddress(null);
 						RepositoriesAccess.ordersRepository.save(x);
 					}
 
-			for (Orders x : orders)
+			for (Order x : orders)
 				if (x.getShippingAddress() != null)
 					if (x.getShippingAddress().getId() == address.getId()) {
 						x.setShippingAddress(null);
 						RepositoriesAccess.ordersRepository.save(x);
 					}
 
-			for (Users x : users)
+			for (User x : users)
 				if (x.getAddress() != null)
 					if (x.getAddress().getId() == address.getId()) {
 						x.setAddress(null);

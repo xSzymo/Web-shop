@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.shop.data.tables.Categories;
+import com.shop.data.tables.Category;
 import com.shop.others.RepositoriesAccess;
 
 @Controller
@@ -16,7 +16,7 @@ public class UpdateCategories {
 
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
 	public String updateSite(Model model) {
-		Iterable<Categories> categories = RepositoriesAccess.categoriesRepository.findAll();
+		Iterable<Category> categories = RepositoriesAccess.categoriesRepository.findAll();
 
 		model.addAttribute("categories", categories);
 		return "administratorSite/categoriesManager/update";
@@ -24,7 +24,7 @@ public class UpdateCategories {
 
 	@RequestMapping(value = "update/{id}", method = RequestMethod.GET)
 	public String updateOneSite(@PathVariable Long id, Model model) {
-		Categories categoryFound = RepositoriesAccess.categoriesRepository.findById(id);
+		Category categoryFound = RepositoriesAccess.categoriesRepository.findById(id);
 
 		if (categoryFound == null)
 			model.addAttribute("msg", "not found");
@@ -37,7 +37,7 @@ public class UpdateCategories {
 	
 	public String update(@RequestParam("id") String id, @RequestParam("name") String name, Model model) {
 
-		Categories category = RepositoriesAccess.categoriesRepository.findById(Long.parseLong(id));
+		Category category = RepositoriesAccess.categoriesRepository.findById(Long.parseLong(id));
 
 		if (category == null) {
 			model.addAttribute("msg", "not found category to update");

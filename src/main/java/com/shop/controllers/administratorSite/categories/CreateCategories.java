@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.shop.data.tables.Categories;
+import com.shop.data.tables.Category;
 import com.shop.others.RepositoriesAccess;
 
 @Controller
@@ -21,12 +21,12 @@ public class CreateCategories {
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public String create(@RequestParam("name") String name, Model model) {
 
-		Categories categories = RepositoriesAccess.categoriesRepository.findByName(name);
+		Category categories = RepositoriesAccess.categoriesRepository.findByName(name);
 
 		if (categories != null)
 			model.addAttribute("msgError", "Category already exist");
 
-		Categories category = new Categories(name);
+		Category category = new Category(name);
 
 		RepositoriesAccess.categoriesRepository.save(category);
 		model.addAttribute("msgSuccess", "success");

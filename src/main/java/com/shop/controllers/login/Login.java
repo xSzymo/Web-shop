@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.shop.data.operations.CookiesDAO;
 import com.shop.data.operations.UserDAO;
 import com.shop.data.tables.Cookies;
-import com.shop.data.tables.Users;
+import com.shop.data.tables.User;
 import com.shop.others.RepositoriesAccess;
 
 @Controller("log")
@@ -98,9 +98,9 @@ public class Login {
 			return "loginAndRegistration/registration";
 		}
 
-		Iterable<Users> users = RepositoriesAccess.usersRepository.findAll();
+		Iterable<User> users = RepositoriesAccess.usersRepository.findAll();
 
-		for (Users x : users) {
+		for (User x : users) {
 			if (x.getLogin() != null)
 				if (x.getLogin().equals(login)) {
 					model.addAttribute("msg", "That user name allready exist  !");
@@ -126,7 +126,7 @@ public class Login {
 				continue;
 			if (x.getName().equals("remember")) {
 				Cookies cookie = RepositoriesAccess.cookiesRepository.findByName(x.getValue());
-				Users user = CookiesDAO.findConnectUserWithCookie(cookie);
+				User user = CookiesDAO.findConnectUserWithCookie(cookie);
 				user.setCookieCode(null);
 				RepositoriesAccess.usersRepository.save(user);
 				RepositoriesAccess.cookiesRepository

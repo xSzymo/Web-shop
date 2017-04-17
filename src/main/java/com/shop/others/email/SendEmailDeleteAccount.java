@@ -13,11 +13,11 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Component;
 
 import com.shop.configuration.ApplicationConfig;
-import com.shop.data.tables.Users;
+import com.shop.data.tables.User;
 
 @Component
 public class SendEmailDeleteAccount {
-	public static String sendCode(Users user, HttpServletRequest request) {
+	public static String sendCode(User user, HttpServletRequest request) {
 		try {
 			Session session = EmailActions.authorizeWebShopEmail();
 

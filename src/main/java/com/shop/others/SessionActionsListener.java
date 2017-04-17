@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.shop.configuration.ApplicationConfig;
-import com.shop.data.tables.Books;
+import com.shop.data.tables.Book;
 
 @Component
 public class SessionActionsListener implements javax.servlet.http.HttpSessionListener, ApplicationContextAware {
@@ -28,8 +28,8 @@ public class SessionActionsListener implements javax.servlet.http.HttpSessionLis
 
 	@Override
 	public void sessionCreated(HttpSessionEvent session) {
-		HashSet<Books> shopBasket = new HashSet<Books>();
-		LinkedList<Books> shopBasketUno = new LinkedList<Books>();
+		HashSet<Book> shopBasket = new HashSet<Book>();
+		LinkedList<Book> shopBasketUno = new LinkedList<Book>();
 
 		session.getSession().setAttribute("basket", shopBasket);
 		session.getSession().setAttribute("basketWithAllBooks", shopBasketUno);

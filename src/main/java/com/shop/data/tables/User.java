@@ -7,22 +7,22 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "users")
-public class Users {
+public class User {
 
 	@Id
 	@GeneratedValue
-	@Column(name = "user_id")
+	@Column(name = "id")
 	private Long id;
 
-	@Column(name = "user_login")
+	@Column(name = "login")
 	private String login;
-	@Column(name = "user_password")
+	@Column(name = "password")
 	private String password;
-	@Column(name = "user_name")
+	@Column(name = "name")
 	private String name;
-	@Column(name = "user_surname")
+	@Column(name = "surname")
 	private String surname;
-	@Column(name = "user_e_mail")
+	@Column(name = "e_mail")
 	private String eMail;
 	@Column(name = "age")
 	private int age;
@@ -35,21 +35,20 @@ public class Users {
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id")
-	private Collection<Orders> orders = new LinkedHashSet<Orders>();
+	private Collection<Order> orders = new LinkedHashSet<Order>();
 
-	public Users() {
+	public User() {
 
 	}
 
-	public Users(String login, String password, String eMail) {
-		super();
+	public User(String login, String password, String eMail) {
 		this.login = login;
 		this.password = password;
 		this.eMail = eMail;
 	}
 
-	public Users(String login, String password, String name, String surname, String eMail, int old,
-			boolean isAdmin, Address address, Collection<Orders> orders) {
+	public User(String login, String password, String name, String surname, String eMail, int old, boolean isAdmin,
+			Address address, Collection<Order> orders) {
 		this.login = login;
 		this.password = password;
 		this.name = name;
@@ -60,7 +59,7 @@ public class Users {
 		this.setOrders(orders);
 	}
 
-	public Users(Users user) {
+	public User(User user) {
 		this.login = user.login;
 		this.password = user.password;
 		this.name = user.name;
@@ -71,8 +70,7 @@ public class Users {
 		this.setOrders(user.orders);
 	}
 
-	public Users(String login, String password, String name, String surname, String eMail) {
-		super();
+	public User(String login, String password, String name, String surname, String eMail) {
 		this.login = login;
 		this.password = password;
 		this.name = name;
@@ -147,11 +145,11 @@ public class Users {
 		this.address = address;
 	}
 
-	public Collection<Orders> getOrders() {
+	public Collection<Order> getOrders() {
 		return orders;
 	}
 
-	public void setOrders(Collection<Orders> orders) {
+	public void setOrders(Collection<Order> orders) {
 		this.orders = orders;
 	}
 

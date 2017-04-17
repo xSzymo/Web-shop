@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.shop.data.operations.UserDAO;
 import com.shop.data.tables.Address;
 import com.shop.data.tables.UserRole;
-import com.shop.data.tables.Users;
+import com.shop.data.tables.User;
 import com.shop.others.RepositoriesAccess;
 
 @Controller
@@ -21,7 +21,7 @@ public class UpdateUsers {
 
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
 	public String update(Model model) {
-		Iterable<Users> users = RepositoriesAccess.usersRepository.findAll();
+		Iterable<User> users = RepositoriesAccess.usersRepository.findAll();
 		Iterable<UserRole> roles = RepositoriesAccess.userRolesRepository.findAll();
 		Iterable<Address> address = RepositoriesAccess.addressRepository.findAll();
 
@@ -33,7 +33,7 @@ public class UpdateUsers {
 
 	@RequestMapping(value = "update/{id}", method = RequestMethod.GET)
 	public String updateBook(@PathVariable Long id, Model model, HttpServletRequest request) {
-		Users foundUser = RepositoriesAccess.usersRepository.findById(id);
+		User foundUser = RepositoriesAccess.usersRepository.findById(id);
 
 		if (foundUser == null)
 			model.addAttribute("msg", "not found");
@@ -53,7 +53,7 @@ public class UpdateUsers {
 
 		if (addressId != null)
 			address = RepositoriesAccess.addressRepository.findById(addressId);
-		Users foundUser = RepositoriesAccess.usersRepository.findById(Long.parseLong(id));
+		User foundUser = RepositoriesAccess.usersRepository.findById(Long.parseLong(id));
 
 		if (foundUser == null) {
 			model.addAttribute("book", foundUser);
@@ -94,7 +94,7 @@ public class UpdateUsers {
 	public String createAddress(@RequestParam("street") String street, @RequestParam("postalCode") String postalCode,
 			@RequestParam("city") String city, @RequestParam("country") String country,
 			@RequestParam("userId") Long userId, Model model) {
-		Users user = RepositoriesAccess.usersRepository.findOne(userId);
+		User user = RepositoriesAccess.usersRepository.findOne(userId);
 		Address address = new Address(street, postalCode, city, country);
 
 		RepositoriesAccess.addressRepository.save(address);
@@ -104,12 +104,12 @@ public class UpdateUsers {
 		return "/administratorSite/usersManager/updateOneUser";
 	}
 
-	public void addUserWithRoles(String role, Users user) {
+	public void addUserWithRoles(String role, User user) {
 		Iterable<UserRole> users = RepositoriesAccess.userRolesRepository.findAll();
 
 		for (UserRole x : users)
 			if (x.getRole().equals(role)) {
-				for (Users x1 : x.getUser()) {
+				for (User x1 : x.getUser()) {
 					if (x1.getId() == user.getId()) {
 						RepositoriesAccess.usersRepository.save(user);
 						return;

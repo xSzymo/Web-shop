@@ -16,9 +16,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shop.configuration.ApplicationConfig;
-import com.shop.data.tables.Books;
-import com.shop.data.tables.Categories;
-import com.shop.data.tables.Pictures;
+import com.shop.data.tables.Book;
+import com.shop.data.tables.Category;
+import com.shop.data.tables.Picture;
 import com.shop.others.RepositoriesAccess;
 
 /*
@@ -34,11 +34,11 @@ public class FileUploadOnUpdateSite {
 	public ModelAndView uploadFileHandlerLinkWithId(@RequestParam(name = "bookId") Long id,
 			@RequestParam(name = "name") String name, @RequestParam("link") String link, Model model,
 			RedirectAttributes redir) throws IOException {
-		Iterable<Categories> categories = RepositoriesAccess.categoriesRepository.findAll();
+		Iterable<Category> categories = RepositoriesAccess.categoriesRepository.findAll();
 		model.addAttribute("categories", categories);
 
-		Pictures found = RepositoriesAccess.picturesRepository.findByName(name);
-		Books foundBook = RepositoriesAccess.booksRepository.findById(id);
+		Picture found = RepositoriesAccess.picturesRepository.findByName(name);
+		Book foundBook = RepositoriesAccess.booksRepository.findById(id);
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("redirect:http://localhost:8080" + ApplicationConfig.PROJECT_NAME + "administratorSite/books/update/" + id);
 
@@ -55,7 +55,7 @@ public class FileUploadOnUpdateSite {
 			return modelAndView;
 		}
 
-		Pictures picture = new Pictures(name, new File(ApplicationConfig.PICTURE_PATH).getAbsolutePath() + File.separator + name);
+		Picture picture = new Picture(name, new File(ApplicationConfig.PICTURE_PATH).getAbsolutePath() + File.separator + name);
 		foundBook.getPictures().add(picture);
 		RepositoriesAccess.booksRepository.save(foundBook);
 
@@ -68,11 +68,11 @@ public class FileUploadOnUpdateSite {
 	public ModelAndView uploadFileHandlerPictureId(@RequestParam(name = "bookId") Long id,
 			@RequestParam(name = "name") String name, @RequestParam("file") MultipartFile file, Model model,
 			RedirectAttributes redir) {
-		Iterable<Categories> categories = RepositoriesAccess.categoriesRepository.findAll();
+		Iterable<Category> categories = RepositoriesAccess.categoriesRepository.findAll();
 		model.addAttribute("categories", categories);
 
-		Pictures found = RepositoriesAccess.picturesRepository.findByName(name);
-		Books foundBook = RepositoriesAccess.booksRepository.findById(id);
+		Picture found = RepositoriesAccess.picturesRepository.findByName(name);
+		Book foundBook = RepositoriesAccess.booksRepository.findById(id);
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("redirect:http://localhost:8080" + ApplicationConfig.PROJECT_NAME + "administratorSite/books/update/" + id);
 
@@ -100,7 +100,7 @@ public class FileUploadOnUpdateSite {
 				stream.write(bytes);
 				stream.close();
 
-				Pictures picture = new Pictures();
+				Picture picture = new Picture();
 				picture.setName(name);
 				picture.setPath(dir.getPath());
 

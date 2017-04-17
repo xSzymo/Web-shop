@@ -8,27 +8,27 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "coupon_codes")
-public class CouponCodes {
+public class CouponCode {
 	@Id
 	@GeneratedValue
-	@Column(name = "coupon_codes_id")
+	@Column(name = "codes_id")
 	private Long id;
 
-	@Column(name = "coupon_code_discount")
+	@Column(name = "discount")
 	private double codeDiscount;
-	@Column(name = "coupon_code")
+	@Column(name = "code")
 	private String code;
 
-	public CouponCodes() {
+	public CouponCode() {
 
 	}
 
-	public CouponCodes(double codeDiscount, String code) {
+	public CouponCode(double codeDiscount, String code) {
 		this.codeDiscount = codeDiscount;
 		this.code = code;
 	}
 
-	public CouponCodes(Long id, double codeDiscount, String code) {
+	public CouponCode(Long id, double codeDiscount, String code) {
 		this.id = id;
 		this.codeDiscount = codeDiscount;
 		this.code = code;

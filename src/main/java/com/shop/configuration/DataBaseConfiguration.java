@@ -41,6 +41,8 @@ public class DataBaseConfiguration {
 
 	@Bean
 	public DataSource dataSource() {
+		if(ApplicationConfig.USE_APPLICATION_PROPERTIES_DATA)
+			new ApplicationPropertiesInitializer();
 		MysqlDataSource dataSource = new MysqlDataSource();
 		dataSource.setServerName("localhost");
 		dataSource.setPort(3306);

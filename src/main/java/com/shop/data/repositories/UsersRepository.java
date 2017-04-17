@@ -1,12 +1,12 @@
 package com.shop.data.repositories;
 
 import org.springframework.data.repository.CrudRepository;
-import com.shop.data.tables.Users;
+import com.shop.data.tables.User;
 
-public interface UsersRepository extends CrudRepository<Users, Long> {
-	public Users findByLogin(String login);
+public interface UsersRepository extends CrudRepository<User, Long> {
+	public User findByLogin(String login);
 
-	public Users findByeMail(String email);
+	public User findByeMail(String email);
 
-	public Users findById(Long bookId);
+	public User findById(Long bookId);
 }

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.shop.controllers.shop.actions.OrderActions;
-import com.shop.data.tables.Users;
+import com.shop.data.tables.User;
 import com.shop.others.RepositoriesAccess;
 import com.shop.others.email.SendEmailUserAccount;
 
@@ -35,7 +35,7 @@ public class AcceptOrder {
 			@RequestParam("couponCode") String couponCode, @RequestParam("email") String email,
 			@RequestParam("payment") Object payment) {
 
-		Users user = RepositoriesAccess.usersRepository
+		User user = RepositoriesAccess.usersRepository
 				.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
 
 		String text = OrderActions.saveOrderAndReturnMessage(shippingAddressStreet, shippingAddressPostalCode, shippingAddressCity,

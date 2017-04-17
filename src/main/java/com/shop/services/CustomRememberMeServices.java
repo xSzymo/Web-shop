@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import com.shop.data.operations.CookiesDAO;
 import com.shop.data.operations.UserDAO;
 import com.shop.data.tables.Cookies;
-import com.shop.data.tables.Users;
+import com.shop.data.tables.User;
 import com.shop.others.Coder;
 import com.shop.others.RepositoriesAccess;
 
@@ -28,7 +28,7 @@ public class CustomRememberMeServices implements RememberMeServices {
 		
 		Cookies a = null;
 		Cookies a1 = null;
-		Users user = null;
+		User user = null;
 
 		if (request.getCookies().length < 2)
 			return null;
@@ -58,7 +58,7 @@ public class CustomRememberMeServices implements RememberMeServices {
 	public void loginSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication successfulAuthentication) {
 
-		Users user = RepositoriesAccess.usersRepository
+		User user = RepositoriesAccess.usersRepository
 				.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
 
 		if (request.getCookies().length > 1)

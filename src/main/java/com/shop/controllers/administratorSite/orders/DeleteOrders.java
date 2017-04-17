@@ -10,7 +10,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.shop.configuration.ApplicationConfig;
-import com.shop.data.tables.Orders;
+import com.shop.data.tables.Order;
 import com.shop.others.RepositoriesAccess;
 
 @Controller
@@ -19,7 +19,7 @@ public class DeleteOrders {
 
 	@RequestMapping(value = "delete", method = RequestMethod.GET)
 	public String deleteSite(Model model) {
-		Iterable<Orders> orders = RepositoriesAccess.ordersRepository.findAll();
+		Iterable<Order> orders = RepositoriesAccess.ordersRepository.findAll();
 
 		model.addAttribute("orders", orders);
 		return "administratorSite/ordersManager/delete";
@@ -27,7 +27,7 @@ public class DeleteOrders {
 
 	@RequestMapping(value = "delete/{id}", method = RequestMethod.POST)
 	public RedirectView deleteFromButton(@PathVariable Long id, Model model, RedirectAttributes red) {
-		Orders foundOrder = RepositoriesAccess.ordersRepository.findById(id);
+		Order foundOrder = RepositoriesAccess.ordersRepository.findById(id);
 
 		if (foundOrder == null)
 			red.addFlashAttribute("msg", "not found");
@@ -35,7 +35,7 @@ public class DeleteOrders {
 			RepositoriesAccess.ordersRepository.delete(foundOrder);
 			red.addFlashAttribute("msg", "Succes");
 		}
-		Iterable<Orders> orders = RepositoriesAccess.ordersRepository.findAll();
+		Iterable<Order> orders = RepositoriesAccess.ordersRepository.findAll();
 		model.addAttribute("orders", orders);
 
 		return new RedirectView(ApplicationConfig.PROJECT_NAME + "administratorSite/orders/delete");
@@ -43,7 +43,7 @@ public class DeleteOrders {
 
 	@RequestMapping(value = "delete", method = RequestMethod.POST)
 	public String deleteFromInputText(@RequestParam("id") String id, Model model) {
-		Orders foundOrder = RepositoriesAccess.ordersRepository.findById(Long.parseLong(id));
+		Order foundOrder = RepositoriesAccess.ordersRepository.findById(Long.parseLong(id));
 
 		if (foundOrder == null)
 			model.addAttribute("msg", "not found");
@@ -52,7 +52,7 @@ public class DeleteOrders {
 			model.addAttribute("msg", "Succes");
 		}
 
-		Iterable<Orders> orders = RepositoriesAccess.ordersRepository.findAll();
+		Iterable<Order> orders = RepositoriesAccess.ordersRepository.findAll();
 		model.addAttribute("orders", orders);
 		return "/administratorSite/ordersManager/delete";
 	}

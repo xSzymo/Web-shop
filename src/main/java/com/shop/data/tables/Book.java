@@ -16,39 +16,37 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "books")
-public class Books {
+public class Book {
 
 	@Id
 	@GeneratedValue
-	@Column(name = "book_id")
+	@Column(name = "id")
 	private Long id;
 
-	@Column(name = "book_name")
+	@Column(name = "name")
 	private String name;
-	@Column(name = "book_author")
+	@Column(name = "author")
 	private String author;
-	@Column(name = "book_language")
+	@Column(name = "language")
 	private String language;
-	@Column(name = "book_description", length = 512)
+	@Column(name = "description", length = 512)
 	private String description;
-	@Column(name = "book_price")
+	@Column(name = "price")
 	private BigDecimal price;
 	
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-	@JoinColumn(name = "book_id")
-	private Collection<Pictures> pictures = new LinkedList<Pictures>();
+	@JoinColumn(name = "books_id")
+	private Collection<Picture> pictures = new LinkedList<Picture>();
 	
-	public Books() {
+	public Book() {
 		
 	}
 	
-	public Books(String name) {
-		super();
+	public Book(String name) {
 		this.name = name;
 	}
 	
-	public Books(String name, String author, String language, String description, BigDecimal price) {
-		super();
+	public Book(String name, String author, String language, String description, BigDecimal price) {
 		this.name = name;
 		this.author = author;
 		this.language = language;
@@ -56,9 +54,8 @@ public class Books {
 		this.price = price;
 	}
 
-	public Books(String name, String author, String language, String description, BigDecimal price,
-			Collection<Pictures> pictures) {
-		super();
+	public Book(String name, String author, String language, String description, BigDecimal price,
+			Collection<Picture> pictures) {
 		this.name = name;
 		this.author = author;
 		this.language = language;
@@ -67,8 +64,8 @@ public class Books {
 		this.pictures = pictures;
 	}
 
-	public Books(Long id, String name, String author, String language, String description, BigDecimal price,
-			Collection<Pictures> pictures) {
+	public Book(Long id, String name, String author, String language, String description, BigDecimal price,
+			Collection<Picture> pictures) {
 		this.id = id;
 		this.name = name;
 		this.author = author;
@@ -132,11 +129,11 @@ public class Books {
 		this.price = price;
 	}
 
-	public Collection<Pictures> getPictures() {
+	public Collection<Picture> getPictures() {
 		return pictures;
 	}
 
-	public void setPictures(Collection<Pictures> pictures) {
+	public void setPictures(Collection<Picture> pictures) {
 		this.pictures = pictures;
 	}
 }

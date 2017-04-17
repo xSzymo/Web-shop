@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.shop.data.tables.Address;
-import com.shop.data.tables.Users;
+import com.shop.data.tables.User;
 import com.shop.others.RepositoriesAccess;
 
 @Controller
@@ -23,8 +23,8 @@ public class UpdateUserData {
 			@RequestParam("street") String street, @RequestParam("postalCode") String postalCode,
 			@RequestParam("city") String city, @RequestParam("country") String country, Model model,
 			HttpServletRequest request) {
-		Users user1 = (Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		Users user = RepositoriesAccess.usersRepository.findByLogin(user1.getLogin());
+		User user1 = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = RepositoriesAccess.usersRepository.findByLogin(user1.getLogin());
 		Address address = null;
 
 		if (addressId != null)
@@ -53,8 +53,8 @@ public class UpdateUserData {
 	@RequestMapping(value = "createAddress", method = RequestMethod.POST)
 	public String createAddress(@RequestParam("street") String street, @RequestParam("postalCode") String postalCode,
 			@RequestParam("city") String city, @RequestParam("country") String country, Model model) {
-		Users user1 = (Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		Users user = RepositoriesAccess.usersRepository.findByLogin(user1.getLogin());
+		User user1 = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = RepositoriesAccess.usersRepository.findByLogin(user1.getLogin());
 		Address address = new Address(street, postalCode, city, country);
 
 		RepositoriesAccess.addressRepository.save(address);
