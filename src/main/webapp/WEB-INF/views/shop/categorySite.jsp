@@ -18,7 +18,7 @@
 	<center>
 			
 			<c:forEach items="${books}" var="book">
-			<table border="0" width="13%">
+			<table border="0" width="20%">
 			--------------------------------------------<br>
 			
 			<tr><c:out value="Name : ${book.name}" /><br></tr>

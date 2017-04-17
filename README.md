@@ -55,3 +55,5 @@ mvn tomcat7:run
 ```
 
 default access on ``` http://localhost:8080/WebShop/ ```
+Edit ApplicationConfig in com.shop.configuration before you start.
+

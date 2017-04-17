@@ -42,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.and()
 		.formLogin().loginPage("/login")
 		.and()
-		.rememberMe().rememberMeServices(rememberMeService)
+		.rememberMe()//.rememberMeServices(rememberMeService)
 		.and()
 		.logout().logoutSuccessUrl("/shop").logoutUrl("/logout")
 		.and()

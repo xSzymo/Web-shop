@@ -9,6 +9,11 @@ import javax.mail.Session;
 
 import com.shop.configuration.ApplicationConfig;
 
+
+/*
+ * Author : Cheok Yan Cheng
+ * source : http://stackoverflow.com/questions/14939607/java-to-send-an-email-via-gmail
+ */
 public class EmailActions {
 	public static Session authorizeWebShopEmail() throws MessagingException {
 		Session session = null;

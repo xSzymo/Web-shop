@@ -26,6 +26,7 @@ public class Shop {
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String start(HttpServletRequest request, HttpServletResponse response, Model model) {
+
 		if (request.getRequestedSessionId() != null)
 			rememberMeService.autoLogin(request, response);
 

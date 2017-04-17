@@ -21,6 +21,10 @@ import com.shop.data.tables.Categories;
 import com.shop.data.tables.Pictures;
 import com.shop.others.RepositoriesAccess;
 
+/*
+ * Author : sahil0021
+ * source : http://stackoverflow.com/questions/34389180/how-to-upload-file-in-server-using-springs
+ */
 @Controller
 @RequestMapping("administratorSite/books")
 public class FileUploadOnUpdateSite {

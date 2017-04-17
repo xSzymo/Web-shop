@@ -19,6 +19,7 @@ public class ApplicationConfig {
 	
 	/*
 	 * Shop email address
+	 * Use gmail
 	 */
 	public static final String SHOP_EMAIL = "examplewebshop@gmail.com";
 	
