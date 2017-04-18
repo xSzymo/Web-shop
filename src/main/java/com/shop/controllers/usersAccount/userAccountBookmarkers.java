@@ -6,7 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.shop.data.tables.Users;
+import com.shop.data.tables.User;
 import com.shop.others.RepositoriesAccess;
 
 @Controller
@@ -26,7 +26,7 @@ public class UserAccountBookmarkers {
 
 	@RequestMapping(value = "orders", method = RequestMethod.GET)
 	public String ordesBookmarker(Model model) {
-		Users user = (Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
 		model.addAttribute("orders", user.getOrders());
 		return "userAccount/options/orders";
@@ -34,8 +34,8 @@ public class UserAccountBookmarkers {
 
 	@RequestMapping(value = "changeData", method = RequestMethod.GET)
 	public String changeDataBookmarker(Model model) {
-		Users user1 = (Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		Users user = RepositoriesAccess.usersRepository.findByLogin(user1.getLogin());
+		User user1 = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = RepositoriesAccess.usersRepository.findByLogin(user1.getLogin());
 
 		model.addAttribute("user", user);
 		return "userAccount/options/changeData";
@@ -43,7 +43,7 @@ public class UserAccountBookmarkers {
 
 	@RequestMapping(value = "changeEmail", method = RequestMethod.GET)
 	public String changeEmailBookmarker(Model model) {
-		Users user = (Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
 		model.addAttribute("user", user);
 		return "userAccount/options/changeEmail";
@@ -51,7 +51,7 @@ public class UserAccountBookmarkers {
 
 	@RequestMapping(value = "changePasswd", method = RequestMethod.GET)
 	public String changePasswordBookmarker(Model model) {
-		Users user = (Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
 		model.addAttribute("user", user);
 		return "userAccount/options/changePassword";
