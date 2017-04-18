@@ -11,7 +11,7 @@ import com.shop.others.RepositoriesAccess;
 
 @Controller
 @RequestMapping("/account")
-public class UserAccountBookmarkers {
+public class userAccountBookmarkers {
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String start(Model model) {
