@@ -70,10 +70,13 @@ public class CookiesDAO {
 		Cookies a1 = null;
 		User user = null;
 
-		for (Cookie x : request.getCookies())
-			if (x.getName().equals("remember"))
-				a = RepositoriesAccess.cookiesRepository.findByValue(x.getValue());
-
+		try {
+			for (Cookie x : request.getCookies())
+				if (x.getName().equals("remember"))
+					a = RepositoriesAccess.cookiesRepository.findByValue(x.getValue());
+		} catch(NullPointerException e) {
+			return false;
+		}
 		if (a != null)
 			for (Cookie x : request.getCookies())
 				if (x.getName().equals(a.getValue()))
