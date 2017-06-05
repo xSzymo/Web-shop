@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping("administratorSite/couponCodes")
 public class CouponCodesSite {
-	
-	@RequestMapping(value = "", method = RequestMethod.GET)
-	public String start() {
-		return "administratorSite/couponCodesStartPage";
-	}
+
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public String start() {
+        return "administratorSite/couponCodesStartPage";
+    }
 }

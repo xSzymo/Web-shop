@@ -1,37 +1,36 @@
 package com.shop.controllers.administratorSite.couponCodes;
 
-import javax.servlet.http.HttpServletRequest;
-
+import com.shop.data.tables.CouponCode;
+import com.shop.others.RepositoriesAccess;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.shop.data.tables.CouponCode;
-import com.shop.others.RepositoriesAccess;
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("administratorSite/couponCodes")
 public class ReadCouponCodes {
 
-	@RequestMapping(value = "read", method = RequestMethod.GET)
-	public String readSite(Model model, HttpServletRequest request) {
-		Iterable<CouponCode> couponCodes = RepositoriesAccess.couponCodesRepository.findAll();
+    @RequestMapping(value = "read", method = RequestMethod.GET)
+    public String readSite(Model model, HttpServletRequest request) {
+        Iterable<CouponCode> couponCodes = RepositoriesAccess.couponCodesRepository.findAll();
 
-		model.addAttribute("couponCodes", couponCodes);
-		return "administratorSite/couponCodesManager/read";
-	}
+        model.addAttribute("couponCodes", couponCodes);
+        return "administratorSite/couponCodesManager/read";
+    }
 
-	@RequestMapping(value = "read", method = RequestMethod.POST)
-	public String readOne(@RequestParam("id") String id, Model model) {
-		CouponCode couponCode = RepositoriesAccess.couponCodesRepository.findById(Long.parseLong(id));
+    @RequestMapping(value = "read", method = RequestMethod.POST)
+    public String readOne(@RequestParam("id") String id, Model model) {
+        CouponCode couponCode = RepositoriesAccess.couponCodesRepository.findById(Long.parseLong(id));
 
-		if (couponCode == null) {
-			model.addAttribute("msg", "not found");
-			return "administratorSite/couponCodesManager/read";
-		}
-		model.addAttribute("couponCode", couponCode);
-		return "administratorSite/couponCodesManager/read";
-	}
+        if (couponCode == null) {
+            model.addAttribute("msg", "not found");
+            return "administratorSite/couponCodesManager/read";
+        }
+        model.addAttribute("couponCode", couponCode);
+        return "administratorSite/couponCodesManager/read";
+    }
 }

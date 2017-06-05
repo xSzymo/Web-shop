@@ -1,11 +1,10 @@
 package com.shop.data.repositories;
 
-import org.springframework.data.repository.CrudRepository;
-
 import com.shop.data.tables.Address;
+import org.springframework.data.repository.CrudRepository;
 
 public interface AdressRepository extends CrudRepository<Address, Long> {
 
-	Address findById(long parseLong);
+    Address findById(long parseLong);
 
 }

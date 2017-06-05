@@ -1,166 +1,156 @@
 package com.shop.data.tables;
 
+import com.shop.data.enums.EnumPayments;
+
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-
-import com.shop.data.enums.EnumPayments;
 
 @Entity
 @Table(name = "orders")
 public class Order {
 
-	@Id
-	@GeneratedValue
-	@Column(name = "id")
-	private Long id;
+    @Id
+    @GeneratedValue
+    @Column(name = "id")
+    private Long id;
 
-	@Column(name = "price")
-	private BigDecimal price;
-	@Column(name = "payment_method")
-	private EnumPayments paymentMethod;
-	@Column(name = "realized")
-	private boolean realized = false;
+    @Column(name = "price")
+    private BigDecimal price;
+    @Column(name = "payment_method")
+    private EnumPayments paymentMethod;
+    @Column(name = "realized")
+    private boolean realized = false;
 
-	@OneToOne
-	@JoinColumn(name = "shipping_address_id")
-	private Address shippingAddress;
+    @OneToOne
+    @JoinColumn(name = "shipping_address_id")
+    private Address shippingAddress;
 
-	@OneToOne
-	@JoinColumn(name = "billing_address_id")
-	private Address billingAddress;
+    @OneToOne
+    @JoinColumn(name = "billing_address_id")
+    private Address billingAddress;
 
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-	@JoinColumn(name = "coupon_codes_id")
-	private CouponCode couponCodes;
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "coupon_codes_id")
+    private CouponCode couponCodes;
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-	@Column(name = "book_id")
-	private Collection<Book> books = new ArrayList<Book>();
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @Column(name = "book_id")
+    private Collection<Book> books = new ArrayList<Book>();
 
-	public Order() {
-	}
-	
-	public Order(BigDecimal price, boolean realized) {
-		this.price = price;
-		this.realized = realized;
-	}
+    public Order() {
+    }
 
-	public Order(BigDecimal price, EnumPayments paymentMethod, Address shippingAddressId, Address billingAddressId,
-			CouponCode couponCodes) {
-		this.price = price;
-		this.paymentMethod = paymentMethod;
-		this.shippingAddress = shippingAddressId;
-		this.billingAddress = billingAddressId;
-		this.couponCodes = couponCodes;
-	}
+    public Order(BigDecimal price, boolean realized) {
+        this.price = price;
+        this.realized = realized;
+    }
 
-	public Order(BigDecimal price, EnumPayments paymentMethod, Address shippingAddressId, Address billingAddressId,
-			CouponCode couponCodes, Collection<Book> books) {
-		this.price = price;
-		this.paymentMethod = paymentMethod;
-		this.shippingAddress = shippingAddressId;
-		this.billingAddress = billingAddressId;
-		this.couponCodes = couponCodes;
-		this.books = books;
-	}
+    public Order(BigDecimal price, EnumPayments paymentMethod, Address shippingAddressId, Address billingAddressId,
+                 CouponCode couponCodes) {
+        this.price = price;
+        this.paymentMethod = paymentMethod;
+        this.shippingAddress = shippingAddressId;
+        this.billingAddress = billingAddressId;
+        this.couponCodes = couponCodes;
+    }
 
-	public Order(Long id, BigDecimal price, EnumPayments paymentMethod, Address shippingAddressId,
-			Address billingAddressId, CouponCode couponCodes, Collection<Book> books) {
-		this.id = id;
-		this.price = price;
-		this.paymentMethod = paymentMethod;
-		this.shippingAddress = shippingAddressId;
-		this.billingAddress = billingAddressId;
-		this.couponCodes = couponCodes;
-		this.books = books;
-	}
-	
-	public Order(Long id, BigDecimal price, boolean realized, Collection<Book> books) {
-		this.id = id;
-		this.price = price;
-		this.realized = realized;
-		this.books = books;
-	}
+    public Order(BigDecimal price, EnumPayments paymentMethod, Address shippingAddressId, Address billingAddressId,
+                 CouponCode couponCodes, Collection<Book> books) {
+        this.price = price;
+        this.paymentMethod = paymentMethod;
+        this.shippingAddress = shippingAddressId;
+        this.billingAddress = billingAddressId;
+        this.couponCodes = couponCodes;
+        this.books = books;
+    }
 
-	@Override
-	public String toString() {
-		return "Orders [id=" + id + ", price=" + price + ", paymentMethod=" + paymentMethod + ", shippingAddressId="
-				+ shippingAddress + ", billingAddressId=" + billingAddress + ", couponCodes=" + couponCodes				+ ", books=" + books + "]";
-	}
+    public Order(Long id, BigDecimal price, EnumPayments paymentMethod, Address shippingAddressId,
+                 Address billingAddressId, CouponCode couponCodes, Collection<Book> books) {
+        this.id = id;
+        this.price = price;
+        this.paymentMethod = paymentMethod;
+        this.shippingAddress = shippingAddressId;
+        this.billingAddress = billingAddressId;
+        this.couponCodes = couponCodes;
+        this.books = books;
+    }
 
-	public Long getId() {
-		return this.id;
-	}
+    public Order(Long id, BigDecimal price, boolean realized, Collection<Book> books) {
+        this.id = id;
+        this.price = price;
+        this.realized = realized;
+        this.books = books;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    @Override
+    public String toString() {
+        return "Orders [id=" + id + ", price=" + price + ", paymentMethod=" + paymentMethod + ", shippingAddressId="
+                + shippingAddress + ", billingAddressId=" + billingAddress + ", couponCodes=" + couponCodes + ", books=" + books + "]";
+    }
 
-	public BigDecimal getPrice() {
-		return this.price;
-	}
+    public Long getId() {
+        return this.id;
+    }
 
-	public void setPrice(BigDecimal price) {
-		this.price = price;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public EnumPayments getPaymentMethod() {
-		return this.paymentMethod;
-	}
+    public BigDecimal getPrice() {
+        return this.price;
+    }
 
-	public void setPaymentMethod(EnumPayments paymentMethod) {
-		this.paymentMethod = paymentMethod;
-	}
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
 
-	public Address getShippingAddress() {
-		return this.shippingAddress;
-	}
+    public EnumPayments getPaymentMethod() {
+        return this.paymentMethod;
+    }
 
-	public void setShippingAddress(Address shippingAddressId) {
-		this.shippingAddress = shippingAddressId;
-	}
+    public void setPaymentMethod(EnumPayments paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
 
-	public Address getBillingAddress() {
-		return this.billingAddress;
-	}
+    public Address getShippingAddress() {
+        return this.shippingAddress;
+    }
 
-	public void setBillingAddress(Address billingAddressId) {
-		this.billingAddress = billingAddressId;
-	}
+    public void setShippingAddress(Address shippingAddressId) {
+        this.shippingAddress = shippingAddressId;
+    }
 
-	public CouponCode getCouponCodes() {
-		return this.couponCodes;
-	}
+    public Address getBillingAddress() {
+        return this.billingAddress;
+    }
 
-	public void setCouponCodes(CouponCode couponCodes) {
-		this.couponCodes = couponCodes;
-	}
+    public void setBillingAddress(Address billingAddressId) {
+        this.billingAddress = billingAddressId;
+    }
 
-	public synchronized Collection<Book> getBooks() {
-		return this.books;
-	}
+    public CouponCode getCouponCodes() {
+        return this.couponCodes;
+    }
 
-	public void setBooks(Collection<Book> books) {
-		this.books = books;
-	}
+    public void setCouponCodes(CouponCode couponCodes) {
+        this.couponCodes = couponCodes;
+    }
 
-	public boolean getIsRealized() {
-		return this.realized;
-	}
+    public synchronized Collection<Book> getBooks() {
+        return this.books;
+    }
 
-	public void setRealized(boolean realized) {
-		this.realized = realized;
-	}
+    public void setBooks(Collection<Book> books) {
+        this.books = books;
+    }
+
+    public boolean getIsRealized() {
+        return this.realized;
+    }
+
+    public void setRealized(boolean realized) {
+        this.realized = realized;
+    }
 }

@@ -1,79 +1,70 @@
 package com.shop.data.tables;
 
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.LinkedHashSet;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 @Entity
 @Table(name = "categories")
 public class Category {
 
-	@Id
-	@GeneratedValue
-	@Column(name = "id")
-	private Long id;
+    @Id
+    @GeneratedValue
+    @Column(name = "id")
+    private Long id;
 
-	@Column(name = "name")
-	private String name;
+    @Column(name = "name")
+    private String name;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "categories_id") // here sssss
-	private Collection<Book> books = new LinkedHashSet<Book>();
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "categories_id") // here sssss
+    private Collection<Book> books = new LinkedHashSet<Book>();
 
-	public Category() {
-		books = new LinkedHashSet<Book>();
-	}
+    public Category() {
+        books = new LinkedHashSet<Book>();
+    }
 
-	public Category(String name) {
-		this.name = name;
-	}
+    public Category(String name) {
+        this.name = name;
+    }
 
-	public Category(String name, Collection<Book> books) {
-		this.name = name;
-		this.books = books;
-	}
+    public Category(String name, Collection<Book> books) {
+        this.name = name;
+        this.books = books;
+    }
 
-	public Category(Long id, String name, Collection<Book> books) {
-		this.id = id;
-		this.name = name;
-		this.books = books;
-	}
+    public Category(Long id, String name, Collection<Book> books) {
+        this.id = id;
+        this.name = name;
+        this.books = books;
+    }
 
-	@Override
-	public String toString() {
-		return "Categories [id=" + id + ", name=" + name + ", books=" + books + "]";
-	}
+    @Override
+    public String toString() {
+        return "Categories [id=" + id + ", name=" + name + ", books=" + books + "]";
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public synchronized Collection<Book> getBooks() {
-		return books;
-	}
+    public synchronized Collection<Book> getBooks() {
+        return books;
+    }
 
-	public void setBooks(Collection<Book> books) {
-		this.books = books;
-	}
+    public void setBooks(Collection<Book> books) {
+        this.books = books;
+    }
 }

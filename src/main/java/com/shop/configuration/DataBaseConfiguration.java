@@ -1,7 +1,5 @@
 package com.shop.configuration;
 
-import java.util.Properties;
-
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -15,51 +13,52 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+import java.util.Properties;
 
 @EnableJpaRepositories("com")
 @ComponentScan("com")
 @Configuration
 public class DataBaseConfiguration {
 
-	@Bean
-	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-		LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
-		factoryBean.setDataSource(dataSource());
-		factoryBean.setPackagesToScan("com");
-		factoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
-		factoryBean.setJpaProperties(getJpaProperties());
-		return factoryBean;
-	}
+    @Bean
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+        LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
+        factoryBean.setDataSource(dataSource());
+        factoryBean.setPackagesToScan("com");
+        factoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
+        factoryBean.setJpaProperties(getJpaProperties());
+        return factoryBean;
+    }
 
-	@Bean
-	public Properties getJpaProperties() {
-		Properties properties = new Properties();
-		properties.setProperty("hibernate.hbm2ddl.auto", "create");
-		properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
-		return properties;
-	}
+    @Bean
+    public Properties getJpaProperties() {
+        Properties properties = new Properties();
+        properties.setProperty("hibernate.hbm2ddl.auto", "create");
+        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
+        return properties;
+    }
 
-	@Bean
-	public DataSource dataSource() {
-		if(ApplicationConfig.USE_APPLICATION_PROPERTIES_DATA)
-			new ApplicationPropertiesInitializer();
-		MysqlDataSource dataSource = new MysqlDataSource();
-		dataSource.setServerName("localhost");
-		dataSource.setPort(3306);
-		dataSource.setDatabaseName(ApplicationConfig.DATABASE_NAME);
-		dataSource.setUser(ApplicationConfig.DATABASE_USER_NANE);
-		dataSource.setPassword(ApplicationConfig.DATABASE_USER_PASSWORD);
-		return dataSource;
-	}
+    @Bean
+    public DataSource dataSource() {
+        if (ApplicationConfig.USE_APPLICATION_PROPERTIES_DATA)
+            new ApplicationPropertiesInitializer();
+        MysqlDataSource dataSource = new MysqlDataSource();
+        dataSource.setServerName(ApplicationConfig.SERVER_NAME);
+        dataSource.setPort(Integer.parseInt(ApplicationConfig.PORT));
+        dataSource.setDatabaseName(ApplicationConfig.DATABASE_NAME);
+        dataSource.setUser(ApplicationConfig.DATABASE_USER_NANE);
+        dataSource.setPassword(ApplicationConfig.DATABASE_USER_PASSWORD);
+        return dataSource;
+    }
 
-	@Bean
-	public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
-		return new JpaTransactionManager(entityManagerFactory);
-	}
+    @Bean
+    public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
+        return new JpaTransactionManager(entityManagerFactory);
+    }
 
-	@Bean
-	public PersistenceExceptionTranslationPostProcessor exceptionTranslator() {
-		return new PersistenceExceptionTranslationPostProcessor();
-	}
+    @Bean
+    public PersistenceExceptionTranslationPostProcessor exceptionTranslator() {
+        return new PersistenceExceptionTranslationPostProcessor();
+    }
 
 }

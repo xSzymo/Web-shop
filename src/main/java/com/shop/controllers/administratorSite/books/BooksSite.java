@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("administratorSite/books")
 public class BooksSite {
 
-	@RequestMapping(value = "", method = RequestMethod.GET)
-	public String start() {
-		return "administratorSite/booksStartPage";
-	}
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public String start() {
+        return "administratorSite/booksStartPage";
+    }
 }
