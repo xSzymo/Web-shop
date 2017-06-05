@@ -40,4 +40,6 @@ public class ApplicationConfig {
      * application properties or this.class
      */
     public static boolean USE_APPLICATION_PROPERTIES_DATA = true;
+
+    public static boolean FALSE_WHILE_RUNNING_DB_TESTS = true;
 }
