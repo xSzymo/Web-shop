@@ -33,12 +33,6 @@ public class Category {
         this.books = books;
     }
 
-    public Category(Long id, String name, Collection<Book> books) {
-        this.id = id;
-        this.name = name;
-        this.books = books;
-    }
-
     @Override
     public String toString() {
         return "Categories [id=" + id + ", name=" + name + ", books=" + books + "]";

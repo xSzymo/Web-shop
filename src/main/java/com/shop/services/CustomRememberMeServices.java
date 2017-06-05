@@ -63,8 +63,8 @@ public class CustomRememberMeServices implements RememberMeServices {
         if (request.getCookies().length > 1)
             CookiesDAO.deleteCurrentCookies(request, response);
 
-        String codeCookieWithCookie = Coder.returnCode();
-        String codeCookieWithUser = Coder.returnCode();
+        String codeCookieWithCookie = Coder.getUniqueCode();
+        String codeCookieWithUser = Coder.getUniqueCode();
 
         Cookies mainCookie = new Cookies(codeCookieWithCookie, codeCookieWithUser);
         Cookies rememberMeCookie = new Cookies("remember", codeCookieWithCookie);

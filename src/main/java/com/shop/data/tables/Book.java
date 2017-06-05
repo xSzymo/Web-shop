@@ -10,7 +10,7 @@ import java.util.LinkedList;
 public class Book {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
 
@@ -47,17 +47,6 @@ public class Book {
 
     public Book(String name, String author, String language, String description, BigDecimal price,
                 Collection<Picture> pictures) {
-        this.name = name;
-        this.author = author;
-        this.language = language;
-        this.description = description;
-        this.price = price;
-        this.pictures = pictures;
-    }
-
-    public Book(Long id, String name, String author, String language, String description, BigDecimal price,
-                Collection<Picture> pictures) {
-        this.id = id;
         this.name = name;
         this.author = author;
         this.language = language;

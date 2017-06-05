@@ -6,18 +6,7 @@ import java.util.Random;
 
 public class Coder {
 
-    public static String coder() {
-        String[] tab = tab();
-        String code = new String();
-        code = "";
-
-        for (int i = 0; i < tab.length; i++)
-            code += tab[i];
-
-        return code;
-    }
-
-    public static String returnCode() {
+    public static String getUniqueCode() {
         Iterable<Cookies> cookies = RepositoriesAccess.cookiesRepository.findAll();
         boolean is = true;
         String code = "";
@@ -32,20 +21,31 @@ public class Coder {
         return code;
     }
 
-    public static String[] tab() {
+    private static String coder() {
+        String[] tab = tab();
+        String code = new String();
+        code = "";
+
+        for (int i = 0; i < tab.length; i++)
+            code += tab[i];
+
+        return code;
+    }
+
+    private static String[] tab() {
         String[] tab = new String[25];
         for (int i = 0; i < tab.length; i++)
-            tab[i] = returnCode(randomNumber(1, 61));
+            tab[i] = getUniqueCode(randomNumber(1, 61));
         return tab;
     }
 
-    public static int randomNumber(int min, int max) {
+    private static int randomNumber(int min, int max) {
         Random rand = new Random();
         int randomNum = rand.nextInt((max - min) + 1) + min;
         return randomNum;
     }
 
-    public static String returnCode(int number) {
+    private static String getUniqueCode(int number) {
         if (number == 1)
             return "a";
         if (number == 2)

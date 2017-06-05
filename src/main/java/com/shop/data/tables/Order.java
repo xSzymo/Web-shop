@@ -66,19 +66,8 @@ public class Order {
         this.books = books;
     }
 
-    public Order(Long id, BigDecimal price, EnumPayments paymentMethod, Address shippingAddressId,
-                 Address billingAddressId, CouponCode couponCodes, Collection<Book> books) {
-        this.id = id;
-        this.price = price;
-        this.paymentMethod = paymentMethod;
-        this.shippingAddress = shippingAddressId;
-        this.billingAddress = billingAddressId;
-        this.couponCodes = couponCodes;
-        this.books = books;
-    }
 
-    public Order(Long id, BigDecimal price, boolean realized, Collection<Book> books) {
-        this.id = id;
+    public Order(BigDecimal price, boolean realized, Collection<Book> books) {
         this.price = price;
         this.realized = realized;
         this.books = books;

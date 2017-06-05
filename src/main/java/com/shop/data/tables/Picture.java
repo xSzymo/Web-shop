@@ -32,13 +32,6 @@ public class Picture {
         this.fileType = fileType;
     }
 
-    public Picture(Long id, String name, String path, String fileType) {
-        this.id = id;
-        this.name = name;
-        this.path = path;
-        this.fileType = fileType;
-    }
-
     @Override
     public String toString() {
         return "Pictures [id=" + id + ", Name=" + name + ", Path=" + path + ", fileType=" + fileType + "]";

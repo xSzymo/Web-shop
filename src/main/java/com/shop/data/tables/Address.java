@@ -30,14 +30,6 @@ public class Address {
         this.country = country;
     }
 
-    public Address(Long id, String street, String postalCode, String city, String country) {
-        this.id = id;
-        this.street = street;
-        this.postalCode = postalCode;
-        this.setCity(city);
-        this.country = country;
-    }
-
     @Override
     public String toString() {
         return "street : " + street + ", postal Code : " + postalCode + ", city : " + city

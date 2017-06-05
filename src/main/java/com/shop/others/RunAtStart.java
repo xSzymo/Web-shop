@@ -64,10 +64,11 @@ public class RunAtStart {
         RepositoriesAccess.ordersRepository.save(o);
 
         Collection<Book> books123 = new ArrayList<Book>();
-        books123.add(new Book("halohalo123123"));
-        books123.add(new Book("vczx"));
-        books123.add(new Book("halohaldrehr123o123123"));
-        RepositoriesAccess.ordersRepository.save(new Order((long) 10, new BigDecimal("100000"), false, books123));
+        books123.add(RepositoriesAccess.booksRepository.save(new Book("halohalo123123")));
+        books123.add(RepositoriesAccess.booksRepository.save(new Book("vczx")));
+        books123.add(RepositoriesAccess.booksRepository.save(new Book("halohaldrehr123o123123")));
+        //RepositoriesAccess.booksRepository.save(books123);
+        RepositoriesAccess.ordersRepository.save(new Order(new BigDecimal("100000"), false, books123));
 
         Order o1 = new Order(new BigDecimal("50"), true);
         o.setBooks(booksCollection);

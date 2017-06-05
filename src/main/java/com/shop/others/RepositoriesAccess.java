@@ -13,7 +13,7 @@ public class RepositoriesAccess {
     @Autowired
     public static BooksRepository booksRepository;
     @Autowired
-    public static AdressRepository addressRepository;
+    public static AddressRepository addressRepository;
     @Autowired
     public static CouponCodesRepository couponCodesRepository;
     @Autowired
@@ -26,14 +26,14 @@ public class RepositoriesAccess {
     public static CookiesRepository cookiesRepository;
 
     private RepositoriesAccess(UsersRepository usersRepository, CategoriesRepository categoriesRepository,
-                               BooksRepository booksRepository, AdressRepository adressRepository,
+                               BooksRepository booksRepository, AddressRepository addressRepository,
                                CouponCodesRepository couponCodesRepository, PicturesRepository picturesRepository,
                                OrdersRepository ordersRepository, UserRolesRepository userRolesRepository, CookiesRepository cookiesRepository) {
 
         RepositoriesAccess.usersRepository = usersRepository;
         RepositoriesAccess.categoriesRepository = categoriesRepository;
         RepositoriesAccess.booksRepository = booksRepository;
-        RepositoriesAccess.addressRepository = adressRepository;
+        RepositoriesAccess.addressRepository = addressRepository;
         RepositoriesAccess.couponCodesRepository = couponCodesRepository;
         RepositoriesAccess.picturesRepository = picturesRepository;
         RepositoriesAccess.ordersRepository = ordersRepository;
