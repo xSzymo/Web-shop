@@ -36,7 +36,13 @@ public class RunAtStart {
         booksCollection1.add(new Book("xzvckmhvzixkcjvblkshjd"));
         RepositoriesAccess.categoriesRepository.save(new Category("halohalo", booksCollection1));
 
-        RepositoriesAccess.categoriesRepository.save(new Category("horror", booksCollection));
+        Book b = new Book("rere");
+        booksCollection.add(b);
+        Category simpleCategory = new Category("horror", booksCollection);
+       // b.category = simpleCategory;
+        RepositoriesAccess.categoriesRepository.save(simpleCategory);
+        RepositoriesAccess.booksRepository.save(b);
+
 
         User user = new User("admin", "admin", "admin@wp.pl");
         user.setAddress(a);
