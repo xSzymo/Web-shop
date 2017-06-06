@@ -26,8 +26,23 @@ public class Address {
     public Address(String street, String postalCode, String city, String country) {
         this.street = street;
         this.postalCode = postalCode;
-        this.setCity(city);
+        this.city = city;
         this.country = country;
+    }
+
+    public boolean compareTwoAddress(Address address) {
+        boolean sameObjects = true;
+        if(!this.id.equals(address.getId()))
+            sameObjects = false;
+        if(!this.street.equals(address.getStreet()))
+            sameObjects = false;
+        if(!this.postalCode.equals(address.getPostalCode()))
+            sameObjects = false;
+        if(!this.city.equals(address.getCity()))
+            sameObjects = false;
+        if(!this.country.equals(address.getCountry()))
+            sameObjects = false;
+        return sameObjects;
     }
 
     @Override
@@ -38,10 +53,6 @@ public class Address {
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getStreet() {
