@@ -17,7 +17,7 @@ public class Category {
     private String name;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "categories_id") // here sssss
+    //@JoinColumn(name = "categories_id") // here sssss
     private Collection<Book> books = new LinkedHashSet<Book>();
 
     public Category() {
@@ -38,6 +38,14 @@ public class Category {
         return "Categories [id=" + id + ", name=" + name + ", books=" + books + "]";
     }
 
+    public boolean compareTwoCategories(Category category) {
+        boolean sameObject = true;
+        if(!this.getId().equals(category.getId()))
+            sameObject = false;
+        if(!this.getName().equals(category.getId()))
+            sameObject = false;
+        return sameObject;
+    }
     public Long getId() {
         return id;
     }
