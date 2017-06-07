@@ -17,18 +17,23 @@ public class CategoriesService {
 	private BooksService booksService;
 
 	public void save(Category category) {
+	boolean leaveIfCannotSaveOrUpdateCategory = false;
 		if (category == null)
 			return;
 		if (findOneByName(category.getName()) != null) {
-			if (category.getId() != null)
+			leaveIfCannotSaveOrUpdateCategory = true;
+			if (category.getId() != null) {
+				leaveIfCannotSaveOrUpdateCategory = true;
 				if (findOne(category.getId()) != null)
-					findOne(category.getId()).setBooks(category.getBooks());
-			return;
+					leaveIfCannotSaveOrUpdateCategory = false;
+			}
+			if(leaveIfCannotSaveOrUpdateCategory == true)
+				return;
 		}
 
 		category.getBooks().forEach(
 				x -> {
-
+					x.setCategory(category);
 					booksService.save(x);
 				});
 		repository.save(category);

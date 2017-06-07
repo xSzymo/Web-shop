@@ -1,8 +1,9 @@
-package integration.com.shop.data.services;
+package com.shop.data.services;
 
-import com.shop.data.services.CategoriesService;
+import com.shop.data.repositories.BooksRepository;
+import com.shop.data.tables.Book;
 import com.shop.data.tables.Category;
-import integration.com.DataBaseTestConfiguration;
+import com.configuration.DataBaseTestConfiguration;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,11 +20,13 @@ import static org.junit.Assert.fail;
 public class CategoriesServiceTest extends DataBaseTestConfiguration {
 	@Autowired
 	private CategoriesService service;
+	@Autowired
+	private BooksRepository booksRepository;
 
 	private LinkedList<Category> categories;
 
 	@Before
-	public void setUp() {
+	public void BeforeEachTest() {
 		categories = createCategoriesCollection();
 	}
 
@@ -43,14 +46,16 @@ public class CategoriesServiceTest extends DataBaseTestConfiguration {
 
 	@Test
 	public void saveOneWithExistName() {
+		categories.add(new Category("category " + 3));
+		categories.add(new Category("category " + 3));
 		service.save(categories);
 
 		for (Category x : service.findAll()) {
-			int a = 0;
+			int numberOfSameObject = 0;
 			for (Category x1 : service.findAll()) {
 				if (x.getName().equals(x1.getName()))
-					a++;
-				if (a > 1)
+					numberOfSameObject++;
+				if (numberOfSameObject > 1)
 					fail("can't save two categories with same name");
 			}
 		}
@@ -65,6 +70,69 @@ public class CategoriesServiceTest extends DataBaseTestConfiguration {
 		actualCategory.forEach(
 				x -> assertTrue(x.compareTwoCategories(service.findOne(x.getId())))
 		);
+	}
+
+	@Test
+	public void saveNull() {
+		Category actualCategory = null;
+
+		try {
+			service.save(actualCategory);
+		} catch (Exception e) {
+			assertNull(e);
+		}
+	}
+
+	@Test
+	public void save() {
+		Category actualCategory = categories.getFirst();
+
+		service.save(actualCategory);
+
+		assertTrue(actualCategory.compareTwoCategories(service.findOne(actualCategory.getId())));
+	}
+
+	@Test
+	public void updateCategoryWithSetBooks() {
+		Category actualCategory = categories.getFirst();
+
+		service.save(actualCategory);
+
+		assertTrue(actualCategory.compareTwoCategories(service.findOne(actualCategory.getId())));
+
+
+		Category categoryToUpdate = service.findOne(actualCategory.getId());
+		categoryToUpdate = service.findOne(actualCategory.getId());
+
+		LinkedList<Book> books = new LinkedList<>();
+		books.add(new Book("avcx"));
+		books.add(new Book("avcx1"));
+
+		categoryToUpdate.setBooks(books);
+		service.save(categoryToUpdate);
+
+		assertTrue(categoryToUpdate.compareTwoCategories(service.findOne(actualCategory.getId())));
+	}
+
+	@Test
+	public void updateCategoryWithAddBooks() {
+		Category actualCategory = categories.getFirst();
+
+		service.save(actualCategory);
+
+		assertTrue(actualCategory.compareTwoCategories(service.findOne(actualCategory.getId())));
+
+
+		Category categoryToUpdate = service.findOne(actualCategory.getId());
+
+		LinkedList<Book> books = new LinkedList<>();
+		books.add(new Book("avcx"));
+		books.add(new Book("avcx1"));
+
+		categoryToUpdate.setBooks(books);
+		service.save(categoryToUpdate);
+
+		assertTrue(categoryToUpdate.compareTwoCategories(service.findOne(actualCategory.getId())));
 	}
 
 	@Test
@@ -86,7 +154,7 @@ public class CategoriesServiceTest extends DataBaseTestConfiguration {
 	}
 
 	@Test
-	public void findOneByName() {
+	public void findOneByNameWithString() {
 		service.save(categories.getFirst());
 
 		Category actualCategory = service.findOneByName(categories.getFirst().getName());
@@ -95,7 +163,7 @@ public class CategoriesServiceTest extends DataBaseTestConfiguration {
 	}
 
 	@Test
-	public void findOneByName1() {
+	public void findOneByNameWithObject() {
 		service.save(categories.getFirst());
 
 		Category actualCategory = service.findOneByName(categories.getFirst());
@@ -150,7 +218,6 @@ public class CategoriesServiceTest extends DataBaseTestConfiguration {
 			Category book = new Category("category " + i);
 			categoriesToReturn.add(book);
 		}
-		categoriesToReturn.add(new Category("category " + 3));
 		categoriesToReturn.add(new Category("category " + 3));
 		return categoriesToReturn;
 	}

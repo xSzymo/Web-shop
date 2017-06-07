@@ -1,8 +1,7 @@
-package integration.com.shop.data.services;
+package com.shop.data.services;
 
-import com.shop.data.services.AddressService;
 import com.shop.data.tables.Address;
-import integration.com.DataBaseTestConfiguration;
+import com.configuration.DataBaseTestConfiguration;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

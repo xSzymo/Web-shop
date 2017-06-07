@@ -1,10 +1,9 @@
-package integration.com.shop.data.services;
+package com.shop.data.services;
 
 import com.shop.data.repositories.CategoriesRepository;
-import com.shop.data.services.BooksService;
 import com.shop.data.tables.Book;
 import com.shop.data.tables.Category;
-import integration.com.DataBaseTestConfiguration;
+import com.configuration.DataBaseTestConfiguration;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

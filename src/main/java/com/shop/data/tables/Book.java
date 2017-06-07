@@ -70,27 +70,10 @@ public class Book {
 		this.pictures = pictures;
 	}
 
-	/*
-	* add some functionality later
-	 */
 	public boolean compareTwoBooks(Book book) {
 		boolean sameObjects = true;
-		if (!this.id.equals(book.getId()))
-			sameObjects = false;
-		if (!this.category.getId().equals(book.getCategory().getId()))
-			sameObjects = false;
-		if (this.description != null && book.getDescription() != null)
-			if (!this.description.equals(book.getDescription()))
-				sameObjects = false;
-		if (this.language != null && book.getLanguage() != null)
-			if (!this.language.equals(book.getLanguage()))
-				sameObjects = false;
-		if (this.author != null && book.getAuthor() != null)
-			if (!this.author.equals(book.getAuthor()))
-				sameObjects = false;
-		if (this.price != null && book.getPrice() != null)
-			if (!this.price.equals(book.getPrice()))
-				sameObjects = false;
+		sameObjects = compareTwoBooksIsAnyFieldNull(book, sameObjects);
+		sameObjects = compareTwoBooksWithFields(book, sameObjects);
 		return sameObjects;
 	}
 
@@ -162,5 +145,43 @@ public class Book {
 
 	public void setPictures(Collection<Picture> pictures) {
 		this.pictures = pictures;
+	}
+
+	private boolean compareTwoBooksIsAnyFieldNull(Book book, boolean sameObjects) {
+		if (this.id != null && book.getId() == null || this.id != null && book.getId() != null)
+			sameObjects = false;
+		if (this.category != null && book.getCategory() == null || this.id != null && book.getCategory() != null)
+			sameObjects = false;
+		if (this.description != null && book.getDescription() == null || this.description != null && book.getDescription() != null)
+			sameObjects = false;
+		if (this.language != null && book.getLanguage() == null || this.language != null && book.getLanguage() != null)
+			sameObjects = false;
+		if (this.author != null && book.getAuthor() == null || this.author != null && book.getAuthor() != null)
+			sameObjects = false;
+		if (this.price != null && book.getPrice() == null || this.price != null && book.getPrice() != null)
+			sameObjects = false;
+		return sameObjects;
+	}
+
+	private boolean compareTwoBooksWithFields(Book book, boolean sameObjects) {
+		if (this.id != null && book.getId() != null)
+			if (!this.id.equals(book.getId()))
+				sameObjects = false;
+		if (this.category != null && book.getCategory() != null)
+			if (!this.category.getId().equals(book.getCategory().getId()))
+				sameObjects = false;
+		if (this.description != null && book.getDescription() != null)
+			if (!this.description.equals(book.getDescription()))
+				sameObjects = false;
+		if (this.language != null && book.getLanguage() != null)
+			if (!this.language.equals(book.getLanguage()))
+				sameObjects = false;
+		if (this.author != null && book.getAuthor() != null)
+			if (!this.author.equals(book.getAuthor()))
+				sameObjects = false;
+		if (this.price != null && book.getPrice() != null)
+			if (!this.price.equals(book.getPrice()))
+				sameObjects = false;
+		return sameObjects;
 	}
 }

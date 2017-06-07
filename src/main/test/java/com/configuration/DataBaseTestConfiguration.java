@@ -1,4 +1,4 @@
-package integration.com;
+package com.configuration;
 
 import com.shop.configuration.AppConfig;
 import com.shop.configuration.AppInitializer;
