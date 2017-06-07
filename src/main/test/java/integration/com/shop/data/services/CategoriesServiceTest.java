@@ -1,6 +1,5 @@
 package integration.com.shop.data.services;
 
-import com.shop.data.repositories.CategoriesRepository;
 import com.shop.data.services.CategoriesService;
 import com.shop.data.tables.Category;
 import integration.com.DataBaseTestConfiguration;
@@ -11,47 +10,60 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.LinkedList;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 
 public class CategoriesServiceTest extends DataBaseTestConfiguration {
 	@Autowired
 	private CategoriesService service;
-	@Autowired
-	private CategoriesRepository categoriesRepository;
 
 	private LinkedList<Category> categories;
-	//private Category category;
 
 	@Before
 	public void setUp() {
-		categories = createBooksCollectionAndNewCategory();
+		categories = createCategoriesCollection();
 	}
 
 	@After
 	public void afterEachTest() {
 		service.delete(categories);
-		//categoriesRepository.delete(category);
 	}
 
 	@Test
 	public void saveOne() {
-		Category actualBook = categories.getFirst();
+		Category actualCategory = categories.getFirst();
 
-		service.save(actualBook);
+		service.save(actualCategory);
 
-		assertTrue(actualBook.compareTwoCategories(service.findOne(actualBook.getId())));
+		assertTrue(actualCategory.compareTwoCategories(service.findOne(actualCategory.getId())));
+	}
+
+	@Test
+	public void saveOneWithExistName() {
+		service.save(categories);
+
+		for (Category x : service.findAll()) {
+			int a = 0;
+			for (Category x1 : service.findAll()) {
+				if (x.getName().equals(x1.getName()))
+					a++;
+				if (a > 1)
+					fail("can't save two categories with same name");
+			}
+		}
 	}
 
 	@Test
 	public void saveCollection() {
-		LinkedList<Category> actualBook = categories;
+		LinkedList<Category> actualCategory = categories;
 
-		service.save(actualBook);
+		service.save(actualCategory);
 
-		actualBook.forEach(
-				x ->
-						assertTrue(x.compareTwoCategories(service.findOne(x.getId())))
+		actualCategory.forEach(
+				x -> assertTrue(x.compareTwoCategories(service.findOne(x.getId())))
 		);
 	}
 
@@ -59,72 +71,87 @@ public class CategoriesServiceTest extends DataBaseTestConfiguration {
 	public void findOne() {
 		service.save(categories.getFirst());
 
-		Category actualBook = service.findOne(categories.getFirst());
+		Category actualCategory = service.findOne(categories.getFirst());
 
-		assertNotNull(actualBook);
+		assertNotNull(actualCategory);
 	}
 
 	@Test
 	public void findOneById() {
 		service.save(categories.getFirst());
 
-		Category actualBook = service.findOne(categories.getFirst().getId());
+		Category actualCategory = service.findOne(categories.getFirst().getId());
 
-		assertNotNull(actualBook);
+		assertNotNull(actualCategory);
+	}
+
+	@Test
+	public void findOneByName() {
+		service.save(categories.getFirst());
+
+		Category actualCategory = service.findOneByName(categories.getFirst().getName());
+
+		assertNotNull(actualCategory);
+	}
+
+	@Test
+	public void findOneByName1() {
+		service.save(categories.getFirst());
+
+		Category actualCategory = service.findOneByName(categories.getFirst());
+
+		assertNotNull(actualCategory);
 	}
 
 	@Test
 	public void findAll() {
-		Iterable<Category> actualBooks = service.findAll();
+		Iterable<Category> actualCategory = service.findAll();
 
-		actualBooks.forEach(
-				x ->
-						assertNotNull(service.findOne(x.getId()))
+		actualCategory.forEach(
+				x -> assertNotNull(service.findOne(x.getId()))
 		);
 	}
 
 	@Test
 	public void delete() {
-		Category actualBook = categories.getFirst();
+		Category actualCategory = categories.getFirst();
 
-		service.save(actualBook);
-		service.delete(actualBook);
+		service.save(actualCategory);
+		service.delete(actualCategory);
 
-		assertNull(service.findOne(actualBook.getId()));
+		assertNull(service.findOne(actualCategory.getId()));
 	}
 
 	@Test
 	public void deleteById() {
-		Category actualBook = categories.getFirst();
+		Category actualCategory = categories.getFirst();
 
-		service.save(actualBook);
-		service.delete(actualBook.getId());
+		service.save(actualCategory);
+		service.delete(actualCategory.getId());
 
-		assertNull(service.findOne(actualBook.getId()));
+		assertNull(service.findOne(actualCategory.getId()));
 	}
 
 	@Test
 	public void deleteCollection() {
-		LinkedList<Category> actualBook = categories;
+		LinkedList<Category> actualCategory = categories;
 
-		service.save(actualBook);
-		service.delete(actualBook);
+		service.save(actualCategory);
+		service.delete(actualCategory);
 
-		actualBook.forEach(
+		actualCategory.forEach(
 				x -> assertNull(service.findOne(x.getId()))
 		);
 	}
 
-	public LinkedList<Category> createBooksCollectionAndNewCategory() {
-		LinkedList<Category> booksToReturn = new LinkedList<>();
-		//category = new Category("123");
-		//categoriesRepository.save(category);
+	public LinkedList<Category> createCategoriesCollection() {
+		LinkedList<Category> categoriesToReturn = new LinkedList<>();
 		for (int i = 0; i < 3; i++) {
-			Category book = new Category("book" + i);
-			//book.setCategory(category);
-			booksToReturn.add(book);
+			Category book = new Category("category " + i);
+			categoriesToReturn.add(book);
 		}
-		//categoriesRepository.save(category);
-		return booksToReturn;
+		categoriesToReturn.add(new Category("category " + 3));
+		categoriesToReturn.add(new Category("category " + 3));
+		return categoriesToReturn;
 	}
 }

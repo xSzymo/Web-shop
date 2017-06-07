@@ -1,14 +1,12 @@
 package com.shop.data.services;
 
 import com.shop.data.repositories.CategoriesRepository;
-import com.shop.data.tables.Book;
 import com.shop.data.tables.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Collection;
-import java.util.Iterator;
 
 @Service
 @Transactional
@@ -18,14 +16,23 @@ public class CategoriesService {
 	@Autowired
 	private BooksService booksService;
 
-	//if category dont have book add id
-	//do not save category when category with same name already exist
 	public void save(Category category) {
 		if (category == null)
 			return;
-		category.getBooks().forEach(x -> booksService.save(x));
+		if (findOneByName(category.getName()) != null) {
+			if (category.getId() != null)
+				if (findOne(category.getId()) != null)
+					findOne(category.getId()).setBooks(category.getBooks());
+			return;
+		}
+
+		category.getBooks().forEach(
+				x -> {
+
+					booksService.save(x);
+				});
 		repository.save(category);
-}
+	}
 
 	public void save(Collection<Category> category) {
 		if (category.size() > 0)
@@ -42,6 +49,25 @@ public class CategoriesService {
 
 	public Category findOne(Category category) {
 		return repository.findOne(category.getId());
+	}
+
+	public Category findOneByName(String name) {
+		Iterable<Category> all = findAll();
+
+		for (Category x : all)
+			if (x.getName().equals(name))
+				return x;
+		return null;
+	}
+
+	public Category findOneByName(Category category) {
+		String name = category.getName();
+		Iterable<Category> all = findAll();
+
+		for (Category x : all)
+			if (x.getName().equals(name))
+				return x;
+		return null;
 	}
 
 	public Iterable<Category> findAll() {
@@ -74,5 +100,5 @@ public class CategoriesService {
 		);
 
 		repository.delete(category.getId());
-}
+	}
 }
