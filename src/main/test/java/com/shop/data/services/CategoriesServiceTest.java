@@ -1,9 +1,8 @@
 package com.shop.data.services;
 
-import com.shop.data.repositories.BooksRepository;
+import com.configuration.DataBaseTestConfiguration;
 import com.shop.data.tables.Book;
 import com.shop.data.tables.Category;
-import com.configuration.DataBaseTestConfiguration;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,8 +19,6 @@ import static org.junit.Assert.fail;
 public class CategoriesServiceTest extends DataBaseTestConfiguration {
 	@Autowired
 	private CategoriesService service;
-	@Autowired
-	private BooksRepository booksRepository;
 
 	private LinkedList<Category> categories;
 
@@ -36,7 +33,7 @@ public class CategoriesServiceTest extends DataBaseTestConfiguration {
 	}
 
 	@Test
-	public void saveOne() {
+	public void save() {
 		Category actualCategory = categories.getFirst();
 
 		service.save(actualCategory);
@@ -45,20 +42,12 @@ public class CategoriesServiceTest extends DataBaseTestConfiguration {
 	}
 
 	@Test
-	public void saveOneWithExistName() {
-		categories.add(new Category("category " + 3));
-		categories.add(new Category("category " + 3));
-		service.save(categories);
+	public void saveOne() {
+		Category actualCategory = categories.getFirst();
 
-		for (Category x : service.findAll()) {
-			int numberOfSameObject = 0;
-			for (Category x1 : service.findAll()) {
-				if (x.getName().equals(x1.getName()))
-					numberOfSameObject++;
-				if (numberOfSameObject > 1)
-					fail("can't save two categories with same name");
-			}
-		}
+		service.save(actualCategory);
+
+		assertTrue(actualCategory.compareTwoCategories(service.findOne(actualCategory.getId())));
 	}
 
 	@Test
@@ -84,12 +73,20 @@ public class CategoriesServiceTest extends DataBaseTestConfiguration {
 	}
 
 	@Test
-	public void save() {
-		Category actualCategory = categories.getFirst();
+	public void saveOneWithExistName() {
+		categories.add(new Category("category " + 3));
+		categories.add(new Category("category " + 3));
+		service.save(categories);
 
-		service.save(actualCategory);
-
-		assertTrue(actualCategory.compareTwoCategories(service.findOne(actualCategory.getId())));
+		for (Category x : service.findAll()) {
+			int numberOfSameObject = 0;
+			for (Category x1 : service.findAll()) {
+				if (x.getName().equals(x1.getName()))
+					numberOfSameObject++;
+				if (numberOfSameObject > 1)
+					fail("can't save two categories with same name");
+			}
+		}
 	}
 
 	@Test
@@ -102,7 +99,6 @@ public class CategoriesServiceTest extends DataBaseTestConfiguration {
 
 
 		Category categoryToUpdate = service.findOne(actualCategory.getId());
-		categoryToUpdate = service.findOne(actualCategory.getId());
 
 		LinkedList<Book> books = new LinkedList<>();
 		books.add(new Book("avcx"));
@@ -111,7 +107,8 @@ public class CategoriesServiceTest extends DataBaseTestConfiguration {
 		categoryToUpdate.setBooks(books);
 		service.save(categoryToUpdate);
 
-		assertTrue(categoryToUpdate.compareTwoCategories(service.findOne(actualCategory.getId())));
+		Category one = service.findOne(actualCategory.getId());
+		assertTrue(categoryToUpdate.compareTwoCategories(one));
 	}
 
 	@Test
@@ -129,7 +126,7 @@ public class CategoriesServiceTest extends DataBaseTestConfiguration {
 		books.add(new Book("avcx"));
 		books.add(new Book("avcx1"));
 
-		categoryToUpdate.setBooks(books);
+		categoryToUpdate.getBooks().addAll(books);
 		service.save(categoryToUpdate);
 
 		assertTrue(categoryToUpdate.compareTwoCategories(service.findOne(actualCategory.getId())));
@@ -142,6 +139,20 @@ public class CategoriesServiceTest extends DataBaseTestConfiguration {
 		Category actualCategory = service.findOne(categories.getFirst());
 
 		assertNotNull(actualCategory);
+	}
+
+	@Test
+	public void findOneWithNull() {
+		Category actualCategory = null;
+
+		try {
+			service.findOne(actualCategory);
+			service.findOneByName(actualCategory);
+			service.findOne(null);
+			service.findOneByName((String) null);
+		} catch (Exception e) {
+			assertNull(e);
+		}
 	}
 
 	@Test

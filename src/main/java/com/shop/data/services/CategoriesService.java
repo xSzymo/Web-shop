@@ -17,7 +17,7 @@ public class CategoriesService {
 	private BooksService booksService;
 
 	public void save(Category category) {
-	boolean leaveIfCannotSaveOrUpdateCategory = false;
+		boolean leaveIfCannotSaveOrUpdateCategory = false;
 		if (category == null)
 			return;
 		if (findOneByName(category.getName()) != null) {
@@ -27,7 +27,7 @@ public class CategoriesService {
 				if (findOne(category.getId()) != null)
 					leaveIfCannotSaveOrUpdateCategory = false;
 			}
-			if(leaveIfCannotSaveOrUpdateCategory == true)
+			if (leaveIfCannotSaveOrUpdateCategory == true)
 				return;
 		}
 
@@ -49,29 +49,44 @@ public class CategoriesService {
 	}
 
 	public Category findOne(long id) {
-		return repository.findOne(id);
+		try {
+			return repository.findOne(id);
+		} catch (NullPointerException e) {
+			return null;
+		}
 	}
 
 	public Category findOne(Category category) {
-		return repository.findOne(category.getId());
+		try {
+			return repository.findOne(category.getId());
+		} catch (NullPointerException e) {
+			return null;
+		}
 	}
 
 	public Category findOneByName(String name) {
 		Iterable<Category> all = findAll();
-
-		for (Category x : all)
-			if (x.getName().equals(name))
-				return x;
+		try {
+			for (Category x : all)
+				if (x.getName().equals(name))
+					return x;
+		} catch (NullPointerException e) {
+			return null;
+		}
 		return null;
 	}
 
 	public Category findOneByName(Category category) {
-		String name = category.getName();
 		Iterable<Category> all = findAll();
 
-		for (Category x : all)
-			if (x.getName().equals(name))
-				return x;
+		try {
+			String name = category.getName();
+			for (Category x : all)
+				if (x.getName().equals(name))
+					return x;
+		} catch (NullPointerException e) {
+			return null;
+		}
 		return null;
 	}
 

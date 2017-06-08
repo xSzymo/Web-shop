@@ -73,6 +73,8 @@ public class Book {
 	public boolean compareTwoBooks(Book book) {
 		boolean sameObjects = true;
 		sameObjects = compareTwoBooksIsAnyFieldNull(book, sameObjects);
+		if(sameObjects == false)
+			return false;
 		sameObjects = compareTwoBooksWithFields(book, sameObjects);
 		return sameObjects;
 	}
@@ -87,9 +89,6 @@ public class Book {
 		return id;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public Category getCategory() {
 		return category;
@@ -148,17 +147,17 @@ public class Book {
 	}
 
 	private boolean compareTwoBooksIsAnyFieldNull(Book book, boolean sameObjects) {
-		if (this.id != null && book.getId() == null || this.id != null && book.getId() != null)
+		if (this.id != null && book.getId() == null || this.id == null && book.getId() != null)
 			sameObjects = false;
-		if (this.category != null && book.getCategory() == null || this.id != null && book.getCategory() != null)
+		if (this.category != null && book.getCategory() == null || this.id == null && book.getCategory() != null)
 			sameObjects = false;
-		if (this.description != null && book.getDescription() == null || this.description != null && book.getDescription() != null)
+		if (this.description != null && book.getDescription() == null || this.description == null && book.getDescription() != null)
 			sameObjects = false;
-		if (this.language != null && book.getLanguage() == null || this.language != null && book.getLanguage() != null)
+		if (this.language != null && book.getLanguage() == null || this.language == null && book.getLanguage() != null)
 			sameObjects = false;
-		if (this.author != null && book.getAuthor() == null || this.author != null && book.getAuthor() != null)
+		if (this.author != null && book.getAuthor() == null || this.author == null && book.getAuthor() != null)
 			sameObjects = false;
-		if (this.price != null && book.getPrice() == null || this.price != null && book.getPrice() != null)
+		if (this.price != null && book.getPrice() == null || this.price == null && book.getPrice() != null)
 			sameObjects = false;
 		return sameObjects;
 	}

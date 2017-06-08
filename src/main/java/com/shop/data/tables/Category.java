@@ -51,13 +51,13 @@ public class Category {
 		if (!this.getName().equals(category.getName()))
 			sameObject = false;
 		for (Book x : this.getBooks()) {
-			boolean a = false;
+			boolean saneBooks = false;
 			for (Book x1 : category.getBooks())
 				if (x.compareTwoBooks(x1)) {
-					a = true;
+					saneBooks = true;
 					break;
 				}
-			if (!a) {
+			if (!saneBooks) {
 				sameObject = false;
 				break;
 			}
@@ -67,10 +67,6 @@ public class Category {
 
 	public Long getId() {
 		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public String getName() {

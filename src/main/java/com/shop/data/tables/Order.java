@@ -83,9 +83,6 @@ public class Order {
         return this.id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public BigDecimal getPrice() {
         return this.price;
