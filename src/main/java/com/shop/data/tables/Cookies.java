@@ -19,12 +19,21 @@ public class Cookies {
     private Date date;
 
     Cookies() {
-
+        //auto generate code
     }
 
     public Cookies(String name, String value) {
         this.value = value;
         this.name = name;
+    }
+
+    public boolean compareTwoCategories(Cookies cookie) {
+        boolean sameObject = true;
+//        if(this.getValue().equals(cookie.getValue()) || this.getName().equals(cookie.getValue()))
+//            return true;
+//        if(this.getValue().equals(cookie.getName()) || this.getName().equals(cookie.getName())
+//        return;
+        return sameObject;
     }
 
     public Date getDate() {
