@@ -30,6 +30,17 @@ public class CouponCode {
         this.code = code;
     }
 
+    public boolean compareTwoCouponCodes(CouponCode couponCode) {
+        boolean sameObjects = true;
+        if(!this.id.equals(couponCode.getId()))
+            sameObjects = false;
+        if(!(this.codeDiscount == couponCode.getCodeDiscount()))
+            sameObjects = false;
+        if(!this.code.equals(couponCode.getCode()))
+            sameObjects = false;
+        return sameObjects;
+    }
+
     @Override
     public String toString() {
         return "CouponCodes [id=" + id + ", codeDiscount=" + codeDiscount + ", code=" + code + "]";
@@ -39,9 +50,6 @@ public class CouponCode {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public double getCodeDiscount() {
         return codeDiscount;
