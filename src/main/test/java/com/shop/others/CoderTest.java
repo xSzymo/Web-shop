@@ -18,9 +18,6 @@ public class CoderTest extends DataBaseTestConfiguration {
 
 	@Test
 	public void coderTest() {
-		//Iterable<Cookies> ac = cookiesRepository.findAll();
-		//Iterable<Book> all = RepositoriesAccess.booksRepository.findAll();
-
 		LinkedList<String> list = new LinkedList<>();
 		for (int i = 0; i < HOW_MANY_TIMES_RUN_TEST; i++)
 			list.add(Coder.getUniqueCode());
@@ -37,7 +34,7 @@ public class CoderTest extends DataBaseTestConfiguration {
 		for (Cookies x : cookiesRepository.findAll())
 			for (String x1 : list)
 				if (x.getName().equals(x1))
-					fail("code can't be same like exist cookie value");
+					fail("code can't be same like exist cookie name");
 				else if (x.getValue().equals(x1))
 					fail("code can't be same like exist cookie value");
 	}
