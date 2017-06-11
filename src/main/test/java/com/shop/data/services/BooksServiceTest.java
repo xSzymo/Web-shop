@@ -1,9 +1,9 @@
 package com.shop.data.services;
 
+import com.configuration.DataBaseTestConfiguration;
 import com.shop.data.repositories.CategoriesRepository;
 import com.shop.data.tables.Book;
 import com.shop.data.tables.Category;
-import com.configuration.DataBaseTestConfiguration;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,9 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.LinkedList;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class BooksServiceTest extends DataBaseTestConfiguration {
 	@Autowired
@@ -54,6 +52,17 @@ public class BooksServiceTest extends DataBaseTestConfiguration {
 				x ->
 						assertTrue(x.compareTwoBooks(service.findOne(x.getId())))
 		);
+	}
+
+	@Test
+	public void saveNull() {
+		Book actualAddress = null;
+
+		try {
+			service.save(actualAddress);
+		} catch (Exception e) {
+			assertNull(e);
+		}
 	}
 
 	@Test

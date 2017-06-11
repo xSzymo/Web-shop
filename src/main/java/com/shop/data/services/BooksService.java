@@ -1,13 +1,11 @@
 package com.shop.data.services;
 
-import com.shop.controllers.administratorSite.books.file.FileUploadActions;
 import com.shop.data.repositories.BooksRepository;
 import com.shop.data.repositories.CategoriesRepository;
 import com.shop.data.repositories.OrdersRepository;
 import com.shop.data.tables.Book;
 import com.shop.data.tables.Category;
 import com.shop.data.tables.Order;
-import com.shop.data.tables.Picture;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,9 +21,9 @@ public class BooksService {
 	@Autowired
 	private OrdersRepository ordersRepository;
 	@Autowired
-	private BooksRepository booksRepository;
-	@Autowired
 	private CategoriesRepository categoriesRepository;
+	@Autowired
+	private PicturesService picturesService;
 
 	public void save(Book book) {
 		if (book != null)
@@ -55,7 +53,7 @@ public class BooksService {
 	}
 
 	public void delete(long id) {
-		Book foundBook = booksRepository.findById(id);
+		Book foundBook = repository.findById(id);
 		deleteOperation(foundBook);
 	}
 
@@ -101,8 +99,7 @@ public class BooksService {
 			}
 		}
 
-		for (Picture x : book.getPictures())
-			FileUploadActions.deletePicture(x.getName());
+		picturesService.delete(book.getPictures());
 		repository.delete(book.getId());
 
 	}
