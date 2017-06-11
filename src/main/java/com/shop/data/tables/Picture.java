@@ -21,15 +21,19 @@ public class Picture {
 
     }
 
-    public Picture(String name, String path) {
+    public Picture(String path, String name) {
         this.name = name;
-        this.path = path;
+        this.path = "." + path;
+        if (fileType == null)
+            fileType = "";
     }
 
-    public Picture(String name, String path, String fileType) {
+    public Picture(String path, String name, String fileType) {
         this.name = name;
         this.path = path;
-        this.fileType = fileType;
+        this.fileType = "." + fileType;
+        if (fileType == null)
+            this.fileType = "";
     }
 
     @Override
@@ -62,7 +66,9 @@ public class Picture {
     }
 
     public void setFileType(String fileType) {
-        this.fileType = fileType;
+        this.fileType = "." + fileType;
+        if (fileType == null)
+            this.fileType = "";
     }
 
 }
