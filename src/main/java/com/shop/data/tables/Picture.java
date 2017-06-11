@@ -24,16 +24,33 @@ public class Picture {
     public Picture(String path, String name) {
         this.name = name;
         this.path = "." + path;
-        if (fileType == null)
+        if (fileType.equals(""))
             fileType = "";
+        if (fileType == null)
+            this.fileType = "";
     }
 
     public Picture(String path, String name, String fileType) {
         this.name = name;
         this.path = path;
         this.fileType = "." + fileType;
+        if (fileType.equals(""))
+            this.fileType = "";
         if (fileType == null)
             this.fileType = "";
+    }
+
+    public boolean compareTwoPictures(Picture picture) {
+        boolean sameObjects = true;
+        if (!this.id.equals(picture.getId()))
+            sameObjects = false;
+        if (!this.name.equals(picture.getName()))
+            sameObjects = false;
+        if (!this.path.equals(picture.getPath()))
+            sameObjects = false;
+        if (!this.fileType.equals(picture.getFileType()))
+            sameObjects = false;
+        return sameObjects;
     }
 
     @Override
@@ -67,8 +84,32 @@ public class Picture {
 
     public void setFileType(String fileType) {
         this.fileType = "." + fileType;
+        if (fileType.equals(""))
+            this.fileType = "";
         if (fileType == null)
             this.fileType = "";
     }
+
+    /*public boolean compareTwoPictures(Picture picture) {
+        boolean sameObjects = true;
+        try {
+            if (this.id == null && picture.getId() != null)
+                return false;
+            if (this.id != null && picture.getId() == null)
+                return false;
+            if (this.id != null && picture.getId() != null)
+                if (!this.id.equals(picture.getId()))
+                    sameObjects = false;
+        } catch(NullPointerException e) {
+            if(this.id != null)
+        }
+        if (!this.name.equals(picture.getName()))
+            sameObjects = false;
+        if (!this.path.equals(picture.getPath()))
+            sameObjects = false;
+        if (!this.fileType.equals(picture.getFileType()))
+            sameObjects = false;
+        return sameObjects;
+    }*/
 
 }

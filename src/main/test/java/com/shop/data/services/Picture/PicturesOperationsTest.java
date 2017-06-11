@@ -7,7 +7,9 @@ import org.junit.Test;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import static org.junit.Assert.fail;
 
@@ -27,15 +29,16 @@ public class PicturesOperationsTest {
         file[0] = ' ';
         MultipartFile multipartFile = new MockMultipartFile(picture.getName(), file);
 
-        pictureSaver.uploadFileHandlerPicture(picture, multipartFile);
+        pictureSaver.uploadFile(picture, multipartFile);
 
-        File f = new File(picture.getPath() + picture.getName() + picture.getFileType());
-        if (f.exists() && !f.isDirectory())
+        Path existPicture = Paths.get(picture.getPath() + picture.getName() + picture.getFileType());
+        if (Files.exists(existPicture))
             pictureSaver.deletePicture(picture);
         else
             fail("the picture wasn't created");
 
-        if (f.exists() && !f.isDirectory())
+        existPicture = Paths.get(picture.getPath() + picture.getName() + picture.getFileType());
+        if (Files.exists(existPicture))
             fail("picture still exists");
     }
 
@@ -45,13 +48,14 @@ public class PicturesOperationsTest {
         String url = "https://avatars2.githubusercontent.com/u/15995737?v=3&u=5a9b47ecf84c0e09d28f023a8f634586d91a1d7d&s=400";
         pictureSaver.downloadImage(url, picture);
 
-        File f = new File(picture.getPath() + picture.getName() + picture.getFileType());
-        if (f.exists() && !f.isDirectory())
+        Path existPicture = Paths.get(picture.getPath() + picture.getName() + picture.getFileType());
+        if (Files.exists(existPicture))
             pictureSaver.deletePicture(picture);
         else
             fail("the picture wasn't created");
 
-        if (f.exists() && !f.isDirectory())
+        existPicture = Paths.get(picture.getPath() + picture.getName() + picture.getFileType());
+        if (Files.exists(existPicture))
             fail("picture still exists");
     }
 

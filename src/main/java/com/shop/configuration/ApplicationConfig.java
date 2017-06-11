@@ -15,7 +15,7 @@ public class ApplicationConfig {
     /**
      * Picture path
      */
-    public static String PICTURE_PATH = "E:/WebShopPictures/";
+    public static String PICTURE_PATH = "D:/WebShop/";
 
     /**
      * Shop email address
