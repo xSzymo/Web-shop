@@ -1,7 +1,7 @@
-package com.shop.configuration;
+package com.shop.configuration.security;
 
-import com.shop.services.CustomRememberMeServices;
-import com.shop.services.CustomUserDetailsService;
+import com.shop.configuration.servicesForConfiguration.CustomRememberMeServices;
+import com.shop.configuration.servicesForConfiguration.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;

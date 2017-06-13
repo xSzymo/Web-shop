@@ -1,4 +1,6 @@
-package com.shop.configuration;
+package com.shop.configuration.system;
+
+import com.shop.configuration.ApplicationConfig;
 
 import java.io.InputStream;
 import java.util.Properties;
@@ -10,7 +12,7 @@ public class ApplicationPropertiesInitializer {
     public String SHOP_EMAIL = "";
     public String SHOP_EMAIL_PASSWORD = "";
     public String DATABASE_NAME = "";
-    public String DATABASE_USER_NANE = "";
+    public String DATABASE_USER_NAME = "";
     public String DATABASE_USER_PASSWORD = "";
     public String DATABASE_SERVER_NAME = "";
     public String DATABASE_PORT = "";
@@ -33,10 +35,10 @@ public class ApplicationPropertiesInitializer {
             SHOP_EMAIL = prop.getProperty("SHOP_EMAIL");
             SHOP_EMAIL_PASSWORD = prop.getProperty("SHOP_EMAIL_PASSWORD");
             DATABASE_NAME = prop.getProperty("DATABASE_NAME");
-            DATABASE_USER_NANE = prop.getProperty("DATABASE_USER_NANE");
+            DATABASE_USER_NAME = prop.getProperty("DATABASE_USER_NAME");
             DATABASE_USER_PASSWORD = prop.getProperty("DATABASE_USER_PASSWORD");
-            DATABASE_SERVER_NAME = prop.getProperty("SERVER_NAME");
-            DATABASE_PORT = prop.getProperty("PORT");
+            DATABASE_SERVER_NAME = prop.getProperty("DATABASE_SERVER_NAME");
+            DATABASE_PORT = prop.getProperty("DATABASE_PORT");
 
             inputStream.close();
         } catch (Exception e) {
@@ -58,8 +60,8 @@ public class ApplicationPropertiesInitializer {
                     ApplicationConfig.SHOP_EMAIL_PASSWORD = SHOP_EMAIL_PASSWORD;
                 if (!DATABASE_NAME.equals(""))
                     ApplicationConfig.DATABASE_NAME = DATABASE_NAME;
-                if (!DATABASE_USER_NANE.equals(""))
-                    ApplicationConfig.DATABASE_USER_NANE = DATABASE_USER_NANE;
+                if (!DATABASE_USER_NAME.equals(""))
+                    ApplicationConfig.DATABASE_USER_NANE = DATABASE_USER_NAME;
                 if (!DATABASE_USER_PASSWORD.equals(""))
                     ApplicationConfig.DATABASE_USER_PASSWORD = DATABASE_USER_PASSWORD;
             }

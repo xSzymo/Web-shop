@@ -1,4 +1,4 @@
-package com.shop.configuration;
+package com.shop.configuration.web;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;

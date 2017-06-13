@@ -1,6 +1,8 @@
-package com.shop.configuration;
+package com.shop.configuration.database;
 
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
+import com.shop.configuration.ApplicationConfig;
+import com.shop.configuration.system.ApplicationPropertiesInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

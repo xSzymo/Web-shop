@@ -1,4 +1,4 @@
-package com.shop.services;
+package com.shop.configuration.servicesForConfiguration;
 
 import com.shop.data.operations.CookiesDAO;
 import com.shop.data.operations.UserDAO;

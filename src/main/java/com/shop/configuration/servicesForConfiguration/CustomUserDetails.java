@@ -1,4 +1,4 @@
-package com.shop.services;
+package com.shop.configuration.servicesForConfiguration;
 
 import com.shop.data.tables.User;
 import org.springframework.security.core.GrantedAuthority;

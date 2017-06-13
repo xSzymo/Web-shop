@@ -1,4 +1,4 @@
-package com.shop.configuration;
+package com.shop.configuration.system;
 
 
 import com.shop.data.services.Picture.PictureOperations;

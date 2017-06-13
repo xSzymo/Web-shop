@@ -1,4 +1,4 @@
-package com.shop.configuration;
+package com.shop.configuration.web;
 
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
