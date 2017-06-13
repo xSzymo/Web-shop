@@ -47,8 +47,11 @@ public class ApplicationPropertiesInitializer {
                     ApplicationConfig.URL = URL;
                 if (!PROJECT_NAME.equals(""))
                     ApplicationConfig.PROJECT_NAME = PROJECT_NAME;
-                if (!PICTURE_PATH.equals(""))
+                if (!PICTURE_PATH.equals("")) {
                     ApplicationConfig.PICTURE_PATH = PICTURE_PATH;
+                    if(ApplicationConfig.PICTURE_PATH.substring(ApplicationConfig.PICTURE_PATH.length() - 1) != "/")
+                        ApplicationConfig.PICTURE_PATH += "/";
+                }
                 if (!SHOP_EMAIL.equals(""))
                     ApplicationConfig.SHOP_EMAIL = SHOP_EMAIL;
                 if (!SHOP_EMAIL_PASSWORD.equals(""))
