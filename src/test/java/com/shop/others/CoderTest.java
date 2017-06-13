@@ -13,7 +13,7 @@ import static org.junit.Assert.fail;
 public class CoderTest extends DataBaseTestConfiguration {
 	@Autowired
 	public CookiesRepository cookiesRepository;
-	public static final int HOW_MANY_TIMES_RUN_TEST = 100;
+	public static final int HOW_MANY_TIMES_RUN_TEST = 100000;
 
 
 	@Test

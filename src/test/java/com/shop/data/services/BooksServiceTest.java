@@ -1,7 +1,6 @@
 package com.shop.data.services;
 
 import com.configuration.DataBaseTestConfiguration;
-import com.shop.data.repositories.CategoriesRepository;
 import com.shop.data.tables.Book;
 import com.shop.data.tables.Category;
 import org.junit.After;
@@ -17,7 +16,7 @@ public class BooksServiceTest extends DataBaseTestConfiguration {
 	@Autowired
 	private BooksService service;
 	@Autowired
-	private CategoriesRepository categoriesRepository;
+	private CategoriesService categoriesService;
 
 	private LinkedList<Book> books;
 	private Category category;
@@ -30,7 +29,7 @@ public class BooksServiceTest extends DataBaseTestConfiguration {
 	@After
 	public void afterEachTest() {
 		service.delete(books);
-		categoriesRepository.delete(category);
+		categoriesService.delete(category);
 	}
 
 	@Test
@@ -128,13 +127,13 @@ public class BooksServiceTest extends DataBaseTestConfiguration {
 	public LinkedList<Book> createBooksCollectionAndNewCategory() {
 		LinkedList<Book> booksToReturn = new LinkedList<>();
 		category = new Category("123");
-		categoriesRepository.save(category);
+		categoriesService.save(category);
 		for (int i = 0; i < 3; i++) {
 			Book book = new Book("book" + i);
 			book.setCategory(category);
 			booksToReturn.add(book);
 		}
-		categoriesRepository.save(category);
+		categoriesService.save(category);
 		return booksToReturn;
 	}
 }
