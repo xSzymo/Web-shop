@@ -26,9 +26,11 @@ public class BooksService {
 	private PicturesService picturesService;
 
 	public void save(Book book) {
-		if (book != null)
-			if (book.getCategory() != null)
-				repository.save(book);
+		if (book == null)
+			return;
+		if (book.getCategory() == null)
+			return;
+		repository.save(book);
 	}
 
 	public void save(Collection<Book> books) {

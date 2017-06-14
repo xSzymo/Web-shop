@@ -2,141 +2,200 @@ package com.shop.data.tables;
 
 import com.shop.data.enums.EnumPayments;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 
+//TODO - after delete repositoryAccess add user to constructor
 @Entity
 @Table(name = "orders")
 public class Order {
 
-    @Id
-    @GeneratedValue
-    @Column(name = "id")
-    private Long id;
+	@Id
+	@GeneratedValue
+	@Column(name = "id")
+	private Long id;
 
-    @Column(name = "price")
-    private BigDecimal price;
-    @Column(name = "payment_method")
-    private EnumPayments paymentMethod;
-    @Column(name = "realized")
-    private boolean realized = false;
+	@Column(name = "price")
+	private BigDecimal price;
+	@Column(name = "payment_method")
+	private EnumPayments paymentMethod;
+	@Column(name = "realized")
+	private boolean realized = false;
 
-    @OneToOne
-    @JoinColumn(name = "shipping_address_id")
-    private Address shippingAddress;
+	@ManyToOne
+	@CollectionTable(name = "user_id")
+	private User user;
 
-    @OneToOne
-    @JoinColumn(name = "billing_address_id")
-    private Address billingAddress;
+	@OneToOne
+	@JoinColumn(name = "shipping_address_id")
+	private Address shippingAddress;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    @JoinColumn(name = "coupon_codes_id")
-    private CouponCode couponCodes;
+	@OneToOne
+	@JoinColumn(name = "billing_address_id")
+	private Address billingAddress;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    @Column(name = "book_id")
-    private Collection<Book> books = new ArrayList<Book>();
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+	@JoinColumn(name = "coupon_codes_id")
+	private CouponCode couponCodes;
 
-    public Order() {
-    }
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+	@Column(name = "book_id")
+	private Collection<Book> books = new ArrayList<Book>();
 
-    public Order(BigDecimal price, boolean realized) {
-        this.price = price;
-        this.realized = realized;
-    }
+	public Order() {
+	}
 
-    public Order(BigDecimal price, EnumPayments paymentMethod, Address shippingAddressId, Address billingAddressId,
-                 CouponCode couponCodes) {
-        this.price = price;
-        this.paymentMethod = paymentMethod;
-        this.shippingAddress = shippingAddressId;
-        this.billingAddress = billingAddressId;
-        this.couponCodes = couponCodes;
-    }
+	public Order(BigDecimal price, boolean realized) {
+		this.price = price;
+		this.realized = realized;
+	}
 
-    public Order(BigDecimal price, EnumPayments paymentMethod, Address shippingAddressId, Address billingAddressId,
-                 CouponCode couponCodes, Collection<Book> books) {
-        this.price = price;
-        this.paymentMethod = paymentMethod;
-        this.shippingAddress = shippingAddressId;
-        this.billingAddress = billingAddressId;
-        this.couponCodes = couponCodes;
-        this.books = books;
-    }
+	public Order(BigDecimal price, EnumPayments paymentMethod, Address shippingAddressId, Address billingAddressId,
+	             CouponCode couponCodes) {
+		this.price = price;
+		this.paymentMethod = paymentMethod;
+		this.shippingAddress = shippingAddressId;
+		this.billingAddress = billingAddressId;
+		this.couponCodes = couponCodes;
+	}
 
-
-    public Order(BigDecimal price, boolean realized, Collection<Book> books) {
-        this.price = price;
-        this.realized = realized;
-        this.books = books;
-    }
-
-    @Override
-    public String toString() {
-        return "Orders [id=" + id + ", price=" + price + ", paymentMethod=" + paymentMethod + ", shippingAddressId="
-                + shippingAddress + ", billingAddressId=" + billingAddress + ", couponCodes=" + couponCodes + ", books=" + books + "]";
-    }
-
-    public Long getId() {
-        return this.id;
-    }
+	public Order(BigDecimal price, EnumPayments paymentMethod, Address shippingAddressId, Address billingAddressId,
+	             CouponCode couponCodes, Collection<Book> books) {
+		this.price = price;
+		this.paymentMethod = paymentMethod;
+		this.shippingAddress = shippingAddressId;
+		this.billingAddress = billingAddressId;
+		this.couponCodes = couponCodes;
+		this.books = books;
+	}
 
 
-    public BigDecimal getPrice() {
-        return this.price;
-    }
+	public Order(BigDecimal price, boolean realized, Collection<Book> books) {
+		this.price = price;
+		this.realized = realized;
+		this.books = books;
+	}
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
+	@Override
+	public String toString() {
+		return "Orders [id=" + id + ", price=" + price + ", paymentMethod=" + paymentMethod + ", shippingAddressId="
+				+ shippingAddress + ", billingAddressId=" + billingAddress + ", couponCodes=" + couponCodes + ", books=" + books + "]";
+	}
 
-    public EnumPayments getPaymentMethod() {
-        return this.paymentMethod;
-    }
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
 
-    public void setPaymentMethod(EnumPayments paymentMethod) {
-        this.paymentMethod = paymentMethod;
-    }
+		Order order = (Order) o;
 
-    public Address getShippingAddress() {
-        return this.shippingAddress;
-    }
+		if (realized != order.realized) return false;
+		if (id != null ? !id.equals(order.id) : order.id != null) return false;
+		if (price != null ? !price.equals(order.price) : order.price != null) return false;
+		if (paymentMethod != order.paymentMethod) return false;
+		if (user != null ? !user.equals(order.user) : order.user != null) return false;
+		if (shippingAddress != null ? !shippingAddress.equals(order.shippingAddress) : order.shippingAddress != null)
+			return false;
+		if (billingAddress != null ? !billingAddress.equals(order.billingAddress) : order.billingAddress != null)
+			return false;
+		if (couponCodes != null ? !couponCodes.equals(order.couponCodes) : order.couponCodes != null) return false;
+		return books != null ? books.equals(order.books) : order.books == null;
+	}
 
-    public void setShippingAddress(Address shippingAddressId) {
-        this.shippingAddress = shippingAddressId;
-    }
+	@Override
+	public int hashCode() {
+		int result = id != null ? id.hashCode() : 0;
+		result = 31 * result + (price != null ? price.hashCode() : 0);
+		result = 31 * result + (paymentMethod != null ? paymentMethod.hashCode() : 0);
+		result = 31 * result + (realized ? 1 : 0);
+		result = 31 * result + (user != null ? user.hashCode() : 0);
+		result = 31 * result + (shippingAddress != null ? shippingAddress.hashCode() : 0);
+		result = 31 * result + (billingAddress != null ? billingAddress.hashCode() : 0);
+		result = 31 * result + (couponCodes != null ? couponCodes.hashCode() : 0);
+		result = 31 * result + (books != null ? books.hashCode() : 0);
+		return result;
+	}
 
-    public Address getBillingAddress() {
-        return this.billingAddress;
-    }
+	public Long getId() {
+		return this.id;
+	}
 
-    public void setBillingAddress(Address billingAddressId) {
-        this.billingAddress = billingAddressId;
-    }
 
-    public CouponCode getCouponCodes() {
-        return this.couponCodes;
-    }
+	public BigDecimal getPrice() {
+		return this.price;
+	}
 
-    public void setCouponCodes(CouponCode couponCodes) {
-        this.couponCodes = couponCodes;
-    }
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
 
-    public synchronized Collection<Book> getBooks() {
-        return this.books;
-    }
+	public EnumPayments getPaymentMethod() {
+		return this.paymentMethod;
+	}
 
-    public void setBooks(Collection<Book> books) {
-        this.books = books;
-    }
+	public void setPaymentMethod(EnumPayments paymentMethod) {
+		this.paymentMethod = paymentMethod;
+	}
 
-    public boolean getIsRealized() {
-        return this.realized;
-    }
+	public Address getShippingAddress() {
+		return this.shippingAddress;
+	}
 
-    public void setRealized(boolean realized) {
-        this.realized = realized;
-    }
+	public void setShippingAddress(Address shippingAddressId) {
+		this.shippingAddress = shippingAddressId;
+	}
+
+	public Address getBillingAddress() {
+		return this.billingAddress;
+	}
+
+	public void setBillingAddress(Address billingAddressId) {
+		this.billingAddress = billingAddressId;
+	}
+
+	public CouponCode getCouponCodes() {
+		return this.couponCodes;
+	}
+
+	public void setCouponCodes(CouponCode couponCodes) {
+		this.couponCodes = couponCodes;
+	}
+
+	public synchronized Collection<Book> getBooks() {
+		return this.books;
+	}
+
+	public void setBooks(Collection<Book> books) {
+		this.books = books;
+	}
+
+	public boolean getIsRealized() {
+		return this.realized;
+	}
+
+	public void setRealized(boolean realized) {
+		this.realized = realized;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 }
+
