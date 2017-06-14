@@ -1,6 +1,6 @@
 package com.shop.controllers.administratorSite.books.file;
 
-import com.shop.configuration.ApplicationConfig;
+import com.shop.configuration.ApplicationProperties;
 import com.shop.data.tables.Picture;
 import com.shop.others.RepositoriesAccess;
 import org.springframework.stereotype.Controller;
@@ -21,7 +21,7 @@ public class FileUploadActions {
             if (picture != null)
                 RepositoriesAccess.picturesRepository.delete(picture.getId());
 
-            File file = new File(ApplicationConfig.PICTURE_PATH + name);
+            File file = new File(ApplicationProperties.PICTURE_PATH + name);
             file.delete();
         } catch (Exception e) {
             e.printStackTrace();

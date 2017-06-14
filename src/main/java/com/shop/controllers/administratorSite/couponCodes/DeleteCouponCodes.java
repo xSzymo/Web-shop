@@ -1,6 +1,6 @@
 package com.shop.controllers.administratorSite.couponCodes;
 
-import com.shop.configuration.ApplicationConfig;
+import com.shop.configuration.ApplicationProperties;
 import com.shop.data.tables.CouponCode;
 import com.shop.data.tables.Order;
 import com.shop.others.RepositoriesAccess;
@@ -49,7 +49,7 @@ public class DeleteCouponCodes {
         Iterable<CouponCode> couponCodesAll = RepositoriesAccess.couponCodesRepository.findAll();
         red.addFlashAttribute("couponCodes", couponCodesAll);
 
-        return new RedirectView(ApplicationConfig.PROJECT_NAME + "administratorSite/couponCodes/delete");
+        return new RedirectView(ApplicationProperties.PROJECT_NAME + "administratorSite/couponCodes/delete");
     }
 
     @RequestMapping(value = "delete", method = RequestMethod.POST)

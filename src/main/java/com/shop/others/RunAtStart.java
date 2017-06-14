@@ -1,6 +1,6 @@
 package com.shop.others;
 
-import com.shop.configuration.ApplicationConfig;
+import com.shop.configuration.ApplicationProperties;
 import com.shop.data.enums.EnumPayments;
 import com.shop.data.tables.*;
 import org.springframework.stereotype.Component;
@@ -15,7 +15,7 @@ import java.util.LinkedHashSet;
 public class RunAtStart {
     @PostConstruct
     public void runAtStart() {
-        if (ApplicationConfig.FALSE_WHILE_RUNNING_DB_TESTS) {
+        if (ApplicationProperties.FALSE_WHILE_RUNNING_DB_TESTS) {
             Address a = new Address();
             a.setCity("CITI");
             a.setCountry("CONTRY");

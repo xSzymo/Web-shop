@@ -1,7 +1,7 @@
 package com.shop.configuration.database;
 
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
-import com.shop.configuration.ApplicationConfig;
+import com.shop.configuration.ApplicationProperties;
 import com.shop.configuration.system.ApplicationPropertiesInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -42,14 +42,14 @@ public class DataBaseConfiguration {
 
     @Bean
     public DataSource dataSource() {
-        if (ApplicationConfig.USE_APPLICATION_PROPERTIES_DATA)
+        if (ApplicationProperties.USE_APPLICATION_PROPERTIES_DATA)
             new ApplicationPropertiesInitializer();
         MysqlDataSource dataSource = new MysqlDataSource();
-        dataSource.setServerName(ApplicationConfig.SERVER_NAME);
-        dataSource.setPort(Integer.parseInt(ApplicationConfig.PORT));
-        dataSource.setDatabaseName(ApplicationConfig.DATABASE_NAME);
-        dataSource.setUser(ApplicationConfig.DATABASE_USER_NANE);
-        dataSource.setPassword(ApplicationConfig.DATABASE_USER_PASSWORD);
+        dataSource.setServerName(ApplicationProperties.SERVER_NAME);
+        dataSource.setPort(Integer.parseInt(ApplicationProperties.PORT));
+        dataSource.setDatabaseName(ApplicationProperties.DATABASE_NAME);
+        dataSource.setUser(ApplicationProperties.DATABASE_USER_NANE);
+        dataSource.setPassword(ApplicationProperties.DATABASE_USER_PASSWORD);
         return dataSource;
     }
 

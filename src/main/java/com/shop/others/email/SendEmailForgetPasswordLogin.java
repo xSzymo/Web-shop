@@ -1,6 +1,6 @@
 package com.shop.others.email;
 
-import com.shop.configuration.ApplicationConfig;
+import com.shop.configuration.ApplicationProperties;
 import com.shop.data.tables.User;
 import com.shop.others.RepositoriesAccess;
 import org.springframework.stereotype.Controller;
@@ -41,7 +41,7 @@ public class SendEmailForgetPasswordLogin {
             request.getSession().setAttribute("email", email);
 
             Message msg = new MimeMessage(session);
-            msg.setFrom(new InternetAddress(ApplicationConfig.SHOP_EMAIL));
+            msg.setFrom(new InternetAddress(ApplicationProperties.SHOP_EMAIL));
             msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email, false));
             msg.setSubject("Reset password");
             msg.setText("After 5 min code will be delete\n" + code);
@@ -68,7 +68,7 @@ public class SendEmailForgetPasswordLogin {
             Session session = EmailActions.authorizeWebShopEmail();
 
             Message msg = new MimeMessage(session);
-            msg.setFrom(new InternetAddress(ApplicationConfig.SHOP_EMAIL));
+            msg.setFrom(new InternetAddress(ApplicationProperties.SHOP_EMAIL));
             msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email, false));
             msg.setSubject("Your login");
             msg.setText("Login : " + user.getLogin());

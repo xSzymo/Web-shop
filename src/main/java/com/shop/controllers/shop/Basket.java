@@ -1,6 +1,6 @@
 package com.shop.controllers.shop;
 
-import com.shop.configuration.ApplicationConfig;
+import com.shop.configuration.ApplicationProperties;
 import com.shop.data.enums.EnumPayments;
 import com.shop.data.tables.Book;
 import com.shop.data.tables.User;
@@ -50,7 +50,7 @@ public class Basket {
         Book book = RepositoriesAccess.booksRepository.findById(id);
 
         if (book == null)
-            return new RedirectView(ApplicationConfig.PROJECT_NAME + "shop/basket");
+            return new RedirectView(ApplicationProperties.PROJECT_NAME + "shop/basket");
 
         boolean is = false;
         int howMany = 1;
@@ -89,7 +89,7 @@ public class Basket {
 
         model.addAttribute("basketWithAllBooks", basketWithAllBooks);
         model.addAttribute("basket", basket);
-        return new RedirectView(ApplicationConfig.PROJECT_NAME + "shop/basket");
+        return new RedirectView(ApplicationProperties.PROJECT_NAME + "shop/basket");
     }
 
     @RequestMapping(value = "continue", method = RequestMethod.GET)

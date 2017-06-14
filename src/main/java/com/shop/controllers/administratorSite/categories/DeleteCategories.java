@@ -1,6 +1,6 @@
 package com.shop.controllers.administratorSite.categories;
 
-import com.shop.configuration.ApplicationConfig;
+import com.shop.configuration.ApplicationProperties;
 import com.shop.data.tables.Category;
 import com.shop.others.RepositoriesAccess;
 import org.springframework.stereotype.Controller;
@@ -37,7 +37,7 @@ public class DeleteCategories {
         Iterable<Category> categories = RepositoriesAccess.categoriesRepository.findAll();
         model.addAttribute("categories", categories);
 
-        return new RedirectView(ApplicationConfig.PROJECT_NAME + "administratorSite/categories/delete");
+        return new RedirectView(ApplicationProperties.PROJECT_NAME + "administratorSite/categories/delete");
     }
 
     @RequestMapping(value = "delete", method = RequestMethod.POST)

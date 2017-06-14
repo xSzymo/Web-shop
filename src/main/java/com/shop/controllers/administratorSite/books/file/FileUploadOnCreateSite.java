@@ -1,6 +1,6 @@
 package com.shop.controllers.administratorSite.books.file;
 
-import com.shop.configuration.ApplicationConfig;
+import com.shop.configuration.ApplicationProperties;
 import com.shop.data.tables.Category;
 import com.shop.data.tables.Picture;
 import com.shop.others.RepositoriesAccess;
@@ -46,7 +46,7 @@ public class FileUploadOnCreateSite {
                 byte[] bytes = file.getBytes();
 
                 // String rootPath = System.getProperty("catalina.home");
-                File dir = new File(ApplicationConfig.PICTURE_PATH);
+                File dir = new File(ApplicationProperties.PICTURE_PATH);
                 System.out.println("File : " + dir.getPath());
                 if (!dir.exists())
                     dir.mkdirs();
@@ -92,14 +92,14 @@ public class FileUploadOnCreateSite {
             return "administratorSite/booksCRUD/create";
         }
         try {
-            FileUploadActions.downloadImage(link, new File(ApplicationConfig.PICTURE_PATH).getAbsolutePath(), name);
+            FileUploadActions.downloadImage(link, new File(ApplicationProperties.PICTURE_PATH).getAbsolutePath(), name);
 
         } catch (IOException ex) {
             model.addAttribute("msgLink", "error");
             return "administratorSite/booksCRUD/create";
         }
 
-        Picture picture = new Picture(name, new File(ApplicationConfig.PICTURE_PATH).getAbsolutePath() + File.separator + name);
+        Picture picture = new Picture(name, new File(ApplicationProperties.PICTURE_PATH).getAbsolutePath() + File.separator + name);
         RepositoriesAccess.picturesRepository.save(picture);
 
         model.addAttribute("pictureLinkName", name);

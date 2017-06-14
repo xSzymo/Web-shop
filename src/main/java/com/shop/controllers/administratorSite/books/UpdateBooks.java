@@ -1,6 +1,6 @@
 package com.shop.controllers.administratorSite.books;
 
-import com.shop.configuration.ApplicationConfig;
+import com.shop.configuration.ApplicationProperties;
 import com.shop.controllers.administratorSite.books.file.FileUploadActions;
 import com.shop.data.tables.Book;
 import com.shop.data.tables.Category;
@@ -114,7 +114,7 @@ public class UpdateBooks {
                                       RedirectAttributes red) {
         Book foundBook = RepositoriesAccess.booksRepository.findById(bookId);
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:" + ApplicationConfig.URL + ApplicationConfig.PROJECT_NAME
+        modelAndView.setViewName("redirect:" + ApplicationProperties.URL + ApplicationProperties.PROJECT_NAME
                 + "administratorSite/books/update/" + bookId);
 
         for (Picture x : foundBook.getPictures()) {

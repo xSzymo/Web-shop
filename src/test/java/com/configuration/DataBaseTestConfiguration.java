@@ -1,6 +1,6 @@
 package com.configuration;
 
-import com.shop.configuration.ApplicationConfig;
+import com.shop.configuration.ApplicationProperties;
 import com.shop.configuration.database.DataBaseConfiguration;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -25,12 +25,12 @@ public class DataBaseTestConfiguration {
 
 	@BeforeClass
 	public static void before() {
-		ApplicationConfig.FALSE_WHILE_RUNNING_DB_TESTS = false;
+		ApplicationProperties.FALSE_WHILE_RUNNING_DB_TESTS = false;
 	}
 
 	@AfterClass
 	public static void afterClass() {
-		ApplicationConfig.FALSE_WHILE_RUNNING_DB_TESTS = true;
+		ApplicationProperties.FALSE_WHILE_RUNNING_DB_TESTS = true;
 	}
 
 	@Test

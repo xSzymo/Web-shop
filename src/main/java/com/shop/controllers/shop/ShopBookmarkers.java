@@ -1,6 +1,6 @@
 package com.shop.controllers.shop;
 
-import com.shop.configuration.ApplicationConfig;
+import com.shop.configuration.ApplicationProperties;
 import com.shop.data.tables.Book;
 import com.shop.data.tables.Category;
 import com.shop.others.RepositoriesAccess;
@@ -41,7 +41,7 @@ public class ShopBookmarkers {
             }
         }
         if (number == null || number.equals(""))
-            return new RedirectView(ApplicationConfig.PROJECT_NAME + "shop/" + category.getName());
+            return new RedirectView(ApplicationProperties.PROJECT_NAME + "shop/" + category.getName());
 
         LinkedList<Book> basketWithAllBooks = Shop.getBasketWithAllBooks(request);
         HashSet<Book> basket = Shop.getBasket(request);
@@ -62,6 +62,6 @@ public class ShopBookmarkers {
         request.getSession().setAttribute("basketWithAllBooks", basketWithAllBooks);
         request.getSession().setAttribute("basket", basket);
 
-        return new RedirectView(ApplicationConfig.PROJECT_NAME + "shop/" + category.getName());
+        return new RedirectView(ApplicationProperties.PROJECT_NAME + "shop/" + category.getName());
     }
 }

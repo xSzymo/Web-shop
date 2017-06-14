@@ -1,6 +1,6 @@
 package com.shop.controllers.administratorSite.adress;
 
-import com.shop.configuration.ApplicationConfig;
+import com.shop.configuration.ApplicationProperties;
 import com.shop.data.tables.Address;
 import com.shop.data.tables.Order;
 import com.shop.data.tables.User;
@@ -58,7 +58,7 @@ public class DeleteAddress {
         Iterable<Address> allAddress = RepositoriesAccess.addressRepository.findAll();
         model.addAttribute("address", allAddress);
 
-        return new RedirectView(ApplicationConfig.PROJECT_NAME + "administratorSite/address/delete");
+        return new RedirectView(ApplicationProperties.PROJECT_NAME + "administratorSite/address/delete");
     }
 
     @RequestMapping(value = "delete", method = RequestMethod.POST)

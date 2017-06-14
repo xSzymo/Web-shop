@@ -1,6 +1,6 @@
 package com.shop.controllers.administratorSite.books;
 
-import com.shop.configuration.ApplicationConfig;
+import com.shop.configuration.ApplicationProperties;
 import com.shop.controllers.administratorSite.books.file.FileUploadActions;
 import com.shop.data.tables.Book;
 import com.shop.data.tables.Category;
@@ -40,7 +40,7 @@ public class DeleteBooks {
             Iterable<Book> books = RepositoriesAccess.booksRepository.findAll();
             model.addAttribute("books", books);
 
-            return new RedirectView(ApplicationConfig.PROJECT_NAME + "administratorSite/books/delete");
+            return new RedirectView(ApplicationProperties.PROJECT_NAME + "administratorSite/books/delete");
         }
 
         Iterable<Order> orders = RepositoriesAccess.ordersRepository.findAll();
@@ -77,7 +77,7 @@ public class DeleteBooks {
         Iterable<Book> books = RepositoriesAccess.booksRepository.findAll();
         model.addAttribute("books", books);
 
-        return new RedirectView(ApplicationConfig.PROJECT_NAME + "administratorSite/books/delete");
+        return new RedirectView(ApplicationProperties.PROJECT_NAME + "administratorSite/books/delete");
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)

@@ -1,6 +1,6 @@
 package com.shop.configuration;
 
-public class ApplicationConfig {
+public class ApplicationProperties {
     /**
      * URL
      */

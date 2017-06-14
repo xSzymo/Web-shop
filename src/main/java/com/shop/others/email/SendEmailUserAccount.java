@@ -1,6 +1,6 @@
 package com.shop.others.email;
 
-import com.shop.configuration.ApplicationConfig;
+import com.shop.configuration.ApplicationProperties;
 import com.shop.data.tables.User;
 import com.shop.others.RepositoriesAccess;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,7 +22,7 @@ public class SendEmailUserAccount {
             Session session = EmailActions.authorizeWebShopEmail();
 
             Message msg = new MimeMessage(session);
-            msg.setFrom(new InternetAddress(ApplicationConfig.SHOP_EMAIL));
+            msg.setFrom(new InternetAddress(ApplicationProperties.SHOP_EMAIL));
             msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(eMail, false));
             msg.setSubject("Shop order");
             msg.setText(text);
@@ -43,7 +43,7 @@ public class SendEmailUserAccount {
 
             if (newPassword != null && email.equals("")) {
                 Message msg = new MimeMessage(session);
-                msg.setFrom(new InternetAddress(ApplicationConfig.SHOP_EMAIL));
+                msg.setFrom(new InternetAddress(ApplicationProperties.SHOP_EMAIL));
                 msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(user.geteMail(), false));
 
                 msg.setSubject("New password");
@@ -57,7 +57,7 @@ public class SendEmailUserAccount {
             } else {
                 String code = Long.toHexString(Double.doubleToLongBits(Math.random()));
                 Message msg = new MimeMessage(session);
-                msg.setFrom(new InternetAddress(ApplicationConfig.SHOP_EMAIL));
+                msg.setFrom(new InternetAddress(ApplicationProperties.SHOP_EMAIL));
                 msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(user.geteMail(), false));
 
                 msg.setSubject("Change Email");

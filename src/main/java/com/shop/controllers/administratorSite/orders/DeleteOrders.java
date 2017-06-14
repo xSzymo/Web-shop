@@ -1,6 +1,6 @@
 package com.shop.controllers.administratorSite.orders;
 
-import com.shop.configuration.ApplicationConfig;
+import com.shop.configuration.ApplicationProperties;
 import com.shop.data.tables.Order;
 import com.shop.others.RepositoriesAccess;
 import org.springframework.stereotype.Controller;
@@ -37,7 +37,7 @@ public class DeleteOrders {
         Iterable<Order> orders = RepositoriesAccess.ordersRepository.findAll();
         model.addAttribute("orders", orders);
 
-        return new RedirectView(ApplicationConfig.PROJECT_NAME + "administratorSite/orders/delete");
+        return new RedirectView(ApplicationProperties.PROJECT_NAME + "administratorSite/orders/delete");
     }
 
     @RequestMapping(value = "delete", method = RequestMethod.POST)

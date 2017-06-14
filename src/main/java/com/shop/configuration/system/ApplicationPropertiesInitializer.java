@@ -1,21 +1,21 @@
 package com.shop.configuration.system;
 
-import com.shop.configuration.ApplicationConfig;
+import com.shop.configuration.ApplicationProperties;
 
 import java.io.InputStream;
 import java.util.Properties;
 
 public class ApplicationPropertiesInitializer {
-    public String URL = "";
-    public String PROJECT_NAME = "";
-    public String PICTURE_PATH = "";
-    public String SHOP_EMAIL = "";
-    public String SHOP_EMAIL_PASSWORD = "";
-    public String DATABASE_NAME = "";
-    public String DATABASE_USER_NAME = "";
-    public String DATABASE_USER_PASSWORD = "";
-    public String DATABASE_SERVER_NAME = "";
-    public String DATABASE_PORT = "";
+    private String URL = "";
+    private String PROJECT_NAME = "";
+    private String PICTURE_PATH = "";
+    private String SHOP_EMAIL = "";
+    private String SHOP_EMAIL_PASSWORD = "";
+    private String DATABASE_NAME = "";
+    private String DATABASE_USER_NAME = "";
+    private String DATABASE_USER_PASSWORD = "";
+    private String DATABASE_SERVER_NAME = "";
+    private String DATABASE_PORT = "";
 
     String propFileName = "application.properties";
     InputStream inputStream;
@@ -44,26 +44,26 @@ public class ApplicationPropertiesInitializer {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (ApplicationConfig.USE_APPLICATION_PROPERTIES_DATA) {
+            if (ApplicationProperties.USE_APPLICATION_PROPERTIES_DATA) {
                 if (!URL.equals(""))
-                    ApplicationConfig.URL = URL;
+                    ApplicationProperties.URL = URL;
                 if (!PROJECT_NAME.equals(""))
-                    ApplicationConfig.PROJECT_NAME = PROJECT_NAME;
+                    ApplicationProperties.PROJECT_NAME = PROJECT_NAME;
                 if (!PICTURE_PATH.equals("")) {
-                    ApplicationConfig.PICTURE_PATH = PICTURE_PATH;
-                    if(ApplicationConfig.PICTURE_PATH.substring(ApplicationConfig.PICTURE_PATH.length() - 1) != "/")
-                        ApplicationConfig.PICTURE_PATH += "/";
+                    ApplicationProperties.PICTURE_PATH = PICTURE_PATH;
+                    if(!ApplicationProperties.PICTURE_PATH.substring(ApplicationProperties.PICTURE_PATH.length() - 1).equals("/"))
+                        ApplicationProperties.PICTURE_PATH += "/";
                 }
                 if (!SHOP_EMAIL.equals(""))
-                    ApplicationConfig.SHOP_EMAIL = SHOP_EMAIL;
+                    ApplicationProperties.SHOP_EMAIL = SHOP_EMAIL;
                 if (!SHOP_EMAIL_PASSWORD.equals(""))
-                    ApplicationConfig.SHOP_EMAIL_PASSWORD = SHOP_EMAIL_PASSWORD;
+                    ApplicationProperties.SHOP_EMAIL_PASSWORD = SHOP_EMAIL_PASSWORD;
                 if (!DATABASE_NAME.equals(""))
-                    ApplicationConfig.DATABASE_NAME = DATABASE_NAME;
+                    ApplicationProperties.DATABASE_NAME = DATABASE_NAME;
                 if (!DATABASE_USER_NAME.equals(""))
-                    ApplicationConfig.DATABASE_USER_NANE = DATABASE_USER_NAME;
+                    ApplicationProperties.DATABASE_USER_NANE = DATABASE_USER_NAME;
                 if (!DATABASE_USER_PASSWORD.equals(""))
-                    ApplicationConfig.DATABASE_USER_PASSWORD = DATABASE_USER_PASSWORD;
+                    ApplicationProperties.DATABASE_USER_PASSWORD = DATABASE_USER_PASSWORD;
             }
         }
     }

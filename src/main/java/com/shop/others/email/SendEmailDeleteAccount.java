@@ -1,6 +1,6 @@
 package com.shop.others.email;
 
-import com.shop.configuration.ApplicationConfig;
+import com.shop.configuration.ApplicationProperties;
 import com.shop.data.tables.User;
 import org.springframework.stereotype.Component;
 
@@ -25,10 +25,10 @@ public class SendEmailDeleteAccount {
             System.out.println(code);
 
             Message msg = new MimeMessage(session);
-            msg.setFrom(new InternetAddress(ApplicationConfig.SHOP_EMAIL));
+            msg.setFrom(new InternetAddress(ApplicationProperties.SHOP_EMAIL));
             msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(user.geteMail(), false));
             msg.setSubject("Delete account");
-            msg.setText("Link : " + ApplicationConfig.URL + ApplicationConfig.PROJECT_NAME + "account/deleteAccountCode/" + code);
+            msg.setText("Link : " + ApplicationProperties.URL + ApplicationProperties.PROJECT_NAME + "account/deleteAccountCode/" + code);
             msg.setSentDate(new Date());
             Transport.send(msg);
 

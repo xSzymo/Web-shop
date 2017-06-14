@@ -1,6 +1,6 @@
 package com.shop.data.services.Picture;
 
-import com.shop.configuration.ApplicationConfig;
+import com.shop.configuration.ApplicationProperties;
 import com.shop.data.tables.Picture;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +14,7 @@ import java.nio.file.Paths;
 import static org.junit.Assert.fail;
 
 /*
-TODO - project doeasnt read application.properties. It needs DataBaseTestConf to set proper
+TODO - project doesnt read application.properties. It needs DataBaseTestConf to set proper
  */
 public class PicturesOperationsTest {
     private PictureOperations pictureSaver;
@@ -26,7 +26,7 @@ public class PicturesOperationsTest {
 
     @Test
     public void uploadFile() throws Exception {
-        Picture picture = new Picture(ApplicationConfig.PICTURE_PATH, "name", "jpg");
+        Picture picture = new Picture(ApplicationProperties.PICTURE_PATH, "name", "jpg");
         pictureSaver.deletePicture(picture);
 
         byte[] file = new byte[1];
@@ -48,7 +48,7 @@ public class PicturesOperationsTest {
 
     @Test
     public void downloadImage() throws Exception {
-        Picture picture = new Picture(ApplicationConfig.PICTURE_PATH, "name", "jpg");
+        Picture picture = new Picture(ApplicationProperties.PICTURE_PATH, "name", "jpg");
         pictureSaver.deletePicture(picture);
 
         String url = "https://avatars2.githubusercontent.com/u/15995737?v=3&u=5a9b47ecf84c0e09d28f023a8f634586d91a1d7d&s=400";

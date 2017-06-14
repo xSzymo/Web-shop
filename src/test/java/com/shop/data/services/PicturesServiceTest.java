@@ -1,7 +1,7 @@
 package com.shop.data.services;
 
 import com.configuration.DataBaseTestConfiguration;
-import com.shop.configuration.ApplicationConfig;
+import com.shop.configuration.ApplicationProperties;
 import com.shop.data.services.Picture.PictureOperations;
 import com.shop.data.tables.Picture;
 import org.junit.After;
@@ -238,7 +238,7 @@ public class PicturesServiceTest extends DataBaseTestConfiguration {
 	public LinkedList<Picture> createPictureCollection() {
 		LinkedList<Picture> actualPicture = new LinkedList<>();
 		for (int i = 0; i < 3; i++)
-			actualPicture.add(new Picture(ApplicationConfig.PICTURE_PATH, "name" + i, ""));
+			actualPicture.add(new Picture(ApplicationProperties.PICTURE_PATH, "name" + i, ""));
 		return actualPicture;
 	}
 }

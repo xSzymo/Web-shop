@@ -1,6 +1,6 @@
 package com.shop.controllers.administratorSite.books.file;
 
-import com.shop.configuration.ApplicationConfig;
+import com.shop.configuration.ApplicationProperties;
 import com.shop.data.tables.Book;
 import com.shop.data.tables.Category;
 import com.shop.data.tables.Picture;
@@ -40,7 +40,7 @@ public class FileUploadOnUpdateSite {
         Picture found = RepositoriesAccess.picturesRepository.findByName(name);
         Book foundBook = RepositoriesAccess.booksRepository.findById(id);
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:http://localhost:8080" + ApplicationConfig.PROJECT_NAME + "administratorSite/books/update/" + id);
+        modelAndView.setViewName("redirect:http://localhost:8080" + ApplicationProperties.PROJECT_NAME + "administratorSite/books/update/" + id);
 
         if (found != null) {
             redir.addFlashAttribute("msgLink", "This picture already exist");
@@ -48,14 +48,14 @@ public class FileUploadOnUpdateSite {
         }
 
         try {
-            FileUploadActions.downloadImage(link, new File(ApplicationConfig.PICTURE_PATH).getAbsolutePath(), name);
+            FileUploadActions.downloadImage(link, new File(ApplicationProperties.PICTURE_PATH).getAbsolutePath(), name);
 
         } catch (IOException ex) {
             redir.addFlashAttribute("msgLink", "error");
             return modelAndView;
         }
 
-        Picture picture = new Picture(name, new File(ApplicationConfig.PICTURE_PATH).getAbsolutePath() + File.separator + name);
+        Picture picture = new Picture(name, new File(ApplicationProperties.PICTURE_PATH).getAbsolutePath() + File.separator + name);
         foundBook.getPictures().add(picture);
         RepositoriesAccess.booksRepository.save(foundBook);
 
@@ -74,7 +74,7 @@ public class FileUploadOnUpdateSite {
         Picture found = RepositoriesAccess.picturesRepository.findByName(name);
         Book foundBook = RepositoriesAccess.booksRepository.findById(id);
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:http://localhost:8080" + ApplicationConfig.PROJECT_NAME + "administratorSite/books/update/" + id);
+        modelAndView.setViewName("redirect:http://localhost:8080" + ApplicationProperties.PROJECT_NAME + "administratorSite/books/update/" + id);
 
         if (found != null) {
             redir.addFlashAttribute("msg", "This picture already exist");
@@ -91,7 +91,7 @@ public class FileUploadOnUpdateSite {
                 byte[] bytes = file.getBytes();
 
                 // String rootPath = System.getProperty("catalina.home");
-                File dir = new File(ApplicationConfig.PICTURE_PATH);
+                File dir = new File(ApplicationProperties.PICTURE_PATH);
                 if (!dir.exists())
                     dir.mkdirs();
 

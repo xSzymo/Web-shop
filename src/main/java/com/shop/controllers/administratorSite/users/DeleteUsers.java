@@ -1,6 +1,6 @@
 package com.shop.controllers.administratorSite.users;
 
-import com.shop.configuration.ApplicationConfig;
+import com.shop.configuration.ApplicationProperties;
 import com.shop.data.tables.User;
 import com.shop.data.tables.UserRole;
 import com.shop.others.RepositoriesAccess;
@@ -40,7 +40,7 @@ public class DeleteUsers {
         Iterable<User> users = RepositoriesAccess.usersRepository.findAll();
         model.addAttribute("users", users);
 
-        return new RedirectView(ApplicationConfig.PROJECT_NAME + "administratorSite/users/delete");
+        return new RedirectView(ApplicationProperties.PROJECT_NAME + "administratorSite/users/delete");
     }
 
     @RequestMapping(value = "delete", method = RequestMethod.POST)

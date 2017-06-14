@@ -1,7 +1,6 @@
 package com.shop.data.services;
 
 import com.shop.data.repositories.BooksRepository;
-import com.shop.data.repositories.CategoriesRepository;
 import com.shop.data.repositories.OrdersRepository;
 import com.shop.data.tables.Book;
 import com.shop.data.tables.Category;
@@ -22,7 +21,7 @@ public class BooksService {
 	@Autowired
 	private OrdersRepository ordersRepository;
 	@Autowired
-	private CategoriesRepository categoriesRepository;
+	private CategoriesService categoriesService;
 	@Autowired
 	private PicturesService picturesService;
 
@@ -65,7 +64,7 @@ public class BooksService {
 	public void delete(Collection<Book> book) {
 		if (book.size() > 0)
 			book.forEach(x -> {
-				if(x.getId() != null)
+				if (x.getId() != null)
 					delete(x.getId());
 			});
 	}
@@ -74,6 +73,29 @@ public class BooksService {
 		if (book == null)
 			return;
 
+		removeBookFromOrders(book);
+		removeBookFromCategories(book);
+
+		picturesService.delete(book.getPictures());
+		repository.delete(book.getId());
+	}
+
+	private void removeBookFromCategories(Book book) {
+		Iterable<Category> categories = categoriesService.findAll();
+
+		for (Iterator<Category> iterator = categories.iterator(); iterator.hasNext(); ) {
+			Category x2 = iterator.next();
+			for (Iterator<Book> iterator2 = x2.getBooks().iterator(); iterator2.hasNext(); ) {
+				Book x3 = iterator2.next();
+				if (x3.getId() == book.getId()) {
+					iterator2.remove();
+					categoriesService.save(x2);
+				}
+			}
+		}
+	}
+
+	private void removeBookFromOrders(Book book) {
 		Iterable<Order> orders = ordersRepository.findAll();
 
 		for (Iterator<Order> iterator = orders.iterator(); iterator.hasNext(); ) {
@@ -86,22 +108,5 @@ public class BooksService {
 				}
 			}
 		}
-
-		Iterable<Category> categories = categoriesRepository.findAll();
-
-		for (Iterator<Category> iterator = categories.iterator(); iterator.hasNext(); ) {
-			Category x2 = iterator.next();
-			for (Iterator<Book> iterator2 = x2.getBooks().iterator(); iterator2.hasNext(); ) {
-				Book x3 = iterator2.next();
-				if (x3.getId() == book.getId()) {
-					iterator2.remove();
-					categoriesRepository.save(x2);
-				}
-			}
-		}
-
-		picturesService.delete(book.getPictures());
-		repository.delete(book.getId());
-
 	}
 }

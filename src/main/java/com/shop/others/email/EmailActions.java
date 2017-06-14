@@ -1,6 +1,6 @@
 package com.shop.others.email;
 
-import com.shop.configuration.ApplicationConfig;
+import com.shop.configuration.ApplicationProperties;
 
 import javax.mail.Authenticator;
 import javax.mail.MessagingException;
@@ -27,8 +27,8 @@ public class EmailActions {
         props.put("mail.debug", "true");
         props.put("mail.store.protocol", "pop3");
         props.put("mail.transport.protocol", "smtp");
-        final String username = ApplicationConfig.SHOP_EMAIL;
-        final String password = ApplicationConfig.SHOP_EMAIL_PASSWORD;
+        final String username = ApplicationProperties.SHOP_EMAIL;
+        final String password = ApplicationProperties.SHOP_EMAIL_PASSWORD;
         session = Session.getDefaultInstance(props, new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(username, password);
