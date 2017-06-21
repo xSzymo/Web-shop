@@ -95,6 +95,7 @@ public class Order {
 				+ shippingAddress + ", billingAddressId=" + billingAddress + ", couponCodes=" + couponCodes + ", books=" + books + "]";
 	}
 
+	//TODO equals books
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -104,15 +105,22 @@ public class Order {
 
 		if (realized != order.realized) return false;
 		if (id != null ? !id.equals(order.id) : order.id != null) return false;
-		if (price != null ? !price.equals(order.price) : order.price != null) return false;
+		if (!(price.longValue() == order.price.longValue())) return false;
 		if (paymentMethod != order.paymentMethod) return false;
-		if (user != null ? !user.equals(order.user) : order.user != null) return false;
+		if (user != null ? !user.getLogin().equals(order.user.getLogin()) : order.user != null) return false;
 		if (shippingAddress != null ? !shippingAddress.equals(order.shippingAddress) : order.shippingAddress != null)
 			return false;
 		if (billingAddress != null ? !billingAddress.equals(order.billingAddress) : order.billingAddress != null)
 			return false;
 		if (couponCodes != null ? !couponCodes.equals(order.couponCodes) : order.couponCodes != null) return false;
-		return books != null ? books.equals(order.books) : order.books == null;
+//			books.forEach(
+//					x -> {
+//
+//					}
+//			);
+//		}
+//		return books != null ?  : order.books == null;
+		return true;
 	}
 
 	@Override
@@ -132,7 +140,6 @@ public class Order {
 	public Long getId() {
 		return this.id;
 	}
-
 
 	public BigDecimal getPrice() {
 		return this.price;

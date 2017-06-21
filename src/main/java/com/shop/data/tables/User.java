@@ -159,4 +159,38 @@ public class User {
     public void setCookieCode(String cookieCode) {
         this.cookieCode = cookieCode;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        if (age != user.age) return false;
+        if (!id.equals(user.id)) return false;
+        if (!login.equals(user.login)) return false;
+        if (!password.equals(user.password)) return false;
+        if (name != null ? !name.equals(user.name) : user.name != null) return false;
+        if (surname != null ? !surname.equals(user.surname) : user.surname != null) return false;
+        if (!eMail.equals(user.eMail)) return false;
+        if (cookieCode != null ? !cookieCode.equals(user.cookieCode) : user.cookieCode != null) return false;
+        if (address != null ? !address.equals(user.address) : user.address != null) return false;
+        return orders != null ? orders.equals(user.orders) : user.orders == null;
+    }
+
+//    @Override
+//    public int hashCode() {
+//        int result = id.hashCode();
+//        result = 31 * result + login.hashCode();
+//        result = 31 * result + password.hashCode();
+//        result = 31 * result + (name != null ? name.hashCode() : 0);
+//        result = 31 * result + (surname != null ? surname.hashCode() : 0);
+//        result = 31 * result + eMail.hashCode();
+//        result = 31 * result + age;
+//        result = 31 * result + (cookieCode != null ? cookieCode.hashCode() : 0);
+//        result = 31 * result + (address != null ? address.hashCode() : 0);
+//        result = 31 * result + (orders != null ? orders.hashCode() : 0);
+//        return result;
+//    }
 }

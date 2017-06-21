@@ -1,11 +1,13 @@
 package com.shop.data.services;
 
 import com.configuration.DataBaseTestConfiguration;
+import com.shop.data.repositories.OrdersRepository;
 import com.shop.data.repositories.UsersRepository;
 import com.shop.data.tables.Book;
 import com.shop.data.tables.Category;
 import com.shop.data.tables.Order;
 import com.shop.data.tables.User;
+import com.shop.others.RepositoriesAccess;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,7 +22,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-public class OrdersServiceTest extends DataBaseTestConfiguration {
+public class OrdersServiceTest {/*extends DataBaseTestConfiguration {
 	@Autowired
 	private OrdersService service;
 	@Autowired
@@ -29,6 +31,8 @@ public class OrdersServiceTest extends DataBaseTestConfiguration {
 	private CategoriesService categoriesService;
 	@Autowired
 	private UsersRepository usersRepository;
+	@Autowired
+	private OrdersRepository repository;
 
 
 	private LinkedList<Order> orders;
@@ -99,8 +103,10 @@ public class OrdersServiceTest extends DataBaseTestConfiguration {
 		Iterable<Order> actualBooks = service.findAll();
 
 		actualBooks.forEach(
-				x ->
-						assertNotNull(service.findOne(x.getId()))
+				x -> {
+					service.save(x);
+					assertNotNull(service.findOne(x.getId()));
+				}
 		);
 	}
 
@@ -111,6 +117,8 @@ public class OrdersServiceTest extends DataBaseTestConfiguration {
 		service.save(actualBook);
 		service.delete(actualBook);
 
+		System.out.println(service.findOne(actualBook.getId()));
+
 		assertNull(service.findOne(actualBook.getId()));
 	}
 
@@ -119,10 +127,13 @@ public class OrdersServiceTest extends DataBaseTestConfiguration {
 		Order actualBook = orders.getFirst();
 
 		service.save(actualBook);
-		service.delete(actualBook.getId());
+		service.delete(actualBook);
 
+		assertNotNull(usersRepository.findById(actualBook.getUser().getId()));
 		assertNull(service.findOne(actualBook.getId()));
 	}
+
+
 
 	@Test
 	public void deleteCollection() {
@@ -163,5 +174,5 @@ public class OrdersServiceTest extends DataBaseTestConfiguration {
 		}
 		categoriesService.save(category);
 		return booksToReturn;
-	}
+	}*/
 }

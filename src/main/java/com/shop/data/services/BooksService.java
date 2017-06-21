@@ -30,6 +30,7 @@ public class BooksService {
 			return;
 		if (book.getCategory() == null)
 			return;
+		categoriesService.save(book.getCategory());
 		repository.save(book);
 	}
 

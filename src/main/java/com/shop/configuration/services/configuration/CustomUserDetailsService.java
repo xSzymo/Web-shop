@@ -1,4 +1,4 @@
-package com.shop.configuration.servicesForConfiguration;
+package com.shop.configuration.services.configuration;
 
 import com.shop.data.tables.User;
 import com.shop.data.tables.UserRole;

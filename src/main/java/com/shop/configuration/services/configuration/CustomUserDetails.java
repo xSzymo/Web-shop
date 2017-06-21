@@ -1,4 +1,4 @@
-package com.shop.configuration.servicesForConfiguration;
+package com.shop.configuration.services.configuration;
 
 import com.shop.data.tables.User;
 import org.springframework.security.core.GrantedAuthority;
@@ -9,6 +9,7 @@ import org.springframework.util.StringUtils;
 import java.util.Collection;
 import java.util.List;
 
+//TODO acc locked/expired
 public class CustomUserDetails extends User implements UserDetails {
 
     private static final long serialVersionUID = 1L;

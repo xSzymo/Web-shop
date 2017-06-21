@@ -1,8 +1,10 @@
 package com.shop.data.services;
 
 import com.shop.data.repositories.OrdersRepository;
+import com.shop.data.repositories.UsersRepository;
 import com.shop.data.tables.Book;
 import com.shop.data.tables.Order;
+import com.shop.data.tables.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,11 +19,15 @@ public class OrdersService {
 	private OrdersRepository repository;
 	@Autowired
 	private BooksService booksService;
+	@Autowired
+	private UsersRepository usersRepository;
 
 	public void save(Order order) {
 		if (order != null)
 			if (order.getUser() != null) {
 				booksService.save(order.getBooks());
+				order.getUser().getOrders().add(order);
+				usersRepository.save(order.getUser());
 				repository.save(order);
 			}
 	}
@@ -67,8 +73,22 @@ public class OrdersService {
 		if (order == null)
 			return;
 		removeBooksFromOrders(order);
+		removeUserFromOrders(order);
 
-		repository.delete(order.getId());
+		try {
+			repository.delete(order.getId());
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void removeUserFromOrders(Order order) {
+		if(order.getUser() == null)
+			return;
+
+		User user = usersRepository.findById(order.getUser().getId());
+		user.getOrders().remove(order);
+		usersRepository.save(user);
 	}
 
 	private void removeBooksFromOrders(Order order) {
@@ -77,7 +97,8 @@ public class OrdersService {
 				x -> {
 					for (Book book : books)
 						if (x.getId() == book.getId())
-							order.getBooks().remove(x);
+							booksService.delete(x);
+//							order.getBooks().remove(x);
 				}
 		);
 	}
