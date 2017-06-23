@@ -124,14 +124,15 @@ public class BooksServiceTest extends DataBaseTestConfiguration {
 		);
 	}
 
+	//TODO - getBooks bug - check for fetchtype
 	public LinkedList<Book> createBooksCollectionAndNewCategory() {
 		LinkedList<Book> booksToReturn = new LinkedList<>();
 		category = new Category("123");
-		categoriesService.save(category);
 		for (int i = 0; i < 3; i++) {
 			Book book = new Book("book" + i);
 			book.setCategory(category);
 			booksToReturn.add(book);
+			category.getBooks().add(book);
 		}
 		categoriesService.save(category);
 		return booksToReturn;

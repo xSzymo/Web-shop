@@ -25,7 +25,7 @@ public class OrdersService {
 	public void save(Order order) {
 		if (order != null)
 			if (order.getUser() != null) {
-				booksService.save(order.getBooks());
+				booksService.saveFromOrder(order.getBooks());
 				order.getUser().getOrders().add(order);
 				usersRepository.save(order.getUser());
 				repository.save(order);

@@ -9,10 +9,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 
@@ -36,13 +38,17 @@ public class Book {
 	@Column(name = "price")
 	private BigDecimal price;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@CollectionTable(name = "category_id")
 	private Category category;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinColumn(name = "books_id")
 	private Collection<Picture> pictures = new LinkedList<Picture>();
+
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@Column(name = "order_id")
+	private Collection<Order> orders = new ArrayList<Order>();
 
 	public Book() {
 
@@ -87,6 +93,10 @@ public class Book {
 
 	public Long getId() {
 		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 
@@ -182,5 +192,13 @@ public class Book {
 			if (!this.price.equals(book.getPrice()))
 				sameObjects = false;
 		return sameObjects;
+	}
+
+	public Collection<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(Collection<Order> orders) {
+		this.orders = orders;
 	}
 }

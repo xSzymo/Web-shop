@@ -1,6 +1,8 @@
 package com.shop.data.services;
 
+import com.shop.data.repositories.BooksRepository;
 import com.shop.data.repositories.CategoriesRepository;
+import com.shop.data.tables.Book;
 import com.shop.data.tables.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,28 +17,31 @@ public class CategoriesService {
 	private CategoriesRepository repository;
 	@Autowired
 	private BooksService booksService;
+	@Autowired
+	private BooksRepository booksRepository;
 
 	public void save(Category category) {
-		boolean leaveIfCannotSaveOrUpdateCategory = false;
 		if (category == null)
 			return;
-		if (findOneByName(category.getName()) != null) {
-			leaveIfCannotSaveOrUpdateCategory = true;
-			if (category.getId() != null) {
-				leaveIfCannotSaveOrUpdateCategory = true;
-				if (findOne(category.getId()) != null)
-					leaveIfCannotSaveOrUpdateCategory = false;
-			}
-			if (leaveIfCannotSaveOrUpdateCategory == true)
-				return;
-		}
+		Category existCategory = findOneByName(category.getName());
 
-		category.getBooks().forEach(
-				x -> {
-					x.setCategory(category);
-					booksService.save(x);
-				});
-		repository.save(category);
+		if (existCategory != null) {
+			existCategory.setBooks(category.getBooks());
+			existCategory.getBooks().forEach(
+					x -> {
+						x.setCategory(category);
+						booksRepository.save(x);
+					});
+
+			repository.save(existCategory);
+		} else {
+			category.getBooks().forEach(
+					x -> {
+						x.setCategory(category);
+						booksRepository.save(x);
+					});
+			repository.save(category);
+		}
 	}
 
 	public void save(Collection<Category> category) {
@@ -51,6 +56,14 @@ public class CategoriesService {
 	public Category findOne(long id) {
 		try {
 			return repository.findOne(id);
+		} catch (NullPointerException e) {
+			return null;
+		}
+	}
+
+	public Category findOne(String name) {
+		try {
+			return repository.findByName(name);
 		} catch (NullPointerException e) {
 			return null;
 		}

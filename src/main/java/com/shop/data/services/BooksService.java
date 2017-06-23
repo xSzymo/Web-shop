@@ -30,8 +30,9 @@ public class BooksService {
 			return;
 		if (book.getCategory() == null)
 			return;
-		categoriesService.save(book.getCategory());
+
 		repository.save(book);
+		categoriesService.save(book.getCategory());
 	}
 
 	public void save(Collection<Book> books) {
@@ -40,6 +41,25 @@ public class BooksService {
 					x -> {
 						if (x != null)
 							save(x);
+					});
+	}
+
+	public void saveFromOrder(Book book) {
+		if (book == null)
+			return;
+		if (book.getCategory() == null)
+			return;
+
+		categoriesService.save(book.getCategory());
+		repository.save(book);
+	}
+
+	public void saveFromOrder(Collection<Book> books) {
+		if (books.size() > 0)
+			books.forEach(
+					x -> {
+						if (x != null)
+							saveFromOrder(x);
 					});
 	}
 

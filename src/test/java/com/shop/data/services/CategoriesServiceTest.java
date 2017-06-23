@@ -95,10 +95,10 @@ public class CategoriesServiceTest extends DataBaseTestConfiguration {
 
 		service.save(actualCategory);
 
-		assertTrue(actualCategory.compareTwoCategories(service.findOne(actualCategory.getId())));
+		assertTrue(actualCategory.compareTwoCategories(service.findOne(actualCategory.getName())));
 
 
-		Category categoryToUpdate = service.findOne(actualCategory.getId());
+		Category categoryToUpdate = service.findOne(actualCategory.getName());
 
 		LinkedList<Book> books = new LinkedList<>();
 		books.add(new Book("avcx"));
@@ -107,8 +107,8 @@ public class CategoriesServiceTest extends DataBaseTestConfiguration {
 		categoryToUpdate.setBooks(books);
 		service.save(categoryToUpdate);
 
-		Category one = service.findOne(actualCategory.getId());
-		assertTrue(categoryToUpdate.compareTwoCategories(one));
+		Category one = service.findOne(categoryToUpdate.getName());
+		assertTrue(categoryToUpdate.equals(one));
 	}
 
 	@Test
@@ -117,10 +117,10 @@ public class CategoriesServiceTest extends DataBaseTestConfiguration {
 
 		service.save(actualCategory);
 
-		assertTrue(actualCategory.compareTwoCategories(service.findOne(actualCategory.getId())));
+		assertTrue(actualCategory.compareTwoCategories(service.findOne(actualCategory.getName())));
 
 
-		Category categoryToUpdate = service.findOne(actualCategory.getId());
+		Category categoryToUpdate = service.findOne(actualCategory.getName());
 
 		LinkedList<Book> books = new LinkedList<>();
 		books.add(new Book("avcx"));
@@ -129,7 +129,7 @@ public class CategoriesServiceTest extends DataBaseTestConfiguration {
 		categoryToUpdate.getBooks().addAll(books);
 		service.save(categoryToUpdate);
 
-		assertTrue(categoryToUpdate.compareTwoCategories(service.findOne(actualCategory.getId())));
+		assertTrue(categoryToUpdate.compareTwoCategories(service.findOne(actualCategory.getName())));
 	}
 
 	@Test
@@ -148,7 +148,7 @@ public class CategoriesServiceTest extends DataBaseTestConfiguration {
 		try {
 			service.findOne(actualCategory);
 			service.findOneByName(actualCategory);
-			service.findOne(null);
+			service.findOne((Category) null);
 			service.findOneByName((String) null);
 		} catch (Exception e) {
 			assertNull(e);

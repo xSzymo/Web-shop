@@ -13,8 +13,6 @@ public interface BooksRepository extends CrudRepository<Book, Long> {
 
     Book findByName(String name);
 
-    void save(Picture picture);
-
     Book save(Book book);
 
     void save(Collection<Book> books);

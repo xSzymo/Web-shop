@@ -22,7 +22,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-public class OrdersServiceTest {/*extends DataBaseTestConfiguration {
+public class OrdersServiceTest extends DataBaseTestConfiguration {
 	@Autowired
 	private OrdersService service;
 	@Autowired
@@ -35,7 +35,7 @@ public class OrdersServiceTest {/*extends DataBaseTestConfiguration {
 	private OrdersRepository repository;
 
 
-	private LinkedList<Order> orders;
+/*	private LinkedList<Order> orders;
 	private LinkedList<Book> books;
 	private Category category;
 	@Before
@@ -56,7 +56,27 @@ public class OrdersServiceTest {/*extends DataBaseTestConfiguration {
 
 		assertTrue(actualBook.equals(service.findOne(actualBook.getId())));
 	}
+*/
+	@Test
+	public void saveOneTest() {
+		Order actualBook = new Order(new BigDecimal("123"), false);
+		actualBook.setUser(new User("123", "123", "123"));
 
+		LinkedList<Book> books = new LinkedList<>();
+		Book book = new Book("123");
+		Category category = new Category("category");
+		book.setCategory(category);
+		books.add(book);
+		category.getBooks().add(book);
+		actualBook.setBooks(books);
+		categoriesService.save(category);
+
+
+		service.save(actualBook);
+
+		assertTrue(actualBook.equals(service.findOne(actualBook.getId())));
+	}
+/*
 	@Test
 	public void saveCollection() {
 		LinkedList<Order> actualBook = orders;
@@ -117,8 +137,6 @@ public class OrdersServiceTest {/*extends DataBaseTestConfiguration {
 		service.save(actualBook);
 		service.delete(actualBook);
 
-		System.out.println(service.findOne(actualBook.getId()));
-
 		assertNull(service.findOne(actualBook.getId()));
 	}
 
@@ -148,9 +166,8 @@ public class OrdersServiceTest {/*extends DataBaseTestConfiguration {
 	}
 
 	private LinkedList<Order> createOrdersCollectionAndNewCategory() {
-		LinkedList<Order> booksToReturn = new LinkedList<>();
+		LinkedList<Order> booksToReturn = new LinkedList<Order>();
 		User user = new User("Adam", "Adam", "Adam");
-		usersRepository.save(user);
 		for (int i = 0; i < 3; i++) {
 			StringBuilder sb = new StringBuilder();
 			sb.append(i%2);
@@ -158,21 +175,25 @@ public class OrdersServiceTest {/*extends DataBaseTestConfiguration {
 					Boolean.parseBoolean(sb.toString()));
 			book.setBooks(createBooksCollectionAndNewCategory());
 			book.setUser(user);
+//			user.getOrders().add(book);
 			booksToReturn.add(book);
 		}
+
+		categoriesService.save(category);
+		usersRepository.save(user);
+
 		return booksToReturn;
 	}
 
 	private LinkedList<Book> createBooksCollectionAndNewCategory() {
 		LinkedList<Book> booksToReturn = new LinkedList<>();
 		category = new Category("1253");
-		categoriesService.save(category);
 		for (int i = 0; i < 3; i++) {
 			Book book = new Book("book" + i);
 			book.setCategory(category);
 			booksToReturn.add(book);
 		}
-		categoriesService.save(category);
+//		categoriesService.save(category);
 		return booksToReturn;
 	}*/
 }

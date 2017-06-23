@@ -5,18 +5,20 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.Collection;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 
 @Entity
 @Table(name = "categories")
 public class Category {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
 	private Long id;
 
@@ -44,6 +46,19 @@ public class Category {
 		return "Categories [id=" + id + ", name=" + name + ", books=" + books + "]";
 	}
 
+	//TODO - check are books same
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		Category category = (Category) o;
+
+		if (!name.equals(category.name)) return false;
+//		return books != null ? books.equals(category.books) : category.books == null;
+		return true;
+	}
+
 	public boolean compareTwoCategories(Category category) {
 		boolean sameObject = true;
 		if (!this.getId().equals(category.getId()))
@@ -69,6 +84,10 @@ public class Category {
 		return id;
 	}
 
+	public void setId(long id) {
+		this.id = id;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -78,12 +97,15 @@ public class Category {
 	}
 
 	public synchronized Collection<Book> getBooks() {
-		if(books.size() < 1)
-			return new LinkedHashSet<Book>();
+//		if(books.size() < 1)
+//			return new LinkedHashSet<Book>();
 		return books;
 	}
 
 	public void setBooks(Collection<Book> books) {
+//		this.books.removeAll(this.books);
+//		this.books = new LinkedHashSet<>();
+//		this.books.addAll(books);
 		this.books = books;
 	}
 }

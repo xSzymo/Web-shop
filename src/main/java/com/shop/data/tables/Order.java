@@ -51,7 +51,7 @@ public class Order {
 	@JoinColumn(name = "coupon_codes_id")
 	private CouponCode couponCodes;
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@Column(name = "book_id")
 	private Collection<Book> books = new ArrayList<Book>();
 
@@ -107,6 +107,7 @@ public class Order {
 		if (id != null ? !id.equals(order.id) : order.id != null) return false;
 		if (!(price.longValue() == order.price.longValue())) return false;
 		if (paymentMethod != order.paymentMethod) return false;
+//
 		if (user != null ? !user.getLogin().equals(order.user.getLogin()) : order.user != null) return false;
 		if (shippingAddress != null ? !shippingAddress.equals(order.shippingAddress) : order.shippingAddress != null)
 			return false;
