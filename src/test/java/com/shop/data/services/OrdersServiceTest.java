@@ -35,48 +35,30 @@ public class OrdersServiceTest extends DataBaseTestConfiguration {
 	private OrdersRepository repository;
 
 
-/*	private LinkedList<Order> orders;
+	private LinkedList<Order> orders;
 	private LinkedList<Book> books;
 	private Category category;
 	@Before
 	public void setUp() {
-		orders = createOrdersCollectionAndNewCategory();
+		orders = createBooksCollectionAndNewCategory();
 	}
 
 	@After
 	public void afterEachTest() {
+		for(int i = 0; i < 3; i++)
+			categoriesService.delete("category" + i);
 		service.delete(orders);
 	}
 
 	@Test
 	public void saveOne() {
-		Order actualBook = orders.getFirst();
+		Order order = orders.getFirst();
 
-		service.save(actualBook);
+		service.save(order);
 
-		assertTrue(actualBook.equals(service.findOne(actualBook.getId())));
+		assertTrue(order.equals(service.findOne(order.getId())));
 	}
-*/
-	@Test
-	public void saveOneTest() {
-		Order actualBook = new Order(new BigDecimal("123"), false);
-		actualBook.setUser(new User("123", "123", "123"));
 
-		LinkedList<Book> books = new LinkedList<>();
-		Book book = new Book("123");
-		Category category = new Category("category");
-		book.setCategory(category);
-		books.add(book);
-		category.getBooks().add(book);
-		actualBook.setBooks(books);
-		categoriesService.save(category);
-
-
-		service.save(actualBook);
-
-		assertTrue(actualBook.equals(service.findOne(actualBook.getId())));
-	}
-/*
 	@Test
 	public void saveCollection() {
 		LinkedList<Order> actualBook = orders;
@@ -165,35 +147,25 @@ public class OrdersServiceTest extends DataBaseTestConfiguration {
 		);
 	}
 
-	private LinkedList<Order> createOrdersCollectionAndNewCategory() {
-		LinkedList<Order> booksToReturn = new LinkedList<Order>();
-		User user = new User("Adam", "Adam", "Adam");
+
+	private LinkedList<Order> createBooksCollectionAndNewCategory() {
+		LinkedList<Order> booksToReturn = new LinkedList<>();
 		for (int i = 0; i < 3; i++) {
-			StringBuilder sb = new StringBuilder();
-			sb.append(i%2);
-			Order book = new Order(new BigDecimal("10" + i*100),
-					Boolean.parseBoolean(sb.toString()));
-			book.setBooks(createBooksCollectionAndNewCategory());
-			book.setUser(user);
-//			user.getOrders().add(book);
-			booksToReturn.add(book);
+			Order order = new Order(new BigDecimal("123" + i*100), false);
+			order.setUser(new User("123" + i*100, "123", "123" + i*100));
+
+			LinkedList<Book> books = new LinkedList<>();
+			Book book = new Book("123" + i);
+			Category category = new Category("category" + i);
+			book.setCategory(category);
+			books.add(book);
+			book.getOrders().add(order);
+			category.getBooks().add(book);
+			order.setBooks(books);
+
+			categoriesService.save(category);
+			booksToReturn.add(order);
 		}
-
-		categoriesService.save(category);
-		usersRepository.save(user);
-
 		return booksToReturn;
 	}
-
-	private LinkedList<Book> createBooksCollectionAndNewCategory() {
-		LinkedList<Book> booksToReturn = new LinkedList<>();
-		category = new Category("1253");
-		for (int i = 0; i < 3; i++) {
-			Book book = new Book("book" + i);
-			book.setCategory(category);
-			booksToReturn.add(book);
-		}
-//		categoriesService.save(category);
-		return booksToReturn;
-	}*/
 }

@@ -25,9 +25,9 @@ public class OrdersService {
 	public void save(Order order) {
 		if (order != null)
 			if (order.getUser() != null) {
-				booksService.saveFromOrder(order.getBooks());
-				order.getUser().getOrders().add(order);
-				usersRepository.save(order.getUser());
+				booksService.save(order.getBooks());
+				//order.getUser().getOrders().add(order);
+				//usersRepository.save(order.getUser());
 				repository.save(order);
 			}
 	}
@@ -96,9 +96,10 @@ public class OrdersService {
 		order.getBooks().forEach(
 				x -> {
 					for (Book book : books)
-						if (x.getId() == book.getId())
+						if (x.getId() == book.getId()) {
+							//order.getBooks().remove(x);
 							booksService.delete(x);
-//							order.getBooks().remove(x);
+						}
 				}
 		);
 	}

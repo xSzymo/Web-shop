@@ -38,7 +38,7 @@ public class Book {
 	@Column(name = "price")
 	private BigDecimal price;
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@CollectionTable(name = "category_id")
 	private Category category;
 

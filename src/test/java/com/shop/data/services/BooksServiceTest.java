@@ -130,7 +130,6 @@ public class BooksServiceTest extends DataBaseTestConfiguration {
 		category = new Category("123");
 		for (int i = 0; i < 3; i++) {
 			Book book = new Book("book" + i);
-			book.setCategory(category);
 			booksToReturn.add(book);
 			category.getBooks().add(book);
 		}

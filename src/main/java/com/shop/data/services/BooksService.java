@@ -31,7 +31,7 @@ public class BooksService {
 		if (book.getCategory() == null)
 			return;
 
-		repository.save(book);
+		//repository.save(book);
 		categoriesService.save(book.getCategory());
 	}
 
@@ -44,24 +44,24 @@ public class BooksService {
 					});
 	}
 
-	public void saveFromOrder(Book book) {
-		if (book == null)
-			return;
-		if (book.getCategory() == null)
-			return;
-
-		categoriesService.save(book.getCategory());
-		repository.save(book);
-	}
-
-	public void saveFromOrder(Collection<Book> books) {
-		if (books.size() > 0)
-			books.forEach(
-					x -> {
-						if (x != null)
-							saveFromOrder(x);
-					});
-	}
+//	public void saveFromOrder(Book book) {
+//		if (book == null)
+//			return;
+//		if (book.getCategory() == null)
+//			return;
+//
+//		categoriesService.save(book.getCategory());
+//		repository.save(book);
+//	}
+//
+//	public void saveFromOrder(Collection<Book> books) {
+//		if (books.size() > 0)
+//			books.forEach(
+//					x -> {
+//						if (x != null)
+//							saveFromOrder(x);
+//					});
+//	}
 
 	public Book findOne(long id) {
 		return repository.findOne(id);

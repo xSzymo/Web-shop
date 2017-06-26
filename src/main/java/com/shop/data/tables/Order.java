@@ -35,7 +35,7 @@ public class Order {
 	@Column(name = "realized")
 	private boolean realized = false;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@CollectionTable(name = "user_id")
 	private User user;
 

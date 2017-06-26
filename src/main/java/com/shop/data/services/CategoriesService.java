@@ -35,11 +35,12 @@ public class CategoriesService {
 
 			repository.save(existCategory);
 		} else {
-			category.getBooks().forEach(
-					x -> {
-						x.setCategory(category);
-						booksRepository.save(x);
-					});
+//			repository.save(category);
+//			category.getBooks().forEach(
+//					x -> {
+//						x.setCategory(category);
+//						booksRepository.save(x);
+//					});
 			repository.save(category);
 		}
 	}
@@ -110,6 +111,10 @@ public class CategoriesService {
 	public void delete(long id) {
 		Category foundBook = repository.findById(id);
 		deleteOperation(foundBook);
+	}
+
+	public void delete(String name) {
+		deleteOperation(repository.findByName(name));
 	}
 
 	public void delete(Category category) {
