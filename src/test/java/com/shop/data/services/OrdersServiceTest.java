@@ -148,7 +148,7 @@ public class OrdersServiceTest extends DataBaseTestConfiguration {
 	}
 
 
-	private LinkedList<Order> createBooksCollectionAndNewCategory() {
+	public LinkedList<Order> createBooksCollectionAndNewCategory() {
 		LinkedList<Order> booksToReturn = new LinkedList<>();
 		for (int i = 0; i < 3; i++) {
 			Order order = new Order(new BigDecimal("123" + i*100), false);
