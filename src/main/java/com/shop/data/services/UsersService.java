@@ -21,8 +21,8 @@ public class UsersService {
 	public void save(User user) {
 		if (user == null)
 			return;
-		User actualUser = repository.findByeMail(user.geteMail());
-		User actualUser1 = repository.findByLogin(user.getLogin());
+		User actualUser1 = repository.findByeMail(user.geteMail());
+		User actualUser = repository.findByLogin(user.getLogin());
 		boolean existUser = false;
 		if (actualUser != null || actualUser1 != null)
 			existUser = true;
@@ -36,10 +36,12 @@ public class UsersService {
 			actualUser.setOrders(user.getOrders());
 			actualUser.setPassword(user.getPassword());
 			actualUser.setLogin(user.getLogin());
+			//ordersService.save(user.getOrders());
+			repository.save(actualUser);
 		} else {
-			user.getOrders().forEach(
-					x -> booksService.save(x.getBooks())
-			);
+//			user.getOrders().forEach(
+//					x -> booksService.save(x.getBooks())
+//			);
 			ordersService.save(user.getOrders());
 			repository.save(user);
 		}
@@ -124,8 +126,10 @@ public class UsersService {
 			return;
 
 		user.getOrders().forEach(
-				x -> ordersService.delete(x)
-		);
+				x -> {
+					ordersService.delete(x);
+					//user.getOrders().remove(x);
+				});
 
 		repository.delete(user.getId());
 	}
