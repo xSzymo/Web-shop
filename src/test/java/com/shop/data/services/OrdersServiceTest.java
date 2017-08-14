@@ -145,6 +145,13 @@ public class OrdersServiceTest extends DataBaseTestConfiguration {
 		actualBook.forEach(
 				x -> assertNull(service.findOne(x.getId()))
 		);
+
+		actualBook.forEach(
+				x -> {
+					for(Book book : x.getBooks())
+						assertNotNull(booksService.findOne(book.getId()));
+				}
+		);
 	}
 
 

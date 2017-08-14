@@ -46,7 +46,7 @@ public class Book {
 	@JoinColumn(name = "books_id")
 	private Collection<Picture> pictures = new LinkedList<Picture>();
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@Column(name = "order_id")
 	private Collection<Order> orders = new ArrayList<Order>();
 

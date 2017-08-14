@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.Collection;
 
 
@@ -92,13 +93,15 @@ public class OrdersService {
 	}
 
 	private void removeBooksFromOrders(Order order) {
+		ArrayList<Book> myBooks = new ArrayList<>();
 		Iterable<Book> books = booksService.findAll();
 		order.getBooks().forEach(
 				x -> {
 					for (Book book : books)
 						if (x.getId() == book.getId()) {
-							//order.getBooks().remove(x);
-							booksService.delete(x);
+							order.getBooks().remove(book);
+							book.getOrders().remove(order);
+							booksService.save(book);
 						}
 				}
 		);
