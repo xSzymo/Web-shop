@@ -36,7 +36,7 @@ public class AddressServiceTest extends DataBaseTestConfiguration {
 
         service.save(address);
 
-        assertTrue(address.compareTwoAddress(service.findOne(address.getId())));
+        assertTrue(address.equals(service.findOne(address.getId())));
     }
 
     @Test
@@ -47,7 +47,7 @@ public class AddressServiceTest extends DataBaseTestConfiguration {
 
         addresses.forEach(
                 x ->
-                        assertTrue(x.compareTwoAddress(service.findOne(x.getId())))
+                        assertTrue(x.equals(service.findOne(x.getId())))
         );
     }
 

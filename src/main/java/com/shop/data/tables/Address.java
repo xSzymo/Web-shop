@@ -30,7 +30,7 @@ public class Address {
         this.country = country;
     }
 
-    public boolean compareTwoAddress(Address address) {
+    public boolean equals(Address address) {
         boolean sameObjects = true;
         if(!this.id.equals(address.getId()))
             sameObjects = false;

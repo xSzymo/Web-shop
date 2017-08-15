@@ -36,7 +36,7 @@ public class CouponCodesServiceTest extends DataBaseTestConfiguration {
 
         service.save(couponCode);
 
-        assertTrue(couponCode.compareTwoCouponCodes(service.findOne(couponCode.getId())));
+        assertTrue(couponCode.equals(service.findOne(couponCode.getId())));
     }
 
     @Test
@@ -45,7 +45,7 @@ public class CouponCodesServiceTest extends DataBaseTestConfiguration {
 
         service.save(couponCode);
 
-        assertTrue(couponCode.compareTwoCouponCodes(service.findOne(couponCode.getId())));
+        assertTrue(couponCode.equals(service.findOne(couponCode.getId())));
     }
 
     @Test
@@ -55,7 +55,7 @@ public class CouponCodesServiceTest extends DataBaseTestConfiguration {
         service.save(couponCodes);
 
         couponCodes.forEach(
-                x -> assertTrue(x.compareTwoCouponCodes(service.findOne(x.getId())))
+                x -> assertTrue(x.equals(service.findOne(x.getId())))
         );
     }
 

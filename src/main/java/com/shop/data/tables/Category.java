@@ -11,7 +11,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.Collection;
 import java.util.LinkedHashSet;
-import java.util.LinkedList;
 
 @Entity
 @Table(name = "categories")
@@ -47,19 +46,19 @@ public class Category {
 	}
 
 	//TODO - check are books same
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+//	@Override
+//	public boolean equals(Object o) {
+//		if (this == o) return true;
+//		if (o == null || getClass() != o.getClass()) return false;
+//
+//		Category category = (Category) o;
+//
+//		if (!name.equals(category.name)) return false;
+////		return books != null ? books.equals(category.books) : category.books == null;
+//		return true;
+//	}
 
-		Category category = (Category) o;
-
-		if (!name.equals(category.name)) return false;
-//		return books != null ? books.equals(category.books) : category.books == null;
-		return true;
-	}
-
-	public boolean compareTwoCategories(Category category) {
+	public boolean equals(Category category) {
 		boolean sameObject = true;
 		if (!this.getId().equals(category.getId()))
 			sameObject = false;
@@ -68,7 +67,7 @@ public class Category {
 		for (Book x : this.getBooks()) {
 			boolean saneBooks = false;
 			for (Book x1 : category.getBooks())
-				if (x.compareTwoBooks(x1)) {
+				if (x.equals(x1)) {
 					saneBooks = true;
 					break;
 				}

@@ -92,7 +92,7 @@ public class CategoriesServiceTest extends DataBaseTestConfiguration {
 
         service.save(category);
 
-        assertTrue(category.compareTwoCategories(service.findOne(category.getName())));
+        assertTrue(category.equals(service.findOne(category.getName())));
 
 
         Category categoryToUpdate = service.findOne(category.getName());
@@ -114,7 +114,7 @@ public class CategoriesServiceTest extends DataBaseTestConfiguration {
 
         service.save(category);
 
-        assertTrue(category.compareTwoCategories(service.findOne(category.getName())));
+        assertTrue(category.equals(service.findOne(category.getName())));
 
 
         Category categoryToUpdate = service.findOne(category.getName());
@@ -126,7 +126,7 @@ public class CategoriesServiceTest extends DataBaseTestConfiguration {
         categoryToUpdate.getBooks().addAll(books);
         service.save(categoryToUpdate);
 
-        assertTrue(categoryToUpdate.compareTwoCategories(service.findOne(category.getName())));
+        assertTrue(categoryToUpdate.equals(service.findOne(category.getName())));
     }
 
     @Test
@@ -233,6 +233,6 @@ public class CategoriesServiceTest extends DataBaseTestConfiguration {
                 x -> assertNotNull(booksService.findOne(x))
         );
 
-        assertTrue(category.compareTwoCategories(service.findOne(category.getId())));
+        assertTrue(category.equals(service.findOne(category.getId())));
     }
 }

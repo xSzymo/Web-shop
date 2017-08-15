@@ -76,7 +76,7 @@ public class Book {
 		this.pictures = pictures;
 	}
 
-	public boolean compareTwoBooks(Book book) {
+	public boolean equals(Book book) {
 		boolean sameObjects = true;
 		sameObjects = compareTwoBooksIsAnyFieldNull(book, sameObjects);
 		if(sameObjects == false)

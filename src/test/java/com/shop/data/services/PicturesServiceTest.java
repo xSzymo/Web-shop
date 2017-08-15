@@ -42,7 +42,7 @@ public class PicturesServiceTest extends DataBaseTestConfiguration {
 
         service.save(picture, URL);
 
-        assertTrue(picture.compareTwoPictures(service.findOne(picture.getId())));
+        assertTrue(picture.equals(service.findOne(picture.getId())));
         File f = new File(picture.getPath() + picture.getName() + picture.getFileType());
         if (f.exists() && !f.isDirectory())
             service.delete(picture);
@@ -60,7 +60,7 @@ public class PicturesServiceTest extends DataBaseTestConfiguration {
 
         service.save(picture, multipartFile);
 
-        assertTrue(picture.compareTwoPictures(service.findOne(picture.getId())));
+        assertTrue(picture.equals(service.findOne(picture.getId())));
         Path f = Paths.get(picture.getPath() + picture.getName() + picture.getFileType());
         if (Files.exists(f))
             service.delete(picture);
@@ -80,7 +80,7 @@ public class PicturesServiceTest extends DataBaseTestConfiguration {
         service.save(picture, multipartFile);
         service.save(secondPicture, multipartFile);
 
-        assertTrue(picture.compareTwoPictures(service.findOne(picture.getId())));
+        assertTrue(picture.equals(service.findOne(picture.getId())));
         assertNull("Error\n(Check your directory, and delete picture with name \"name0\" if exist from last test?)", service.findOne(secondPicture));
         File f = new File(picture.getPath() + picture.getName() + picture.getFileType());
         if (f.exists() && !f.isDirectory())
@@ -97,7 +97,7 @@ public class PicturesServiceTest extends DataBaseTestConfiguration {
         service.save(picture, URL);
         service.save(secondPicture, URL);
 
-        assertTrue(picture.compareTwoPictures(service.findOne(picture)));
+        assertTrue(picture.equals(service.findOne(picture)));
         assertNull("Error\n(Check your directory, and delete picture with name \"name0\" if exist from last test?)", service.findOne(secondPicture));
         File f = new File(picture.getPath() + picture.getName() + picture.getFileType());
         if (f.exists() && !f.isDirectory())

@@ -77,13 +77,7 @@ public class User {
         this.eMail = eMail;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        User user = (User) o;
-
+    public boolean equals(User user) {
         if (!login.equals(user.login)) return false;
         return eMail.equals(user.eMail);
     }

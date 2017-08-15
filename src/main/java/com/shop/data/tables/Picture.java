@@ -40,7 +40,7 @@ public class Picture {
             this.fileType = "";
     }
 
-    public boolean compareTwoPictures(Picture picture) {
+    public boolean equals(Picture picture) {
         boolean sameObjects = true;
         if (!this.id.equals(picture.getId()))
             sameObjects = false;
@@ -90,7 +90,7 @@ public class Picture {
             this.fileType = "";
     }
 
-    /*public boolean compareTwoPictures(Picture picture) {
+    /*public boolean equals(Picture picture) {
         boolean sameObjects = true;
         try {
             if (this.id == null && picture.getId() != null)

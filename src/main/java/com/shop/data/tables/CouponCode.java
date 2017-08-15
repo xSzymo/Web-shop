@@ -30,7 +30,7 @@ public class CouponCode {
         this.code = code;
     }
 
-    public boolean compareTwoCouponCodes(CouponCode couponCode) {
+    public boolean equals(CouponCode couponCode) {
         boolean sameObjects = true;
         if(!this.id.equals(couponCode.getId()))
             sameObjects = false;

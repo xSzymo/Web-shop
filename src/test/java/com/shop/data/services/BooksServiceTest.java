@@ -38,7 +38,7 @@ public class BooksServiceTest extends DataBaseTestConfiguration {
 
         service.save(book);
 
-        assertTrue(book.compareTwoBooks(service.findOne(book.getId())));
+        assertTrue(book.equals(service.findOne(book.getId())));
     }
 
     @Test
@@ -49,7 +49,7 @@ public class BooksServiceTest extends DataBaseTestConfiguration {
 
         books.forEach(
                 x ->
-                        assertTrue(x.compareTwoBooks(service.findOne(x.getId())))
+                        assertTrue(x.equals(service.findOne(x.getId())))
         );
     }
 
