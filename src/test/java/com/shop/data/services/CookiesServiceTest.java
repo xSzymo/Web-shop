@@ -19,53 +19,51 @@ public class CookiesServiceTest extends DataBaseTestConfiguration {
 	@Autowired
 	private CookiesService service;
 
-	private LinkedList<Cookies> categories;
+	private LinkedList<Cookies> cookies;
 
 	@Before
 	public void BeforeEachTest() {
-		categories = createCategoriesCollection();
+		cookies = createCookiesCollection();
 	}
 
 	@After
 	public void afterEachTest() {
-		service.delete(categories);
+		service.delete(cookies);
 	}
 
 	@Test
 	public void save() {
-		Cookies actualCategory = categories.getFirst();
+		Cookies cookie = cookies.getFirst();
 
-		service.save(actualCategory);
+		service.save(cookie);
 
-		assertTrue(actualCategory.compareTwoCategories(service.findOne(actualCategory.getId())));
+		assertTrue(cookie.compareTwoCategories(service.findOne(cookie.getId())));
 	}
 
 	@Test
 	public void saveOne() {
-		Cookies actualCategory = categories.getFirst();
+		Cookies cookie = cookies.getFirst();
 
-		service.save(actualCategory);
+		service.save(cookie);
 
-		assertTrue(actualCategory.compareTwoCategories(service.findOne(actualCategory.getId())));
+		assertTrue(cookie.compareTwoCategories(service.findOne(cookie.getId())));
 	}
 
 	@Test
 	public void saveCollection() {
-		LinkedList<Cookies> actualCategory = categories;
+		LinkedList<Cookies> cookies = this.cookies;
 
-		service.save(actualCategory);
+		service.save(cookies);
 
-		actualCategory.forEach(
+		cookies.forEach(
 				x -> assertTrue(x.compareTwoCategories(service.findOne(x.getId())))
 		);
-	}
+}
 
 	@Test
 	public void saveNull() {
-		Cookies actualCategory = null;
-
 		try {
-			service.save(actualCategory);
+			service.save((Cookies) null);
 		} catch (Exception e) {
 			assertNull(e);
 		}
@@ -73,9 +71,8 @@ public class CookiesServiceTest extends DataBaseTestConfiguration {
 
 	@Test
 	public void saveOneWithExistName() {
-		categories.add(new Cookies("category " + 6, "category " + 6));
-		categories.add(new Cookies("category " + 6, "category " + 6));
-		service.save(categories);
+		cookies.add(new Cookies("category " + 6, "category " + 6));
+		service.save(cookies);
 
 		for (Cookies x : service.findAll()) {
 			int numberOfSameObject = 0;
@@ -90,20 +87,18 @@ public class CookiesServiceTest extends DataBaseTestConfiguration {
 
 	@Test
 	public void findOne() {
-		service.save(categories.getFirst());
+		service.save(cookies.getFirst());
 
-		Cookies actualCategory = service.findOne(categories.getFirst());
+		Cookies cookies = service.findOne(this.cookies.getFirst());
 
-		assertNotNull(actualCategory);
+		assertNotNull(cookies);
 	}
 
 	@Test
 	public void findOneWithNull() {
-		Cookies actualCategory = null;
-
 		try {
-			service.findOne(actualCategory);
-			service.findOneByName(actualCategory);
+			service.findOne((Cookies) null);
+			service.findOneByName((Cookies) null);
 			service.findOne(null);
 			service.findOneByName((String) null);
 		} catch (Exception e) {
@@ -113,99 +108,98 @@ public class CookiesServiceTest extends DataBaseTestConfiguration {
 
 	@Test
 	public void findOneById() {
-		service.save(categories.getFirst());
+		service.save(cookies.getFirst());
 
-		Cookies actualCategory = service.findOne(categories.getFirst().getId());
+		Cookies cookie = service.findOne(cookies.getFirst().getId());
 
-		assertNotNull(actualCategory);
+		assertNotNull(cookie);
 	}
 
 	@Test
 	public void findOneByNameWithString() {
-		service.save(categories.getFirst());
+		service.save(cookies.getFirst());
 
-		Cookies actualCategory = service.findOneByName(categories.getFirst().getName());
+		Cookies cookie = service.findOneByName(cookies.getFirst().getName());
 
-		assertNotNull(actualCategory);
+		assertNotNull(cookie);
 	}
 
 	@Test
 	public void findOneByValueWithString() {
-		service.save(categories.getFirst());
+		service.save(cookies.getFirst());
 
-		Cookies actualCategory = service.findOneByValue(categories.getFirst().getValue());
+		Cookies cookie = service.findOneByValue(cookies.getFirst().getValue());
 
-		assertNotNull(actualCategory);
+		assertNotNull(cookie);
 	}
 
 	@Test
 	public void findOneByValueWithObject() {
-		service.save(categories.getFirst());
+		service.save(cookies.getFirst());
 
-		Cookies actualCategory = service.findOneByValue(categories.getFirst());
+		Cookies cookie = service.findOneByValue(cookies.getFirst());
 
-		assertNotNull(actualCategory);
+		assertNotNull(cookie);
 	}
 
 	@Test
 	public void findOneByNameWithObject() {
-		service.save(categories.getFirst());
+		service.save(cookies.getFirst());
 
-		Cookies actualCategory = service.findOneByName(categories.getFirst());
+		Cookies cookie = service.findOneByName(cookies.getFirst());
 
-		assertNotNull(actualCategory);
+		assertNotNull(cookie);
 	}
 
 	@Test
 	public void findAll() {
-		Iterable<Cookies> actualCategory = service.findAll();
+		service.save(this.cookies);
 
-		actualCategory.forEach(
+		Iterable<Cookies> cookies = this.cookies;
+
+		cookies.forEach(
 				x -> assertNotNull(service.findOne(x.getId()))
 		);
 	}
 
 	@Test
 	public void delete() {
-		Cookies actualCategory = categories.getFirst();
+		Cookies cookies = this.cookies.getFirst();
 
-		service.save(actualCategory);
-		service.delete(actualCategory);
+		service.save(cookies);
+		service.delete(cookies);
 
-		assertNull(service.findOne(actualCategory.getId()));
+		assertNull(service.findOne(cookies.getId()));
 	}
 
 	@Test
 	public void deleteById() {
-		Cookies actualCategory = categories.getFirst();
+		Cookies cookies = this.cookies.getFirst();
 
-		service.save(actualCategory);
-		service.delete(actualCategory.getId());
+		service.save(cookies);
+		service.delete(cookies.getId());
 
-		assertNull(service.findOne(actualCategory.getId()));
+		assertNull(service.findOne(cookies.getId()));
 	}
 
 	@Test
 	public void deleteCollection() {
-		LinkedList<Cookies> actualCategory = categories;
+		LinkedList<Cookies> cookies = this.cookies;
 
-		service.save(actualCategory);
-		service.delete(actualCategory);
+		service.save(cookies);
+		service.delete(cookies);
 
-		actualCategory.forEach(
+		cookies.forEach(
 				x -> assertNull(service.findOne(x.getId()))
 		);
 	}
 
-	public LinkedList<Cookies> createCategoriesCollection() {
-		LinkedList<Cookies> categoriesToReturn = new LinkedList<>();
+	public LinkedList<Cookies> createCookiesCollection() {
+		LinkedList<Cookies> cookiesToReturn = new LinkedList<>();
 		for (int i = 0; i < 3; i++) {
 			Cookies book = new Cookies("category " + i, "category " + i + 1);
-			categoriesToReturn.add(book);
+			cookiesToReturn.add(book);
 		}
-//			categoriesToReturn.add(new Cookies("category " + 3));
-		return categoriesToReturn;
+		return cookiesToReturn;
 	}
-
-
 }

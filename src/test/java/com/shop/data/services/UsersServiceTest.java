@@ -39,12 +39,12 @@ public class UsersServiceTest extends DataBaseTestConfiguration {
 	@Autowired
 	private BooksService booksService;
 
-	private LinkedList<User> categories;
+	private LinkedList<User> users;
 
 
 	@Before
 	public void BeforeEachTest() {
-		categories = createCategoriesCollection();
+		users = createUsersCollection();
 	}
 
 	//delete
@@ -59,7 +59,7 @@ public class UsersServiceTest extends DataBaseTestConfiguration {
 //		);
 //
 		try {
-			service.delete(categories);
+			service.delete(users);
 			picturesRepository.deleteAll();
 			booksRepository.deleteAll();
 			categoriesRepository.deleteAll();
@@ -87,30 +87,28 @@ public class UsersServiceTest extends DataBaseTestConfiguration {
 
 	@Test
 	public void save() {
-		User actualCategory = categories.getFirst();
+		User user = users.getFirst();
 
-		service.save(actualCategory);
+		service.save(user);
 
-		assertTrue(actualCategory.equals(service.findOne(actualCategory.getId())));
+		assertTrue(user.equals(service.findOne(user.getId())));
 	}
 
 	@Test
 	public void saveCollection() {
-		LinkedList<User> actualCategory = categories;
+		LinkedList<User> user = users;
 
-		service.save(actualCategory);
+		service.save(user);
 
-			actualCategory.forEach(
+			user.forEach(
 				x -> assertTrue(x.equals(service.findOne(x.getId())))
 		);
 	}
 
 	@Test
 	public void saveNull() {
-		User actualCategory = null;
-
 		try {
-			service.save(actualCategory);
+			service.save((User) null);
 		} catch (Exception e) {
 			assertNull(e);
 		}
@@ -118,9 +116,9 @@ public class UsersServiceTest extends DataBaseTestConfiguration {
 
 	@Test
 	public void saveOneWithExistLogin() {
-		categories.add(new User("category " + 3, "", ""));
-		categories.add(new User("category " + 3, "", ""));
-		service.save(categories);
+		users.add(new User("category " + 3, "", ""));
+		users.add(new User("category " + 3, "", ""));
+		service.save(users);
 
 		for (User x : service.findAll()) {
 			int numberOfSameObject = 0;
@@ -178,17 +176,15 @@ public class UsersServiceTest extends DataBaseTestConfiguration {
 
 	@Test
 	public void findOne() {
-		service.save(categories.getFirst());
+		service.save(users.getFirst());
 
-		User actualCategory = service.findOne(categories.getFirst());
+		User user = service.findOne(users.getFirst());
 
-		assertNotNull(actualCategory);
+		assertNotNull(user);
 	}
 
 	@Test
 	public void findOneWithNull() {
-		Category actualCategory = null;
-
 		try {
 //			service.findOne(actualCategory);
 //			service.findByLogin(actualCategory);
@@ -201,61 +197,63 @@ public class UsersServiceTest extends DataBaseTestConfiguration {
 
 	@Test
 	public void findOneById() {
-		service.save(categories.getFirst());
+		service.save(users.getFirst());
 
-		User actualCategory = service.findOne(categories.getFirst().getId());
+		User user = service.findOne(users.getFirst().getId());
 
-		assertNotNull(actualCategory);
+		assertNotNull(user);
 	}
 
 	@Test
 	public void findOneByNameWithString() {
-		service.save(categories.getFirst());
+		service.save(users.getFirst());
 
-		User actualCategory = service.findByLogin(categories.getFirst().getLogin());
+		User user = service.findByLogin(users.getFirst().getLogin());
 
-		assertNotNull(actualCategory);
+		assertNotNull(user);
 	}
 
 	@Test
 	public void findOneByNameWithObject() {
-		service.save(categories.getFirst());
+		service.save(users.getFirst());
 
-		User actualCategory = service.findByLogin(categories.getFirst());
+		User user = service.findByLogin(users.getFirst());
 
-		assertNotNull(actualCategory);
+		assertNotNull(user);
 	}
 
 	@Test
 	public void findAll() {
-		Iterable<User> actualCategory = service.findAll();
+		service.save(users);
 
-		actualCategory.forEach(
+		Iterable<User> users = this.users;
+
+		users.forEach(
 				x -> assertNotNull(service.findOne(x.getId()))
 		);
 	}
 
 	@Test
 	public void delete() {
-		User actualCategory = categories.getFirst();
+		User user = users.getFirst();
 
-		service.save(actualCategory);
-		service.delete(actualCategory);
+		service.save(user);
+		service.delete(user);
 
-		assertNull(service.findOne(actualCategory.getId()));
+		assertNull(service.findOne(user.getId()));
 	}
 
 	@Test
 	public void deleteById() {
-		User actualCategory = categories.getFirst();
+		User user = users.getFirst();
 
-		service.save(actualCategory);
-		service.delete(actualCategory.getId());
+		service.save(user);
+		service.delete(user.getId());
 
-		assertNull(service.findOne(actualCategory.getId()));
-		actualCategory.getOrders().forEach(
+		assertNull(service.findOne(user.getId()));
+		user.getOrders().forEach(
 				x -> assertNull(ordersService.findOne(x)));
-//		actualCategory.getOrders().forEach(
+//		user.getOrders().forEach(
 //				x -> x.getBooks().forEach(
 //						x1 -> {
 //							//assertNotNull(booksRepository.findByName(x1.getName()));
@@ -267,18 +265,18 @@ public class UsersServiceTest extends DataBaseTestConfiguration {
 
 	@Test
 	public void deleteCollection() {
-		LinkedList<User> actualCategory = categories;
+		LinkedList<User> users = this.users;
 
-		service.save(actualCategory);
-		service.delete(actualCategory);
+		service.save(users);
+		service.delete(users);
 
-		actualCategory.forEach(
+		users.forEach(
 				x -> assertNull(service.findOne(x.getId()))
 		);
 	}
 
-	public LinkedList<User> createCategoriesCollection() {
-		LinkedList<User> categoriesToReturn = new LinkedList<>();
+	public LinkedList<User> createUsersCollection() {
+		LinkedList<User> usersToReturn = new LinkedList<>();
 
 		for(int i = 0; i < 3; i++) {
 			User user = new User("login" + i, "password", "email" + i);
@@ -289,9 +287,9 @@ public class UsersServiceTest extends DataBaseTestConfiguration {
 			order.getBooks().add(book);
 			user.getOrders().add(order);
 
-			categoriesToReturn.add(user);
+			usersToReturn.add(user);
 			categoriesService.save(category);
 		}
-		return categoriesToReturn;
+		return usersToReturn;
 	}
 }

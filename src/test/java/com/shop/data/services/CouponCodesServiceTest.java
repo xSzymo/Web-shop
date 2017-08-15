@@ -9,184 +9,181 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.LinkedList;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
+/*
+ * done
+ */
 public class CouponCodesServiceTest extends DataBaseTestConfiguration {
-		@Autowired
-		private CouponCodesService service;
+    @Autowired
+    private CouponCodesService service;
 
-		private LinkedList<CouponCode> categories;
+    private LinkedList<CouponCode> couponCodes;
 
-		@Before
-		public void BeforeEachTest() {
-			categories = createCategoriesCollection();
-		}
+    @Before
+    public void BeforeEachTest() {
+        couponCodes = createCouponCodesCollection();
+    }
 
-		@After
-		public void afterEachTest() {
-			service.delete(categories);
-		}
+    @After
+    public void afterEachTest() {
+        service.delete(couponCodes);
+    }
 
-		@Test
-		public void save() {
-			CouponCode actualCategory = categories.getFirst();
+    @Test
+    public void save() {
+        CouponCode couponCode = couponCodes.getFirst();
 
-			service.save(actualCategory);
+        service.save(couponCode);
 
-			assertTrue(actualCategory.compareTwoCouponCodes(service.findOne(actualCategory.getId())));
-		}
+        assertTrue(couponCode.compareTwoCouponCodes(service.findOne(couponCode.getId())));
+    }
 
-		@Test
-		public void saveOne() {
-			CouponCode actualCategory = categories.getFirst();
+    @Test
+    public void saveOne() {
+        CouponCode couponCode = couponCodes.getFirst();
 
-			service.save(actualCategory);
+        service.save(couponCode);
 
-			assertTrue(actualCategory.compareTwoCouponCodes(service.findOne(actualCategory.getId())));
-		}
+        assertTrue(couponCode.compareTwoCouponCodes(service.findOne(couponCode.getId())));
+    }
 
-		@Test
-		public void saveCollection() {
-			LinkedList<CouponCode> actualCategory = categories;
+    @Test
+    public void saveCollection() {
+        LinkedList<CouponCode> couponCodes = this.couponCodes;
 
-			service.save(actualCategory);
+        service.save(couponCodes);
 
-			actualCategory.forEach(
-					x -> assertTrue(x.compareTwoCouponCodes(service.findOne(x.getId())))
-			);
-		}
+        couponCodes.forEach(
+                x -> assertTrue(x.compareTwoCouponCodes(service.findOne(x.getId())))
+        );
+    }
 
-		@Test
-		public void saveNull() {
-			CouponCode actualCategory = null;
+    @Test
+    public void saveNull() {
+        try {
+            service.save((CouponCode) null);
+        } catch (Exception e) {
+            assertNull(e);
+        }
+    }
 
-			try {
-				service.save(actualCategory);
-			} catch (Exception e) {
-				assertNull(e);
-			}
-		}
+    @Test
+    public void saveOneWithExistName() {
+        couponCodes.add(new CouponCode(2D, "category"));
+        couponCodes.add(new CouponCode(2D, "category"));
+        service.save(couponCodes);
 
-		@Test
-		public void saveOneWithExistName() {
-			categories.add(new CouponCode(2D , "category" ));
-			categories.add(new CouponCode(2D, "category"));
-			service.save(categories);
+        for (CouponCode x : service.findAll()) {
+            int numberOfSameObject = 0;
+            for (CouponCode x1 : service.findAll()) {
+                if (x.getCode().equals(x1.getCode()))
+                    numberOfSameObject++;
+                if (numberOfSameObject > 1)
+                    fail("can't save two categories with same name");
+            }
+        }
+    }
 
-			for (CouponCode x : service.findAll()) {
-				int numberOfSameObject = 0;
-				for (CouponCode x1 : service.findAll()) {
-					if (x.getCode().equals(x1.getCode()))
-						numberOfSameObject++;
-					if (numberOfSameObject > 1)
-						fail("can't save two categories with same name");
-				}
-			}
-		}
+    @Test
+    public void findOne() {
+        service.save(couponCodes.getFirst());
 
-		@Test
-		public void findOne() {
-			service.save(categories.getFirst());
+        CouponCode couponCodes = service.findOne(this.couponCodes.getFirst());
 
-			CouponCode actualCategory = service.findOne(categories.getFirst());
+        assertNotNull(couponCodes);
+    }
 
-			assertNotNull(actualCategory);
-		}
+    @Test
+    public void findOneWithNull() {
+        try {
+            service.findOne((CouponCode) null);
+            service.findOneByCode((CouponCode) null);
+            service.findOne(null);
+            service.findOneByCode((String) null);
+        } catch (Exception e) {
+            assertNull(e);
+        }
+    }
 
-		@Test
-		public void findOneWithNull() {
-			CouponCode actualCategory = null;
+    @Test
+    public void findOneById() {
+        service.save(couponCodes.getFirst());
 
-			try {
-				service.findOne(actualCategory);
-				service.findOneByCode(actualCategory);
-				service.findOne(null);
-				service.findOneByCode((String) null);
-			} catch (Exception e) {
-				assertNull(e);
-			}
-		}
+        CouponCode couponCode = service.findOne(couponCodes.getFirst().getId());
 
-		@Test
-		public void findOneById() {
-			service.save(categories.getFirst());
+        assertNotNull(couponCode);
+    }
 
-			CouponCode actualCategory = service.findOne(categories.getFirst().getId());
+    @Test
+    public void findOneByNameWithString() {
+        service.save(couponCodes.getFirst());
 
-			assertNotNull(actualCategory);
-		}
+        CouponCode couponCode = service.findOneByCode(couponCodes.getFirst().getCode());
 
-		@Test
-		public void findOneByNameWithString() {
-			service.save(categories.getFirst());
+        assertNotNull(couponCode);
+    }
 
-			CouponCode actualCategory = service.findOneByCode(categories.getFirst().getCode());
+    @Test
+    public void findOneByNameWithObject() {
+        service.save(couponCodes.getFirst());
 
-			assertNotNull(actualCategory);
-		}
+        CouponCode couponCode = service.findOneByCode(couponCodes.getFirst());
 
-		@Test
-		public void findOneByNameWithObject() {
-			service.save(categories.getFirst());
+        assertNotNull(couponCode);
+    }
 
-			CouponCode actualCategory = service.findOneByCode(categories.getFirst());
+    @Test
+    public void findAll() {
+        service.save(this.couponCodes);
 
-			assertNotNull(actualCategory);
-		}
+        Iterable<CouponCode> couponCodes = this.couponCodes;
 
-		@Test
-		public void findAll() {
-			Iterable<CouponCode> actualCategory = service.findAll();
+        couponCodes.forEach(
+                x -> assertNotNull(service.findOne(x.getId()))
+        );
+    }
 
-			actualCategory.forEach(
-					x -> assertNotNull(service.findOne(x.getId()))
-			);
-		}
+    @Test
+    public void delete() {
+        CouponCode couponCode = couponCodes.getFirst();
 
-		@Test
-		public void delete() {
-			CouponCode actualCategory = categories.getFirst();
+        service.save(couponCode);
+        service.delete(couponCode);
 
-			service.save(actualCategory);
-			service.delete(actualCategory);
+        assertNull(service.findOne(couponCode.getId()));
+    }
 
-			assertNull(service.findOne(actualCategory.getId()));
-		}
+    @Test
+    public void deleteById() {
+        CouponCode couponCode = couponCodes.getFirst();
 
-		@Test
-		public void deleteById() {
-			CouponCode actualCategory = categories.getFirst();
+        service.save(couponCode);
+        service.delete(couponCode.getId());
 
-			service.save(actualCategory);
-			service.delete(actualCategory.getId());
+        assertNull(service.findOne(couponCode.getId()));
+    }
 
-			assertNull(service.findOne(actualCategory.getId()));
-		}
+    @Test
+    public void deleteCollection() {
+        LinkedList<CouponCode> couponCodes = this.couponCodes;
 
-		@Test
-		public void deleteCollection() {
-			LinkedList<CouponCode> actualCategory = categories;
+        service.save(couponCodes);
+        service.delete(couponCodes);
 
-			service.save(actualCategory);
-			service.delete(actualCategory);
+        couponCodes.forEach(
+                x -> assertNull(service.findOne(x.getId()))
+        );
+    }
 
-			actualCategory.forEach(
-					x -> assertNull(service.findOne(x.getId()))
-			);
-		}
-
-		public LinkedList<CouponCode> createCategoriesCollection() {
-			LinkedList<CouponCode> categoriesToReturn = new LinkedList<>();
-			for (int i = 0; i < 3; i++) {
-				CouponCode book = new CouponCode(3D, "category " + i);
-				categoriesToReturn.add(book);
-			}
-			//categoriesToReturn.add(new CouponCode("category " + 3));
-			return categoriesToReturn;
-		}
+    public LinkedList<CouponCode> createCouponCodesCollection() {
+        LinkedList<CouponCode> couponCodes = new LinkedList<>();
+        for (int i = 0; i < 3; i++) {
+            CouponCode book = new CouponCode(3D, "category " + i);
+            couponCodes.add(book);
+        }
+        return couponCodes;
+    }
 }
 
 

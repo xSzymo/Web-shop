@@ -18,34 +18,34 @@ public class AddressServiceTest extends DataBaseTestConfiguration {
     @Autowired
     private AddressService service;
 
-    private LinkedList<Address> address;
+    private LinkedList<Address> addresses;
 
     @Before
     public void beforeEachTest() {
-        address = createAddressCollection();
+        addresses = createAddressesCollection();
     }
 
     @After
     public void afterEachTest() {
-        service.delete(address);
+        service.delete(addresses);
     }
 
     @Test
     public void saveOne() {
-        Address actualAddress = address.getFirst();
+        Address address = addresses.getFirst();
 
-        service.save(actualAddress);
+        service.save(address);
 
-        assertTrue(actualAddress.compareTwoAddress(service.findOne(actualAddress.getId())));
+        assertTrue(address.compareTwoAddress(service.findOne(address.getId())));
     }
 
     @Test
     public void saveCollection() {
-        LinkedList<Address> actualAddress = address;
+        LinkedList<Address> addresses = this.addresses;
 
-        service.save(actualAddress);
+        service.save(addresses);
 
-        actualAddress.forEach(
+        addresses.forEach(
                 x ->
                         assertTrue(x.compareTwoAddress(service.findOne(x.getId())))
         );
@@ -53,10 +53,8 @@ public class AddressServiceTest extends DataBaseTestConfiguration {
 
     @Test
     public void saveNull() {
-        Address actualAddress = null;
-
         try {
-            service.save(actualAddress);
+            service.save((Address) null);
         } catch (Exception e) {
             assertNull(e);
         }
@@ -65,27 +63,29 @@ public class AddressServiceTest extends DataBaseTestConfiguration {
 
     @Test
     public void findOne() {
-        service.save(address.getFirst());
+        service.save(addresses.getFirst());
 
-        Address address = service.findOne(this.address.getFirst());
+        Address address = service.findOne(this.addresses.getFirst());
 
         assertNotNull(address);
     }
 
     @Test
     public void findOneById() {
-        service.save(address.getFirst());
+        service.save(addresses.getFirst());
 
-        Address actualAddress = service.findOne(this.address.getFirst().getId());
+        Address address = service.findOne(this.addresses.getFirst().getId());
 
-        assertNotNull(actualAddress);
+        assertNotNull(address);
     }
 
     @Test
     public void findAll() {
-        Iterable<Address> actualAddress = service.findAll();
+        service.save(addresses);
 
-        actualAddress.forEach(
+        Iterable<Address> addresses = this.addresses;
+
+        addresses.forEach(
                 x ->
                         assertNotNull(service.findOne(x.getId()))
         );
@@ -93,10 +93,8 @@ public class AddressServiceTest extends DataBaseTestConfiguration {
 
     @Test
     public void findNull() {
-        Address actualAddress = null;
-
         try {
-            service.findOne(actualAddress);
+            service.findOne((Address) null);
         } catch (Exception e) {
             assertNull(e);
         }
@@ -104,48 +102,46 @@ public class AddressServiceTest extends DataBaseTestConfiguration {
 
     @Test
     public void delete() {
-        Address actualAddress = address.getFirst();
+        Address address = addresses.getFirst();
 
-        service.save(actualAddress);
-        service.delete(actualAddress);
+        service.save(address);
+        service.delete(address);
 
-        assertNull(service.findOne(actualAddress.getId()));
+        assertNull(service.findOne(address.getId()));
     }
 
     @Test
     public void deleteById() {
-        Address actualAddress = address.getFirst();
+        Address address = addresses.getFirst();
 
-        service.save(actualAddress);
-        service.delete(actualAddress.getId());
+        service.save(address);
+        service.delete(address.getId());
 
-        assertNull(service.findOne(actualAddress.getId()));
+        assertNull(service.findOne(address.getId()));
     }
 
     @Test
     public void deleteCollection() {
-        LinkedList<Address> actualAddress = address;
+        LinkedList<Address> addresses = this.addresses;
 
-        service.save(actualAddress);
-        service.delete(actualAddress);
+        service.save(addresses);
+        service.delete(addresses);
 
-        actualAddress.forEach(
+        addresses.forEach(
                 x -> assertNull(service.findOne(x.getId()))
         );
     }
 
     @Test
     public void deleteNull() {
-        Address actualAddress = null;
-
         try {
-            service.delete(actualAddress);
+            service.delete((Address) null);
         } catch (Exception e) {
             assertNull(e);
         }
     }
 
-    public LinkedList<Address> createAddressCollection() {
+    public LinkedList<Address> createAddressesCollection() {
         LinkedList<Address> actualAddress = new LinkedList<>();
         actualAddress.add(new Address("street", "postal code", "city", "country"));
         actualAddress.add(new Address("street", "postal code", "city", "country"));

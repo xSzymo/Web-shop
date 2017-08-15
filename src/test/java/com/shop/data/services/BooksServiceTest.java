@@ -13,127 +13,125 @@ import java.util.LinkedList;
 import static org.junit.Assert.*;
 
 public class BooksServiceTest extends DataBaseTestConfiguration {
-	@Autowired
-	private BooksService service;
-	@Autowired
-	private CategoriesService categoriesService;
+    @Autowired
+    private BooksService service;
+    @Autowired
+    private CategoriesService categoriesService;
 
-	private LinkedList<Book> books;
-	private Category category;
+    private LinkedList<Book> books;
+    private Category category;
 
-	@Before
-	public void setUp() {
-		books = createBooksCollectionAndNewCategory();
-	}
+    @Before
+    public void setUp() {
+        books = createBooksCollection();
+    }
 
-	@After
-	public void afterEachTest() {
-		service.delete(books);
-		categoriesService.delete(category);
-	}
+    @After
+    public void afterEachTest() {
+        service.delete(books);
+        categoriesService.delete(category);
+    }
 
-	@Test
-	public void saveOne() {
-		Book actualBook = books.getFirst();
+    @Test
+    public void saveOne() {
+        Book book = books.getFirst();
 
-		service.save(actualBook);
+        service.save(book);
 
-		assertTrue(actualBook.compareTwoBooks(service.findOne(actualBook.getId())));
-	}
+        assertTrue(book.compareTwoBooks(service.findOne(book.getId())));
+    }
 
-	@Test
-	public void saveCollection() {
-		LinkedList<Book> actualBook = books;
+    @Test
+    public void saveCollection() {
+        LinkedList<Book> books = this.books;
 
-		service.save(actualBook);
+        service.save(books);
 
-		actualBook.forEach(
-				x ->
-						assertTrue(x.compareTwoBooks(service.findOne(x.getId())))
-		);
-	}
+        books.forEach(
+                x ->
+                        assertTrue(x.compareTwoBooks(service.findOne(x.getId())))
+        );
+    }
 
-	@Test
-	public void saveNull() {
-		Book actualAddress = null;
+    @Test
+    public void saveNull() {
+        try {
+            service.save((Book) null);
+        } catch (Exception e) {
+            assertNull(e);
+        }
+    }
 
-		try {
-			service.save(actualAddress);
-		} catch (Exception e) {
-			assertNull(e);
-		}
-	}
+    @Test
+    public void findOne() {
+        service.save(books.getFirst());
 
-	@Test
-	public void findOne() {
-		service.save(books.getFirst());
+        Book book = service.findOne(books.getFirst());
 
-		Book actualBook = service.findOne(books.getFirst());
+        assertNotNull(book);
+    }
 
-		assertNotNull(actualBook);
-	}
+    @Test
+    public void findOneById() {
+        service.save(books.getFirst());
 
-	@Test
-	public void findOneById() {
-		service.save(books.getFirst());
+        Book book = service.findOne(books.getFirst().getId());
 
-		Book actualBook = service.findOne(books.getFirst().getId());
+        assertNotNull(book);
+    }
 
-		assertNotNull(actualBook);
-	}
+    @Test
+    public void findAll() {
+        service.save(this.books);
+        Iterable<Book> books = this.books;
 
-	@Test
-	public void findAll() {
-		Iterable<Book> actualBooks = service.findAll();
+        books.forEach(
+                x ->
+                        assertNotNull(service.findOne(x.getId()))
+        );
+    }
 
-		actualBooks.forEach(
-				x ->
-						assertNotNull(service.findOne(x.getId()))
-		);
-	}
+    @Test
+    public void delete() {
+        Book book = books.getFirst();
 
-	@Test
-	public void delete() {
-		Book actualBook = books.getFirst();
+        service.save(book);
+        service.delete(book);
 
-		service.save(actualBook);
-		service.delete(actualBook);
+        assertNull(service.findOne(book.getId()));
+    }
 
-		assertNull(service.findOne(actualBook.getId()));
-	}
+    @Test
+    public void deleteById() {
+        Book book = books.getFirst();
 
-	@Test
-	public void deleteById() {
-		Book actualBook = books.getFirst();
+        service.save(book);
+        service.delete(book.getId());
 
-		service.save(actualBook);
-		service.delete(actualBook.getId());
+        assertNull(service.findOne(book.getId()));
+    }
 
-		assertNull(service.findOne(actualBook.getId()));
-	}
+    @Test
+    public void deleteCollection() {
+        LinkedList<Book> books = this.books;
 
-	@Test
-	public void deleteCollection() {
-		LinkedList<Book> actualBook = books;
+        service.save(books);
+        service.delete(books);
 
-		service.save(actualBook);
-		service.delete(actualBook);
+        books.forEach(
+                x -> assertNull(service.findOne(x.getId()))
+        );
+    }
 
-		actualBook.forEach(
-				x -> assertNull(service.findOne(x.getId()))
-		);
-	}
-
-	//TODO - getBooks bug - check for fetchtype
-	public LinkedList<Book> createBooksCollectionAndNewCategory() {
-		LinkedList<Book> booksToReturn = new LinkedList<>();
-		category = new Category("123");
-		for (int i = 0; i < 3; i++) {
-			Book book = new Book("book" + i);
-			booksToReturn.add(book);
-			category.getBooks().add(book);
-		}
-		categoriesService.save(category);
-		return booksToReturn;
-	}
+    public LinkedList<Book> createBooksCollection() {
+        LinkedList<Book> booksToReturn = new LinkedList<>();
+        category = new Category("123");
+        for (int i = 0; i < 3; i++) {
+            Book book = new Book("book" + i);
+            booksToReturn.add(book);
+            category.getBooks().add(book);
+        }
+        categoriesService.save(category);
+        return booksToReturn;
+    }
 }

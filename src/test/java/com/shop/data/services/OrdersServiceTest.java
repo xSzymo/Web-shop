@@ -29,7 +29,7 @@ public class OrdersServiceTest extends DataBaseTestConfiguration {
 
     @Before
     public void setUp() {
-        orders = createBooksCollectionAndNewCategory();
+        orders = createOrdersCollection();
     }
 
     @After
@@ -50,11 +50,11 @@ public class OrdersServiceTest extends DataBaseTestConfiguration {
 
     @Test
     public void saveCollection() {
-        LinkedList<Order> ordersToCheck = orders;
+        LinkedList<Order> orders = this.orders;
 
-        service.save(ordersToCheck);
+        service.save(orders);
 
-        ordersToCheck.forEach(
+        orders.forEach(
                 x ->
                         assertTrue(x.equals(service.findOne(x.getId())))
         );
@@ -122,19 +122,19 @@ public class OrdersServiceTest extends DataBaseTestConfiguration {
 
     @Test
     public void deleteCollection() {
-        LinkedList<Order> order = orders;
+        LinkedList<Order> orders = this.orders;
 
-        service.save(order);
-        service.delete(order);
+        service.save(orders);
+        service.delete(orders);
 
-        order.forEach(
+        orders.forEach(
                 this::checker
         );
     }
 
 
-    public LinkedList<Order> createBooksCollectionAndNewCategory() {
-        LinkedList<Order> booksToReturn = new LinkedList<>();
+    public LinkedList<Order> createOrdersCollection() {
+        LinkedList<Order> orders = new LinkedList<>();
         for (int i = 0; i < 3; i++) {
             Order order = new Order(new BigDecimal("123" + i * 100), false);
             order.setUser(new User("123" + i * 100, "123", "123" + i * 100));
@@ -149,9 +149,9 @@ public class OrdersServiceTest extends DataBaseTestConfiguration {
             order.setBooks(books);
 
             categoriesService.save(category);
-            booksToReturn.add(order);
+            orders.add(order);
         }
-        return booksToReturn;
+        return orders;
     }
 
 
