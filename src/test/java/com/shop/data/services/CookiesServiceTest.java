@@ -37,7 +37,7 @@ public class CookiesServiceTest extends DataBaseTestConfiguration {
 
 		service.save(cookie);
 
-		assertTrue(cookie.compareTwoCategories(service.findOne(cookie.getId())));
+		assertTrue(cookie.equals(service.findOne(cookie.getId())));
 	}
 
 	@Test
@@ -46,7 +46,7 @@ public class CookiesServiceTest extends DataBaseTestConfiguration {
 
 		service.save(cookie);
 
-		assertTrue(cookie.compareTwoCategories(service.findOne(cookie.getId())));
+		assertTrue(cookie.equals(service.findOne(cookie.getId())));
 	}
 
 	@Test
@@ -56,7 +56,7 @@ public class CookiesServiceTest extends DataBaseTestConfiguration {
 		service.save(cookies);
 
 		cookies.forEach(
-				x -> assertTrue(x.compareTwoCategories(service.findOne(x.getId())))
+				x -> assertTrue(x.equals(service.findOne(x.getId())))
 		);
 }
 

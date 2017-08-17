@@ -27,10 +27,10 @@ public class Cookies {
         this.name = name;
     }
 
-    public boolean compareTwoCategories(Cookies cookie) {
+    public boolean equals(Cookies cookie) {
         boolean sameObject = true;
-//        if(this.getValue().equals(cookie.getValue()) || this.getName().equals(cookie.getValue()))
-//            return true;
+        if(!this.getValue().equals(cookie.getValue()) || !this.getName().equals(cookie.getName()))
+            return false;
 //        if(this.getValue().equals(cookie.getName()) || this.getName().equals(cookie.getName())
 //        return;
         return sameObject;
