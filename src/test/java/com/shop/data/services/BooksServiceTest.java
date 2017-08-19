@@ -42,6 +42,27 @@ public class BooksServiceTest extends DataBaseTestConfiguration {
     }
 
     @Test
+    public void saveOneWithOutCategory() {
+        Book book = new Book("abc");
+
+        service.save(book);
+
+        assertNull(service.findOne(book));
+    }
+
+
+    @Test
+    public void saveOneWithExistCategory() {
+        Book book = new Book("abc1");
+        book.setCategory(category);
+
+        service.save(book);
+
+        assertNotNull(service.findOne(book));
+    }
+
+
+    @Test
     public void saveCollection() {
         LinkedList<Book> books = this.books;
 

@@ -32,6 +32,7 @@ public class BooksService {
 			return;
 
 		//repository.save(book);
+		book.getCategory().getBooks().add(book);
 		categoriesService.save(book.getCategory());
 	}
 
@@ -68,6 +69,8 @@ public class BooksService {
 	}
 
 	public Book findOne(Book book) {
+		if(book.getId() == null)
+			return null;
 		return repository.findOne(book.getId());
 	}
 
