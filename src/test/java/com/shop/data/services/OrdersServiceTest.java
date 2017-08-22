@@ -24,6 +24,8 @@ public class OrdersServiceTest extends DataBaseTestConfiguration {
     private CategoriesService categoriesService;
     @Autowired
     private AddressService addressService;
+    @Autowired
+    private UsersService usersService;
 
     private LinkedList<Order> orders;
 
@@ -36,7 +38,9 @@ public class OrdersServiceTest extends DataBaseTestConfiguration {
     public void afterEachTest() {
         for (int i = 0; i < 3; i++)
             categoriesService.delete("category" + i);
+        orders.forEach(x -> usersService.delete(x.getUser()));
         service.delete(orders);
+
     }
 
     @Test
@@ -114,7 +118,7 @@ public class OrdersServiceTest extends DataBaseTestConfiguration {
         Order order = orders.getFirst();
 
         service.save(order);
-        service.delete(order);
+        service.delete(order.getId());
 
         checker(order);
     }
@@ -136,19 +140,25 @@ public class OrdersServiceTest extends DataBaseTestConfiguration {
     public LinkedList<Order> createOrdersCollection() {
         LinkedList<Order> orders = new LinkedList<>();
         for (int i = 0; i < 3; i++) {
-            Order order = new Order(new BigDecimal("123" + i * 100), false);
-            order.setUser(new User("123" + i * 100, "123", "123" + i * 100));
-
-            LinkedList<Book> books = new LinkedList<>();
-            Book book = new Book("123" + i);
             Category category = new Category("category" + i);
-            book.setCategory(category);
-            books.add(book);
-            book.getOrders().add(order);
-            category.getBooks().add(book);
-            order.setBooks(books);
-
             categoriesService.save(category);
+
+            Order order = new Order(new BigDecimal("123" + i * 100), false);
+
+            Book book = new Book("123" + i);
+            book.setCategory(category);
+            booksService.save(book);
+            order.getBooks().add(book);
+
+            book = new Book("1234" + i);
+            book.setCategory(category);
+            booksService.save(book);
+            order.getBooks().add(book);
+
+            User user = new User("123" + i * 100, "123", "123" + i * 100);
+            usersService.save(user);
+
+            order.setUser(user);
             orders.add(order);
         }
         return orders;
@@ -156,11 +166,11 @@ public class OrdersServiceTest extends DataBaseTestConfiguration {
 
 
     private void checker(Order order) {
-        assertNull(service.findOne(order.getId()));
+        assertNull(service.findOne(order));
         assertNull(addressService.findOne(order.getBillingAddress()));
         assertNull(addressService.findOne(order.getShippingAddress()));
 
         for (Book book : order.getBooks())
-            assertNotNull(booksService.findOne(book.getId()));
+            assertNotNull(booksService.findOne(book));
     }
 }

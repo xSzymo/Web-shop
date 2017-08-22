@@ -35,7 +35,7 @@ public class Order {
 	@Column(name = "realized")
 	private boolean realized = false;
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@CollectionTable(name = "user_id")
 	private User user;
 
@@ -51,7 +51,7 @@ public class Order {
 	@JoinColumn(name = "coupon_codes_id")
 	private CouponCode couponCodes;
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@Column(name = "book_id")
 	private Collection<Book> books = new ArrayList<Book>();
 

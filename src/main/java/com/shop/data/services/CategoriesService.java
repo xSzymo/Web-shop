@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.Collection;
 
+//TODO need to add if books haven't id then don't save category
 @Service
 @Transactional
 public class CategoriesService {

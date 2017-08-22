@@ -31,7 +31,11 @@ public class BooksService {
 		if (book.getCategory() == null)
 			return;
 
-		//repository.save(book);
+		Category category = categoriesService.findOne(book.getCategory());
+		if(category == null)
+			return;
+
+		book.setCategory(category);
 		book.getCategory().getBooks().add(book);
 		categoriesService.save(book.getCategory());
 	}
