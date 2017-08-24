@@ -119,6 +119,7 @@ public class BooksService {
 				Book x3 = iterator2.next();
 				if (x3.getId() == book.getId()) {
 					iterator2.remove();
+					x2.getBooks().remove(book);
 					categoriesService.save(x2);
 				}
 			}

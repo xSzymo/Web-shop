@@ -73,6 +73,9 @@ public class CategoriesService {
 
 	public Category findOne(Category category) {
 		try {
+			if(category.getId() == null)
+				return null;
+
 			return repository.findOne(category.getId());
 		} catch (NullPointerException e) {
 			return null;

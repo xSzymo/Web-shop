@@ -42,7 +42,13 @@ public class UsersService {
 //			user.getOrders().forEach(
 //					x -> booksService.save(x.getBooks())
 //			);
-			ordersService.save(user.getOrders());
+			user.getOrders().forEach(
+					x -> {
+
+						x.setUser(user);
+										}
+			);
+			//ordersService.save(user.getOrders());
 			repository.save(user);
 		}
 	}
@@ -127,6 +133,8 @@ public class UsersService {
 
 		user.getOrders().forEach(
 				x -> {
+					//user.getOrders().remove(x);
+					//x.setUser(null);
 					ordersService.delete(x);
 					//user.getOrders().remove(x);
 				});

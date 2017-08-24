@@ -14,42 +14,41 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.math.BigDecimal;
 import java.util.LinkedList;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 public class UsersServiceTest extends DataBaseTestConfiguration {
-	@Autowired
-	private UsersService service;
-	@Autowired
-	private UsersRepository usersRepository;
-	@Autowired
-	private PicturesRepository picturesRepository;
-	@Autowired
-	private OrdersService ordersService;
-	@Autowired
-	private CategoriesService categoriesService;
-	@Autowired
-	private OrdersRepository ordersRepository;
-	@Autowired
-	private CategoriesRepository categoriesRepository;
-	@Autowired
-	private BooksRepository booksRepository;
-	@Autowired
-	private BooksService booksService;
+    @Autowired
+    private UsersService service;
+    @Autowired
+    private UsersRepository usersRepository;
+    @Autowired
+    private PicturesRepository picturesRepository;
+    @Autowired
+    private OrdersService ordersService;
+    @Autowired
+    private CategoriesService categoriesService;
+    @Autowired
+    private OrdersRepository ordersRepository;
+    @Autowired
+    private CategoriesRepository categoriesRepository;
+    @Autowired
+    private BooksRepository booksRepository;
+    @Autowired
+    private BooksService booksService;
 
-	private LinkedList<User> users;
+    private LinkedList<User> users;
+
+    private LinkedList<Category> categories = new LinkedList<>();
 
 
-	@Before
-	public void BeforeEachTest() {
-		users = createUsersCollection();
-	}
+    @Before
+    public void BeforeEachTest() {
+        users = createUsersCollection();
+    }
 
-	//delete
-	@After
-	public void afterEachTest() {
+    //delete
+    @After
+    public void afterEachTest() {
 //		categories.forEach(
 //				x ->    x.getOrders().forEach(
 //							x1 -> x1.getBooks().forEach(
@@ -58,20 +57,24 @@ public class UsersServiceTest extends DataBaseTestConfiguration {
 //						)
 //		);
 //
-		try {
-			service.delete(users);
-			picturesRepository.deleteAll();
-			booksRepository.deleteAll();
-			categoriesRepository.deleteAll();
-			usersRepository.deleteAll();
-			ordersRepository.deleteAll();
-		} catch (Exception e) {
-			//e.printStackTrace();
-		}
-	}
+        try {
+//			service.delete(users);
+            usersRepository.deleteAll();
+            ordersRepository.deleteAll();
+            picturesRepository.deleteAll();
+            booksRepository.deleteAll();
+            categoriesRepository.deleteAll();
+            categoriesService.delete(categories);
+            categoriesService.delete("category0");
+            categoriesService.delete("category1");
+            categoriesService.delete("category2");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 /*	@Test
-	public void test() {
+    public void test() {
 		User user = new User("login", "password", "email");
 		Order order = new Order(new BigDecimal("1"), false);
 		Category category = new Category("category");
@@ -85,51 +88,63 @@ public class UsersServiceTest extends DataBaseTestConfiguration {
 		assertTrue(user.equals(service.findByLogin(user)));
 	}*/
 
-	@Test
-	public void save() {
-		User user = users.getFirst();
+    @Test
+    public void save() {
+        User user = users.getFirst();
 
-		service.save(user);
+        service.save(user);
 
-		assertTrue(user.equals(service.findOne(user.getId())));
-	}
+        assertTrue(user.equals(service.findOne(user.getId())));
+    }
 
-	@Test
-	public void saveCollection() {
-		LinkedList<User> user = users;
 
-		service.save(user);
+    @Test
+    public void save1() {
+        User user = users.getFirst();
 
-			user.forEach(
-				x -> assertTrue(x.equals(service.findOne(x.getId())))
-		);
-	}
+        service.save(user);
 
-	@Test
-	public void saveNull() {
-		try {
-			service.save((User) null);
-		} catch (Exception e) {
-			assertNull(e);
-		}
-	}
+        ordersService.save(createOrdersCollection(user));
 
-	@Test
-	public void saveOneWithExistLogin() {
-		users.add(new User("category " + 3, "", ""));
-		users.add(new User("category " + 3, "", ""));
-		service.save(users);
+        assertTrue(user.equals(service.findOne(user.getId())));
+    }
 
-		for (User x : service.findAll()) {
-			int numberOfSameObject = 0;
-			for (User x1 : service.findAll()) {
-				if (x.getLogin().equals(x1.getLogin()))
-					numberOfSameObject++;
-				if (numberOfSameObject > 1)
-					fail("can't save two categories with same name");
-			}
-		}
-	}
+    @Test
+    public void saveCollection() {
+        LinkedList<User> user = users;
+
+        service.save(user);
+
+        user.forEach(
+                x -> assertTrue(x.equals(service.findOne(x.getId())))
+        );
+    }
+
+    @Test
+    public void saveNull() {
+        try {
+            service.save((User) null);
+        } catch (Exception e) {
+            assertNull(e);
+        }
+    }
+
+    @Test
+    public void saveOneWithExistLogin() {
+        users.add(new User("category " + 3, "", ""));
+        users.add(new User("category " + 3, "", ""));
+        service.save(users);
+
+        for (User x : service.findAll()) {
+            int numberOfSameObject = 0;
+            for (User x1 : service.findAll()) {
+                if (x.getLogin().equals(x1.getLogin()))
+                    numberOfSameObject++;
+                if (numberOfSameObject > 1)
+                    fail("can't save two categories with same name");
+            }
+        }
+    }
 
 //	@Test
 //	public void updateCategoryWithSetBooks() {
@@ -174,122 +189,211 @@ public class UsersServiceTest extends DataBaseTestConfiguration {
 //		assertTrue(categoryToUpdate.equals(service.findOne(actualCategory.getName())));
 //	}
 
-	@Test
-	public void findOne() {
-		service.save(users.getFirst());
+    @Test
+    public void findOne() {
+        service.save(users.getFirst());
 
-		User user = service.findOne(users.getFirst());
+        User user = service.findOne(users.getFirst());
 
-		assertNotNull(user);
-	}
+        assertNotNull(user);
+    }
 
-	@Test
-	public void findOneWithNull() {
-		try {
+    @Test
+    public void findOne1() {
+        User user = users.getFirst();
+
+        service.save(user);
+
+        ordersService.save(createOrdersCollection(user));
+
+        assertNotNull(user);
+    }
+
+    @Test
+    public void findOneWithNull() {
+        try {
 //			service.findOne(actualCategory);
 //			service.findByLogin(actualCategory);
 //			service.findOne((Category) null);
-			service.findByLogin((String) null);
-		} catch (Exception e) {
-			assertNull(e);
-		}
-	}
+            service.findByLogin((String) null);
+        } catch (Exception e) {
+            assertNull(e);
+        }
+    }
 
-	@Test
-	public void findOneById() {
-		service.save(users.getFirst());
+    @Test
+    public void findOneById() {
+        service.save(users.getFirst());
 
-		User user = service.findOne(users.getFirst().getId());
+        User user = service.findOne(users.getFirst().getId());
 
-		assertNotNull(user);
-	}
+        assertNotNull(user);
+    }
 
-	@Test
-	public void findOneByNameWithString() {
-		service.save(users.getFirst());
+    @Test
+    public void findOneById1() {
+        service.save(users.getFirst());
 
-		User user = service.findByLogin(users.getFirst().getLogin());
+        User user = service.findOne(users.getFirst().getId());
 
-		assertNotNull(user);
-	}
+        ordersService.save(createOrdersCollection(user));
 
-	@Test
-	public void findOneByNameWithObject() {
-		service.save(users.getFirst());
+        assertNotNull(user);
+    }
 
-		User user = service.findByLogin(users.getFirst());
+    @Test
+    public void findOneByNameWithString() {
+        service.save(users.getFirst());
 
-		assertNotNull(user);
-	}
+        User user = service.findByLogin(users.getFirst().getLogin());
 
-	@Test
-	public void findAll() {
-		service.save(users);
+        assertNotNull(user);
+    }
 
-		Iterable<User> users = this.users;
+    @Test
+    public void findOneByNameWithString1() {
+        service.save(users.getFirst());
 
-		users.forEach(
-				x -> assertNotNull(service.findOne(x.getId()))
-		);
-	}
+        User user = service.findByLogin(users.getFirst().getLogin());
 
-	@Test
-	public void delete() {
-		User user = users.getFirst();
+        ordersService.save(createOrdersCollection(user));
 
-		service.save(user);
-		service.delete(user);
+        assertNotNull(user);
+    }
 
-		assertNull(service.findOne(user.getId()));
-	}
+    @Test
+    public void findOneByNameWithObject() {
+        service.save(users.getFirst());
 
-	@Test
-	public void deleteById() {
-		User user = users.getFirst();
+        User user = service.findByLogin(users.getFirst());
 
-		service.save(user);
-		service.delete(user.getId());
+        assertNotNull(user);
+    }
 
-		assertNull(service.findOne(user.getId()));
-		user.getOrders().forEach(
-				x -> assertNull(ordersService.findOne(x)));
-//		user.getOrders().forEach(
-//				x -> x.getBooks().forEach(
-//						x1 -> {
-//							//assertNotNull(booksRepository.findByName(x1.getName()));
-//							//assertNotNull(categoriesService.findOneByName(x1.getCategory().getName()));
-//						}
-//				)
-//		);
-	}
+    @Test
+    public void findOneByNameWithObject1() {
+        service.save(users.getFirst());
 
-	@Test
-	public void deleteCollection() {
-		LinkedList<User> users = this.users;
+        User user = service.findByLogin(users.getFirst());
 
-		service.save(users);
-		service.delete(users);
+        ordersService.save(createOrdersCollection(user));
 
-		users.forEach(
-				x -> assertNull(service.findOne(x.getId()))
-		);
-	}
+        assertNotNull(user);
+    }
 
-	public LinkedList<User> createUsersCollection() {
-		LinkedList<User> usersToReturn = new LinkedList<>();
+    @Test
+    public void findAll() {
+        service.save(users);
 
-		for(int i = 0; i < 3; i++) {
-			User user = new User("login" + i, "password", "email" + i);
-			Order order = new Order(new BigDecimal("1"), false);
-			Category category = new Category("category" + i);
-			Book book = new Book("book");
-			book.setCategory(category);
-			order.getBooks().add(book);
-			user.getOrders().add(order);
+        users.forEach(
+                x -> assertNotNull(service.findOne(x.getId()))
+        );
+    }
 
-			usersToReturn.add(user);
-			categoriesService.save(category);
-		}
-		return usersToReturn;
-	}
+    @Test
+    public void delete() {
+        User user = users.getFirst();
+
+        service.save(user);
+        service.delete(user);
+
+        checker(user);
+    }
+
+    @Test
+    public void delete1() {
+        User user = users.getFirst();
+
+        service.save(user);
+        ordersService.save(createOrdersCollection(user));
+        service.delete(user);
+
+        checker(user);
+    }
+
+    @Test
+    public void deleteById() {
+        User user = users.getFirst();
+
+        service.save(user);
+        service.delete(user.getId());
+
+        checker(user);
+    }
+
+    @Test
+    public void deleteById1() {
+        User user = users.getFirst();
+
+        service.save(user);
+        ordersService.save(createOrdersCollection(user));
+        service.delete(user.getId());
+
+        checker(user);
+    }
+
+    @Test
+    public void deleteCollection() {
+        LinkedList<User> users = this.users;
+
+        service.save(users);
+        service.delete(users);
+
+        users.forEach(this::checker);
+    }
+
+    public LinkedList<User> createUsersCollection() {
+        LinkedList<User> users = new LinkedList<>();
+        for (int i = 0; i < 3; i++) {
+            User user = new User("123" + i * 100, "123", "123" + i * 100);
+
+            users.add(user);
+        }
+        return users;
+    }
+
+    /**
+     * order cannot be saved if user is null
+     * user cannot be save
+     * @return
+     */
+    public LinkedList<Order> createOrdersCollection(User user) {
+        LinkedList<Order> orders = new LinkedList<>();
+        for (int i = 0; i < 3; i++) {
+            Category category = new Category("category" + i);
+            categoriesService.save(category);
+
+            Order order = new Order(new BigDecimal("123" + i * 100), false);
+
+            Book book = new Book("123" + i);
+            book.setCategory(category);
+            booksService.save(book);
+            order.getBooks().add(book);
+
+            book = new Book("1234" + i);
+            book.setCategory(category);
+            booksService.save(book);
+            order.getBooks().add(book);
+
+            order.setUser(user);
+            orders.add(order);
+
+            categories.add(category);
+        }
+        return orders;
+    }
+
+
+    private void checker(User user) {
+        user.getOrders().forEach(
+                x -> {
+                    assertNull(service.findOne(x.getId()));
+                    x.getBooks().forEach(
+                            x1 ->  assertNotNull(booksService.findOne(x1))
+                    );
+                }
+        );
+
+        assertNull(service.findOne(user));
+    }
 }
