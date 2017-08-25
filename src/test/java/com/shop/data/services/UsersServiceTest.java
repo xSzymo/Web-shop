@@ -46,47 +46,23 @@ public class UsersServiceTest extends DataBaseTestConfiguration {
         users = createUsersCollection();
     }
 
-    //delete
     @After
     public void afterEachTest() {
-//		categories.forEach(
-//				x ->    x.getOrders().forEach(
-//							x1 -> x1.getBooks().forEach(
-//									x2 -> booksService.delete(x2)
-//								)
-//						)
-//		);
-//
+
         try {
-//			service.delete(users);
             usersRepository.deleteAll();
             ordersRepository.deleteAll();
             picturesRepository.deleteAll();
             booksRepository.deleteAll();
-            categoriesRepository.deleteAll();
             categoriesService.delete(categories);
             categoriesService.delete("category0");
             categoriesService.delete("category1");
             categoriesService.delete("category2");
+            categoriesRepository.deleteAll();
         } catch (Exception e) {
-            e.printStackTrace();
+            // e.printStackTrace();
         }
     }
-
-/*	@Test
-    public void test() {
-		User user = new User("login", "password", "email");
-		Order order = new Order(new BigDecimal("1"), false);
-		Category category = new Category("category");
-		Book book = new Book("book");
-		book.setCategory(category);
-		order.getBooks().add(book);
-		user.getOrders().add(order);
-
-		service.save(user);
-
-		assertTrue(user.equals(service.findByLogin(user)));
-	}*/
 
     @Test
     public void save() {
@@ -99,7 +75,7 @@ public class UsersServiceTest extends DataBaseTestConfiguration {
 
 
     @Test
-    public void save1() {
+    public void saveWithOrdersCollection() {
         User user = users.getFirst();
 
         service.save(user);
@@ -146,49 +122,6 @@ public class UsersServiceTest extends DataBaseTestConfiguration {
         }
     }
 
-//	@Test
-//	public void updateCategoryWithSetBooks() {
-//		User actualCategory = categories.getFirst();
-//
-//		service.save(actualCategory);
-//
-//		assertTrue(actualCategory.equals(service.findOne(actualCategory.getName())));
-//
-//
-//		User categoryToUpdate = service.findOne(actualCategory.getName());
-//
-//		LinkedList<Book> books = new LinkedList<>();
-//		books.add(new Book("avcx"));
-//		books.add(new Book("avcx1"));
-//
-//		categoryToUpdate.(books);
-//		service.save(categoryToUpdate);
-//
-//		Category one = service.findOne(categoryToUpdate.getName());
-//		assertTrue(categoryToUpdate.equals(one));
-//	}
-//
-//	@Test
-//	public void updateCategoryWithAddBooks() {
-//		User actualCategory = categories.getFirst();
-//
-//		service.save(actualCategory);
-//
-//		assertTrue(actualCategory.equals(service.findOne(actualCategory.getName())));
-//
-//
-//		User categoryToUpdate = service.findOne(actualCategory.getName());
-//
-//		LinkedList<Book> books = new LinkedList<>();
-//		books.add(new Book("avcx"));
-//		books.add(new Book("avcx1"));
-//
-//		categoryToUpdate.getBooks().addAll(books);
-//		service.save(categoryToUpdate);
-//
-//		assertTrue(categoryToUpdate.equals(service.findOne(actualCategory.getName())));
-//	}
-
     @Test
     public void findOne() {
         service.save(users.getFirst());
@@ -199,7 +132,7 @@ public class UsersServiceTest extends DataBaseTestConfiguration {
     }
 
     @Test
-    public void findOne1() {
+    public void findOneWithOrdersCollection() {
         User user = users.getFirst();
 
         service.save(user);
@@ -231,7 +164,7 @@ public class UsersServiceTest extends DataBaseTestConfiguration {
     }
 
     @Test
-    public void findOneById1() {
+    public void findOneByIdWithOrdersCollection() {
         service.save(users.getFirst());
 
         User user = service.findOne(users.getFirst().getId());
@@ -251,7 +184,7 @@ public class UsersServiceTest extends DataBaseTestConfiguration {
     }
 
     @Test
-    public void findOneByNameWithString1() {
+    public void findOneByNameWithStringWithOrdersCollection() {
         service.save(users.getFirst());
 
         User user = service.findByLogin(users.getFirst().getLogin());
@@ -271,7 +204,7 @@ public class UsersServiceTest extends DataBaseTestConfiguration {
     }
 
     @Test
-    public void findOneByNameWithObject1() {
+    public void findOneByNameWithObjectWithOrdersCollection() {
         service.save(users.getFirst());
 
         User user = service.findByLogin(users.getFirst());
@@ -301,7 +234,7 @@ public class UsersServiceTest extends DataBaseTestConfiguration {
     }
 
     @Test
-    public void delete1() {
+    public void deleteWithOrdersCollection() {
         User user = users.getFirst();
 
         service.save(user);
@@ -322,7 +255,7 @@ public class UsersServiceTest extends DataBaseTestConfiguration {
     }
 
     @Test
-    public void deleteById1() {
+    public void deleteByIdWithOrdersCollection() {
         User user = users.getFirst();
 
         service.save(user);
@@ -352,11 +285,6 @@ public class UsersServiceTest extends DataBaseTestConfiguration {
         return users;
     }
 
-    /**
-     * order cannot be saved if user is null
-     * user cannot be save
-     * @return
-     */
     public LinkedList<Order> createOrdersCollection(User user) {
         LinkedList<Order> orders = new LinkedList<>();
         for (int i = 0; i < 3; i++) {
@@ -389,7 +317,7 @@ public class UsersServiceTest extends DataBaseTestConfiguration {
                 x -> {
                     assertNull(service.findOne(x.getId()));
                     x.getBooks().forEach(
-                            x1 ->  assertNotNull(booksService.findOne(x1))
+                            x1 -> assertNotNull(booksService.findOne(x1))
                     );
                 }
         );

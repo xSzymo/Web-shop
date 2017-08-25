@@ -73,10 +73,10 @@ public class CategoriesService {
 
 	public Category findOne(Category category) {
 		try {
-			if(category.getId() == null)
+			if(category.getName() == null)
 				return null;
 
-			return repository.findOne(category.getId());
+			return findOneByName(category.getName());
 		} catch (NullPointerException e) {
 			return null;
 		}
