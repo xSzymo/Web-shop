@@ -27,7 +27,7 @@ public class Category {
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	private Collection<Book> books = new LinkedHashSet<Book>();
 
-	public Category() {
+	private Category() {
 		books = new LinkedHashSet<Book>();
 	}
 

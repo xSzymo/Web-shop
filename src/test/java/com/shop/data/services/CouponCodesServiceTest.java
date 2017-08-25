@@ -137,7 +137,7 @@ public class CouponCodesServiceTest extends DataBaseTestConfiguration {
     public void findAll() {
         service.save(this.couponCodes);
 
-        Iterable<CouponCode> couponCodes = this.couponCodes;
+        Iterable<CouponCode> couponCodes = service.findAll();
 
         couponCodes.forEach(
                 x -> assertNotNull(service.findOne(x.getId()))

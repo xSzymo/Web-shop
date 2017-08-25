@@ -155,7 +155,7 @@ public class CookiesServiceTest extends DataBaseTestConfiguration {
 	public void findAll() {
 		service.save(this.cookies);
 
-		Iterable<Cookies> cookies = this.cookies;
+		Iterable<Cookies> cookies = service.findAll();
 
 		cookies.forEach(
 				x -> assertNotNull(service.findOne(x.getId()))

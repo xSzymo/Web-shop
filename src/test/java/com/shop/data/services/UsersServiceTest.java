@@ -218,6 +218,8 @@ public class UsersServiceTest extends DataBaseTestConfiguration {
     public void findAll() {
         service.save(users);
 
+        Iterable<User> users = service.findAll();
+
         users.forEach(
                 x -> assertNotNull(service.findOne(x.getId()))
         );

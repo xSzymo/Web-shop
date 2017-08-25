@@ -93,6 +93,8 @@ public class OrdersServiceTest extends DataBaseTestConfiguration {
 
     @Test
     public void findAll() {
+        service.save(orders);
+
         Iterable<Order> orders = service.findAll();
 
         orders.forEach(

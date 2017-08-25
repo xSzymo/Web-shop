@@ -36,6 +36,18 @@ public class BooksServiceTest extends DataBaseTestConfiguration {
     }
 
     @Test
+    public void saveOneWithCategoryWhichDoesNotExist() {
+        Book book = books.getFirst();
+
+        book.setId(19);
+        book.setCategory(new Category("complicated name"));
+
+        service.save(book);
+
+        assertNull(service.findOne(book));
+    }
+
+    @Test
     public void saveOne() {
         Book book = books.getFirst();
 
@@ -107,7 +119,8 @@ public class BooksServiceTest extends DataBaseTestConfiguration {
     @Test
     public void findAll() {
         service.save(this.books);
-        Iterable<Book> books = this.books;
+
+        Iterable<Book> books = service.findAll();
 
         books.forEach(
                 x ->

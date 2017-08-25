@@ -56,7 +56,7 @@ public class AddressServiceTest extends DataBaseTestConfiguration {
         try {
             service.save((Address) null);
         } catch (Exception e) {
-            assertNull(e);
+            fail("Exception should not be throw " + e.getMessage());
         }
     }
 
@@ -83,7 +83,7 @@ public class AddressServiceTest extends DataBaseTestConfiguration {
     public void findAll() {
         service.save(addresses);
 
-        Iterable<Address> addresses = this.addresses;
+        Iterable<Address> addresses = service.findAll();
 
         addresses.forEach(
                 x ->

@@ -90,18 +90,4 @@ public class OrdersService {
         user.getOrders().remove(order);
         usersRepository.save(user);
     }
-
-    private void removeBooksFromOrders(Order order) {
-        ArrayList<Book> myBooks = new ArrayList<>();
-        Iterable<Book> books = booksService.findAll();
-        order.getBooks().forEach(
-                x -> {
-                    for (Book book : books)
-                        if (x.getId() == book.getId()) {
-                            order.getBooks().remove(book);
-                            booksService.save(book);
-                        }
-                }
-        );
-    }
 }

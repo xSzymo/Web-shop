@@ -48,7 +48,7 @@ public class RunAtStart {
             RepositoriesAccess.usersRepository.save(new User("person", "person", "person@wp.pl"));
             RepositoriesAccess.usersRepository.save(new User("personerino", "personerino", "personerino@wp.pl"));
 
-            Category categories = new Category();
+            Category categories = new Category("bb");
             categories.setName("mmo");
             RepositoriesAccess.categoriesRepository.save(categories);
 
