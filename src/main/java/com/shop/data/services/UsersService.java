@@ -121,13 +121,7 @@ public class UsersService {
 		if (user == null)
 			return;
 
-		user.getOrders().forEach(
-				x -> {
-					//user.getOrders().remove(x);
-					//x.setUser(null);
-					ordersService.delete(x);
-					//user.getOrders().remove(x);
-				});
+		user.getOrders().forEach(x -> ordersService.delete(x));
 
 		repository.delete(user.getId());
 	}

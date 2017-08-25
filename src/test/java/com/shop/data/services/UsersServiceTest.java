@@ -164,6 +164,15 @@ public class UsersServiceTest extends DataBaseTestConfiguration {
     }
 
     @Test
+    public void findOneByEmail() {
+        service.save(users.getFirst());
+
+        User user = service.findByEmail(users.getFirst().geteMail());
+
+        assertNotNull(user);
+    }
+
+    @Test
     public void findOneByIdWithOrdersCollection() {
         service.save(users.getFirst());
 
@@ -263,6 +272,17 @@ public class UsersServiceTest extends DataBaseTestConfiguration {
         service.save(user);
         ordersService.save(createOrdersCollection(user));
         service.delete(user.getId());
+
+        checker(user);
+    }
+
+    @Test
+    public void deleteByNameWithOrdersCollection() {
+        User user = users.getFirst();
+
+        service.save(user);
+        ordersService.save(createOrdersCollection(user));
+        service.delete(user.getLogin());
 
         checker(user);
     }
