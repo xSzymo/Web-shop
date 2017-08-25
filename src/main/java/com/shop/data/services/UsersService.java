@@ -36,19 +36,9 @@ public class UsersService {
 			actualUser.setOrders(user.getOrders());
 			actualUser.setPassword(user.getPassword());
 			actualUser.setLogin(user.getLogin());
-			//ordersService.save(user.getOrders());
 			repository.save(actualUser);
 		} else {
-//			user.getOrders().forEach(
-//					x -> booksService.save(x.getBooks())
-//			);
-			user.getOrders().forEach(
-					x -> {
-
-						x.setUser(user);
-										}
-			);
-			//ordersService.save(user.getOrders());
+			user.getOrders().forEach(x -> x.setUser(user));
 			repository.save(user);
 		}
 	}

@@ -72,7 +72,6 @@ public class OrdersService {
     private void deleteOperation(Order order) {
         if (order == null)
             return;
-//		removeBooksFromOrders(order);
         removeUserFromOrders(order);
 
         try {

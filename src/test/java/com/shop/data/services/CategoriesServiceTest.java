@@ -162,12 +162,38 @@ public class CategoriesServiceTest extends DataBaseTestConfiguration {
     }
 
     @Test
+    public void findOneByNameWitchDoesNotExistWithSring() {
+
+        Category category = service.findOneByName("bla bla bla");
+
+        assertNull(category);
+    }
+
+    @Test
+    public void findOneByNameWitchDoesNotExistWithObject() {
+
+        Category category = service.findOneByName(new Category("bla bla bla"));
+
+        assertNull(category);
+    }
+
+    @Test
     public void findOneByNameWithString() {
         service.save(categories.getFirst());
 
         Category category = service.findOneByName(categories.getFirst().getName());
 
         assertNotNull(category);
+    }
+
+    @Test
+    public void findOneWithStringThrowException() {
+        service.save(categories.getFirst());
+        categories.getFirst().setName(null);
+
+        Category category = service.findOne(categories.getFirst());
+
+        assertNull(category);
     }
 
     @Test

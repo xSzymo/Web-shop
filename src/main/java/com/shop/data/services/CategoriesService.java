@@ -36,12 +36,6 @@ public class CategoriesService {
 
 			repository.save(existCategory);
 		} else {
-//			repository.save(category);
-//			category.getBooks().forEach(
-//					x -> {
-//						x.setCategory(category);
-//						booksRepository.save(x);
-//					});
 			repository.save(category);
 		}
 	}

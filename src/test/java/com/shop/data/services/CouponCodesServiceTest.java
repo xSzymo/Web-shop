@@ -116,6 +116,15 @@ public class CouponCodesServiceTest extends DataBaseTestConfiguration {
     }
 
     @Test
+    public void findDoesNotExistObject() {
+        service.save(couponCodes.getFirst());
+
+        CouponCode couponCode = service.findOneByCode(new CouponCode());
+
+        assertNull(couponCode);
+    }
+
+    @Test
     public void findOneByNameWithString() {
         service.save(couponCodes.getFirst());
 
