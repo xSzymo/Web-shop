@@ -15,8 +15,6 @@ public class UsersService {
 	private UsersRepository repository;
 	@Autowired
 	private OrdersService ordersService;
-	@Autowired
-	private BooksService booksService;
 
 	public void save(User user) {
 		if (user == null)

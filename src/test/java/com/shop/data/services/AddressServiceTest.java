@@ -11,9 +11,6 @@ import java.util.LinkedList;
 
 import static org.junit.Assert.*;
 
-/*
-* done
- */
 public class AddressServiceTest extends DataBaseTestConfiguration {
     @Autowired
     private AddressService service;

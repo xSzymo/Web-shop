@@ -19,11 +19,7 @@ public class OrdersService {
     @Autowired
     private OrdersRepository repository;
     @Autowired
-    private BooksService booksService;
-    @Autowired
     private UsersRepository usersRepository;
-    @Autowired
-    private UsersService usersService;
 
     public void save(Order order) {
         if (order != null)

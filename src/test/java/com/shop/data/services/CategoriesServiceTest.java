@@ -12,9 +12,6 @@ import java.util.LinkedList;
 
 import static org.junit.Assert.*;
 
-/*
- * done?
- */
 public class CategoriesServiceTest extends DataBaseTestConfiguration {
     @Autowired
     private CategoriesService service;
