@@ -23,7 +23,7 @@ public class UserDAO {
         List<String> userRoles = new ArrayList<>();
 
         for (UserRole x : found)
-            for (Iterator<User> iterator = x.getUser().iterator(); iterator.hasNext(); ) {
+            for (Iterator<User> iterator = x.getUsers().iterator(); iterator.hasNext(); ) {
                 User a = iterator.next();
                 if (a.getId() == admin.getId()) {
                     userRoles.add(x.getRole());
@@ -72,7 +72,7 @@ public class UserDAO {
         RepositoriesAccess.usersRepository.save(user);
 
         UserRole role = RepositoriesAccess.userRolesRepository.findRoleByRole("ROLE_USER");
-        role.getUser().add(user);
+        role.getUsers().add(user);
         RepositoriesAccess.userRolesRepository.save(role);
     }
 

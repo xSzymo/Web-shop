@@ -11,7 +11,7 @@ public class UserRole {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "role_id")
-    private Long roleid;
+    private long id;
 
     @Column(name = "role")
     private String role;
@@ -19,6 +19,12 @@ public class UserRole {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "role_id")
     private Collection<User> user = new LinkedHashSet<User>();
+
+    private UserRole() {}
+
+    public UserRole(String role) {
+        this.role = role;
+    }
 
     public String getRole() {
         return role;
@@ -28,19 +34,19 @@ public class UserRole {
         this.role = role;
     }
 
-    public Long getUserRoleId() {
-        return roleid;
+    public Long getId() {
+        return id;
     }
 
-    public void setUserroleid(Long roleid) {
-        this.roleid = roleid;
+    public void setId(Long roleid) {
+        this.id = roleid;
     }
 
-    public Collection<User> getUser() {
+    public Collection<User> getUsers() {
         return user;
     }
 
-    public void setUser(Collection<User> user) {
+    public void setUsers(Collection<User> user) {
         this.user = user;
     }
 }

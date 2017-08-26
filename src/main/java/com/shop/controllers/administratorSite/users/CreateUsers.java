@@ -91,13 +91,13 @@ public class CreateUsers {
         Iterable<UserRole> users = RepositoriesAccess.userRolesRepository.findAll();
         for (UserRole x : users)
             if (x.getRole().equals(role)) {
-                for (User x1 : x.getUser()) {
+                for (User x1 : x.getUsers()) {
                     if (x1.getId() == user.getId()) {
                         RepositoriesAccess.usersRepository.save(user);
                         return;
                     }
                 }
-                x.getUser().add(user);
+                x.getUsers().add(user);
                 RepositoriesAccess.userRolesRepository.save(x);
                 return;
             }

@@ -307,7 +307,7 @@ public class UsersServiceTest extends DataBaseTestConfiguration {
         return users;
     }
 
-    public LinkedList<Order> createOrdersCollection(User user) {
+    private LinkedList<Order> createOrdersCollection(User user) {
         LinkedList<Order> orders = new LinkedList<>();
         for (int i = 0; i < 3; i++) {
             Category category = new Category("category" + i);

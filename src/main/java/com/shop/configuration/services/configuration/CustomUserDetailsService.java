@@ -26,7 +26,7 @@ public class CustomUserDetailsService implements UserDetailsService {
             UserRole ROLEPLAYING = null;
 
             for (UserRole x : found)
-                for (Iterator<User> iterator = x.getUser().iterator(); iterator.hasNext(); ) {
+                for (Iterator<User> iterator = x.getUsers().iterator(); iterator.hasNext(); ) {
                     User a = iterator.next();
                     if (a.getId() == user.getId()) {
                         ROLEPLAYING = x;

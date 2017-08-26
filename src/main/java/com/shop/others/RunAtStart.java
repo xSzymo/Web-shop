@@ -85,18 +85,16 @@ public class RunAtStart {
             Collection<User> users = new LinkedHashSet<User>();
             users.add(user);
 
-            UserRole r = new UserRole();
-            r.setRole("ROLE_ADMIN");
-            r.setUser(users);
+            UserRole r = new UserRole("ROLE_ADMIN");
+            r.setUsers(users);
             RepositoriesAccess.userRolesRepository.save(r);
 
 
             Collection<User> users1 = new LinkedHashSet<User>();
             users1.add(user1);
 
-            UserRole r1 = new UserRole();
-            r1.setRole("ROLE_USER");
-            r1.setUser(users1);
+            UserRole r1 = new UserRole("ROLE_USER");
+            r1.setUsers(users1);
             RepositoriesAccess.userRolesRepository.save(r1);
         }
     }
