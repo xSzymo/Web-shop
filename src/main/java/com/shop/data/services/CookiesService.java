@@ -11,7 +11,6 @@ import java.util.Collection;
 @Service
 @Transactional
 public class CookiesService {
-
 	@Autowired
 	private CookiesRepository repository;
 

@@ -12,7 +12,6 @@ import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.Iterator;
 
-//TODO - fix
 @Service
 @Transactional
 public class BooksService {
