@@ -1,10 +1,14 @@
 package com.shop.controllers.administratorSite.users;
 
 import com.shop.data.operations.UserDAO;
+import com.shop.data.services.AddressService;
+import com.shop.data.services.UserRolesService;
+import com.shop.data.services.UsersService;
 import com.shop.data.tables.Address;
 import com.shop.data.tables.User;
 import com.shop.data.tables.UserRole;
 import com.shop.others.RepositoriesAccess;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,15 +21,12 @@ import java.util.Date;
 @Controller
 @RequestMapping("administratorSite/users")
 public class CreateUsers {
-
-    @SuppressWarnings("deprecation")
-    public static Date getDate(String date) {
-        String year = date.substring(0, 4);
-        String month = date.substring(5, 7);
-        String day = date.substring(8, 10);
-        Date newDate = new Date(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
-        return newDate;
-    }
+    @Autowired
+    private UsersService usersService;
+    @Autowired
+    private AddressService addressService;
+    @Autowired
+    private UserRolesService userRolesService;
 
     @RequestMapping(value = "create", method = RequestMethod.GET)
     public String createSite() {
@@ -37,11 +38,11 @@ public class CreateUsers {
                          @RequestParam("name") String name, @RequestParam("surname") String surname,
                          @RequestParam("date") String date, @RequestParam("eMail") String eMail,
                          @RequestParam("address") Long addressId, Model model, HttpServletRequest request) {
-        User foundUser = RepositoriesAccess.usersRepository.findByLogin(login);
+        User foundUser = usersService.findByLogin(login);
 
         Address address = null;
         if (addressId != null)
-            address = RepositoriesAccess.addressRepository.findById(addressId);
+            address = addressService.findOne(addressId);
 
         String adminRole = request.getParameter("Admin");
         String userRole = request.getParameter("User");
@@ -66,11 +67,11 @@ public class CreateUsers {
             user.setAddress(address);
 
         if (request.getParameter("Admin") != null)
-            addUserWithRoles(adminRole, user);
+            UserDAO.addUserWithRoles(adminRole, user);
         else if (request.getParameter("User") != null)
-            addUserWithRoles(userRole, user);
+            UserDAO.addUserWithRoles(userRole, user);
         else
-            RepositoriesAccess.usersRepository.save(user);
+            usersService.save(user);
 
         model.addAttribute("msgSuccess", "success");
         return "administratorSite/usersManager/create";
@@ -81,25 +82,9 @@ public class CreateUsers {
                                 @RequestParam("city") String city, @RequestParam("country") String country, Model model) {
         Address address = new Address(street, postalCode, city, country);
 
-        RepositoriesAccess.addressRepository.save(address);
+        addressService.save(address);
         model.addAttribute("address", address);
 
         return "administratorSite/usersManager/create";
-    }
-
-    public void addUserWithRoles(String role, User user) {
-        Iterable<UserRole> users = RepositoriesAccess.userRolesRepository.findAll();
-        for (UserRole x : users)
-            if (x.getRole().equals(role)) {
-                for (User x1 : x.getUsers()) {
-                    if (x1.getId() == user.getId()) {
-                        RepositoriesAccess.usersRepository.save(user);
-                        return;
-                    }
-                }
-                x.getUsers().add(user);
-                RepositoriesAccess.userRolesRepository.save(x);
-                return;
-            }
     }
 }

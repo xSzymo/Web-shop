@@ -1,10 +1,14 @@
 package com.shop.controllers.administratorSite.users;
 
 import com.shop.data.operations.UserDAO;
+import com.shop.data.services.AddressService;
+import com.shop.data.services.UserRolesService;
+import com.shop.data.services.UsersService;
 import com.shop.data.tables.Address;
 import com.shop.data.tables.User;
 import com.shop.data.tables.UserRole;
 import com.shop.others.RepositoriesAccess;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,12 +21,18 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 @RequestMapping("administratorSite/users")
 public class UpdateUsers {
+    @Autowired
+    private UsersService usersService;
+    @Autowired
+    private UserRolesService userRolesService;
+    @Autowired
+    private AddressService addressService;
 
     @RequestMapping(value = "/update", method = RequestMethod.GET)
     public String update(Model model) {
-        Iterable<User> users = RepositoriesAccess.usersRepository.findAll();
-        Iterable<UserRole> roles = RepositoriesAccess.userRolesRepository.findAll();
-        Iterable<Address> address = RepositoriesAccess.addressRepository.findAll();
+        Iterable<User> users = usersService.findAll();
+        Iterable<UserRole> roles = userRolesService.findAll();
+        Iterable<Address> address = addressService.findAll();
 
         model.addAttribute("address", address);
         model.addAttribute("users", users);
@@ -32,7 +42,7 @@ public class UpdateUsers {
 
     @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
     public String updateBook(@PathVariable Long id, Model model, HttpServletRequest request) {
-        User foundUser = RepositoriesAccess.usersRepository.findById(id);
+        User foundUser = usersService.findOne(id);
 
         if (foundUser == null)
             model.addAttribute("msg", "not found");
@@ -51,8 +61,8 @@ public class UpdateUsers {
         Address address = null;
 
         if (addressId != null)
-            address = RepositoriesAccess.addressRepository.findById(addressId);
-        User foundUser = RepositoriesAccess.usersRepository.findById(Long.parseLong(id));
+            address = addressService.findOne(addressId);
+        User foundUser = usersService.findOne(Long.parseLong(id));
 
         if (foundUser == null) {
             model.addAttribute("book", foundUser);
@@ -78,11 +88,11 @@ public class UpdateUsers {
         else
             foundUser.setAge(UserDAO.convertDateIntoYears(date));
         if (request.getParameter("Admin") != null)
-            addUserWithRoles(adminRole, foundUser);
+            UserDAO.addUserWithRoles(adminRole, foundUser);
         else if (request.getParameter("User") != null)
-            addUserWithRoles(userRole, foundUser);
+            UserDAO.addUserWithRoles(userRole, foundUser);
         else
-            RepositoriesAccess.usersRepository.save(foundUser);
+            usersService.save(foundUser);
         model.addAttribute("msg", "success");
         model.addAttribute("user", foundUser);
         model.addAttribute("address", address);
@@ -93,30 +103,13 @@ public class UpdateUsers {
     public String createAddress(@RequestParam("street") String street, @RequestParam("postalCode") String postalCode,
                                 @RequestParam("city") String city, @RequestParam("country") String country,
                                 @RequestParam("userId") Long userId, Model model) {
-        User user = RepositoriesAccess.usersRepository.findOne(userId);
+        User user = usersService.findOne(userId);
         Address address = new Address(street, postalCode, city, country);
 
-        RepositoriesAccess.addressRepository.save(address);
+        addressService.save(address);
         model.addAttribute("address", address);
         model.addAttribute("user", user);
 
         return "/administratorSite/usersManager/updateOneUser";
-    }
-
-    public void addUserWithRoles(String role, User user) {
-        Iterable<UserRole> users = RepositoriesAccess.userRolesRepository.findAll();
-
-        for (UserRole x : users)
-            if (x.getRole().equals(role)) {
-                for (User x1 : x.getUsers()) {
-                    if (x1.getId() == user.getId()) {
-                        RepositoriesAccess.usersRepository.save(user);
-                        return;
-                    }
-                }
-                x.getUsers().add(user);
-                RepositoriesAccess.userRolesRepository.save(x);
-                return;
-            }
     }
 }
