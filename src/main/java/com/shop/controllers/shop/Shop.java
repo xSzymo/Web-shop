@@ -1,5 +1,7 @@
 package com.shop.controllers.shop;
 
+import com.shop.data.services.CategoriesService;
+import com.shop.data.services.UsersService;
 import com.shop.data.tables.Book;
 import com.shop.data.tables.Category;
 import com.shop.others.RepositoriesAccess;
@@ -19,6 +21,8 @@ import java.util.LinkedList;
 @Controller
 @RequestMapping("shop")
 public class Shop {
+    @Autowired
+    private CategoriesService categoriesService;
     @Autowired
     private RememberMeServices rememberMeService;
 
@@ -43,7 +47,7 @@ public class Shop {
         else
             model.addAttribute("logged", false);
 
-        Iterable<Category> categories = RepositoriesAccess.categoriesRepository.findAll();
+        Iterable<Category> categories = categoriesService.findAll();
         model.addAttribute("categories", categories);
         return "shopStartPage";
     }

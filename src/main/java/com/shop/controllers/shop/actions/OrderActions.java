@@ -3,8 +3,13 @@ package com.shop.controllers.shop.actions;
 import com.shop.controllers.shop.Basket;
 import com.shop.controllers.shop.Shop;
 import com.shop.data.enums.EnumPayments;
+import com.shop.data.services.AddressService;
+import com.shop.data.services.CouponCodesService;
+import com.shop.data.services.OrdersService;
+import com.shop.data.services.UsersService;
 import com.shop.data.tables.*;
 import com.shop.others.RepositoriesAccess;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +18,15 @@ import java.util.HashSet;
 import java.util.LinkedList;
 
 public class OrderActions {
+    @Autowired
+    private static AddressService addressService;
+    @Autowired
+    private static CouponCodesService couponCodesService;
+    @Autowired
+    private static UsersService usersService;
+    @Autowired
+    private static OrdersService ordersService;
+
     public static String saveOrderAndReturnMessage(String shippingAddressStreet, String shippingAddressPostalCode,
                                                    String shippingAddressCity, String shippingAddressCountry, String billingAddressStreet,
                                                    String billingAddressPostalCode, String billingAddressCity, String billingAddressCountry, Object payment,
@@ -31,12 +45,12 @@ public class OrderActions {
                 shippingAddressCountry);
         Address billingAddress = new Address(billingAddressStreet, billingAddressPostalCode, billingAddressCity,
                 billingAddressCountry);
-        RepositoriesAccess.addressRepository.save(shippingAddress);
-        RepositoriesAccess.addressRepository.save(billingAddress);
+        addressService.save(shippingAddress);
+        addressService.save(billingAddress);
 
-        CouponCode coupon = RepositoriesAccess.couponCodesRepository.findByCode(couponCode);
+        CouponCode coupon = couponCodesService.findOneByCode(couponCode);
         if (coupon != null)
-            RepositoriesAccess.couponCodesRepository.save(coupon);
+            couponCodesService.save(coupon);
         else
             coupon = null;
 
@@ -46,15 +60,15 @@ public class OrderActions {
         order.setPaymentMethod(paymentType);
         order.setCouponCodes(coupon);
         order.setPrice(price);
-        RepositoriesAccess.ordersRepository.save(order);
+        ordersService.save(order);
 
         String text = null;
 
         if (!SecurityContextHolder.getContext().getAuthentication().getName().equals("anonymousUser")) {
-            User user = RepositoriesAccess.usersRepository
+            User user = usersService
                     .findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
             user.getOrders().add(order);
-            RepositoriesAccess.usersRepository.save(user);
+            usersService.save(user);
 
             text = EmailText.textFromUser(price, paymentType, shippingAddressStreet, shippingAddressPostalCode,
                     shippingAddressCity, shippingAddressCountry, billingAddressStreet, billingAddressPostalCode,

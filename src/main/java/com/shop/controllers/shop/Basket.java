@@ -2,9 +2,12 @@ package com.shop.controllers.shop;
 
 import com.shop.configuration.ApplicationProperties;
 import com.shop.data.enums.EnumPayments;
+import com.shop.data.services.BooksService;
+import com.shop.data.services.UsersService;
 import com.shop.data.tables.Book;
 import com.shop.data.tables.User;
 import com.shop.others.RepositoriesAccess;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +24,10 @@ import java.util.LinkedList;
 @Controller
 @RequestMapping("shop")
 public class Basket {
+    @Autowired
+    private UsersService usersService;
+    @Autowired
+    private BooksService booksService;
 
     public static BigDecimal toCalculate(LinkedList<Book> basket) {
         BigDecimal price = new BigDecimal("0");
@@ -47,7 +54,7 @@ public class Basket {
                                              HttpServletRequest request, Model model) {
         LinkedList<Book> basketWithAllBooks = Shop.getBasketWithAllBooks(request);
         HashSet<Book> basket = Shop.getBasket(request);
-        Book book = RepositoriesAccess.booksRepository.findById(id);
+        Book book = booksService.findOne(id);
 
         if (book == null)
             return new RedirectView(ApplicationProperties.PROJECT_NAME + "shop/basket");
@@ -112,7 +119,7 @@ public class Basket {
         if (SecurityContextHolder.getContext().getAuthentication().getPrincipal().equals("anonymousUser"))
             return "shop/options/anonymousUserOrder";
 
-        User user = RepositoriesAccess.usersRepository
+        User user = usersService
                 .findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
         model.addAttribute("user", user);
         return "shop/options/userOrder";

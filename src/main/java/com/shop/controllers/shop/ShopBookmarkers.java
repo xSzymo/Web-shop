@@ -1,9 +1,12 @@
 package com.shop.controllers.shop;
 
 import com.shop.configuration.ApplicationProperties;
+import com.shop.data.services.BooksService;
+import com.shop.data.services.CategoriesService;
 import com.shop.data.tables.Book;
 import com.shop.data.tables.Category;
 import com.shop.others.RepositoriesAccess;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,10 +22,14 @@ import java.util.LinkedList;
 @Controller
 @RequestMapping("shop")
 public class ShopBookmarkers {
+    @Autowired
+    private CategoriesService categoriesService;
+    @Autowired
+    private BooksService booksService;
 
     @RequestMapping(value = "{categoryName}", method = RequestMethod.GET)
     public String shopBookmarker(@PathVariable String categoryName, Model model) {
-        Category category = RepositoriesAccess.categoriesRepository.findByName(categoryName);
+        Category category = categoriesService.findOneByName(categoryName);
         model.addAttribute("books", category.getBooks());
         return "shop/categorySite";
     }
@@ -30,8 +37,8 @@ public class ShopBookmarkers {
     @RequestMapping(value = "categorySite/{id}", method = RequestMethod.GET)
     public RedirectView addItemToBasket(@PathVariable Long id, @RequestParam("number") String number,
                                         HttpServletRequest request, Model model) {
-        Book book = RepositoriesAccess.booksRepository.findById(id);
-        Iterable<Category> categories = RepositoriesAccess.categoriesRepository.findAll();
+        Book book = booksService.findOne(id);
+        Iterable<Category> categories = categoriesService.findAll();
         Category category = null;
         for (Category x : categories) {
             for (Book x1 : x.getBooks()) {

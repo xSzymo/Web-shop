@@ -1,9 +1,11 @@
 package com.shop.controllers.shop;
 
 import com.shop.controllers.shop.actions.OrderActions;
+import com.shop.data.services.UsersService;
 import com.shop.data.tables.User;
 import com.shop.others.RepositoriesAccess;
 import com.shop.others.email.SendEmailUserAccount;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 @RequestMapping("shop")
 public class AcceptOrder {
+    @Autowired
+    private UsersService usersService;
 
     @Secured(value = {"ROLE_ADMIN", "ROLE_USER"})
     @RequestMapping(value = "accept", method = RequestMethod.POST)
@@ -34,7 +38,7 @@ public class AcceptOrder {
                                 @RequestParam("couponCode") String couponCode, @RequestParam("email") String email,
                                 @RequestParam("payment") Object payment) {
 
-        User user = RepositoriesAccess.usersRepository
+        User user = usersService
                 .findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
 
         String text = OrderActions.saveOrderAndReturnMessage(shippingAddressStreet, shippingAddressPostalCode, shippingAddressCity,
