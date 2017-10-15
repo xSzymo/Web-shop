@@ -1,7 +1,9 @@
 package com.shop.controllers.administratorSite.adress;
 
+import com.shop.data.services.AddressService;
 import com.shop.data.tables.Address;
 import com.shop.others.RepositoriesAccess;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,10 +14,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("administratorSite/address")
 public class UpdateAddress {
+    @Autowired
+    private AddressService addressService;
 
     @RequestMapping(value = "/update", method = RequestMethod.GET)
     public String updateSite(Model model) {
-        Iterable<Address> address = RepositoriesAccess.addressRepository.findAll();
+        Iterable<Address> address = addressService.findAll();
 
         model.addAttribute("allAddress", address);
         return "administratorSite/addressManager/update";
@@ -23,7 +27,7 @@ public class UpdateAddress {
 
     @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
     public String updateOneSite(@PathVariable Long id, Model model) {
-        Address address = RepositoriesAccess.addressRepository.findById(id);
+        Address address = addressService.findOne(id);
 
         if (address == null)
             model.addAttribute("msg", "not found");
@@ -37,7 +41,7 @@ public class UpdateAddress {
                          @RequestParam("postalCode") String postalCode, @RequestParam("street") String street,
                          @RequestParam("id") String id, Model model) {
 
-        Address address = RepositoriesAccess.addressRepository.findById(Long.parseLong(id));
+        Address address = addressService.findOne(Long.parseLong(id));
 
         if (address == null) {
             model.addAttribute("msg", "not found category to update");
@@ -49,7 +53,7 @@ public class UpdateAddress {
         address.setPostalCode(postalCode);
         address.setStreet(street);
 
-        RepositoriesAccess.addressRepository.save(address);
+        addressService.save(address);
         model.addAttribute("address", address);
         model.addAttribute("msg", "Success");
         return "administratorSite/addressManager/updateOneAddress";
