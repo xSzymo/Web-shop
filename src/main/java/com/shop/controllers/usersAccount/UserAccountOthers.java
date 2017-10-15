@@ -1,10 +1,13 @@
 package com.shop.controllers.usersAccount;
 
 import com.shop.controllers.login.Login;
+import com.shop.data.services.UserRolesService;
+import com.shop.data.services.UsersService;
 import com.shop.data.tables.User;
 import com.shop.data.tables.UserRole;
 import com.shop.others.RepositoriesAccess;
 import com.shop.others.email.SendEmailDeleteAccount;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,12 +23,16 @@ import java.util.Iterator;
 @Controller
 @RequestMapping("/account")
 public class UserAccountOthers {
+    @Autowired
+    private UsersService usersService;
+    @Autowired
+    private UserRolesService userRolesService;
 
     @RequestMapping(value = "informations", method = RequestMethod.GET)
     public String userInformations(Model model) {
         User user1 = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = RepositoriesAccess.usersRepository.findByLogin(user1.getLogin());
-        Iterable<UserRole> found = RepositoriesAccess.userRolesRepository.findAll();
+        User user = usersService.findByLogin(user1.getLogin());
+        Iterable<UserRole> found = userRolesService.findAll();
 
         UserRole ROLEPLAYING = null;
 
@@ -45,8 +52,7 @@ public class UserAccountOthers {
     @RequestMapping(value = "deleteAccount", method = RequestMethod.POST)
     public String deleteAccount(@RequestParam("password") String password, @RequestParam("password1") String password1,
                                 Model model, HttpServletRequest request) {
-        User user = RepositoriesAccess.usersRepository
-                .findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
+        User user = usersService.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
         if (password.equals(password1))
             if (user.getPassword().equals(password))
                 SendEmailDeleteAccount.sendCode(user, request);
@@ -60,8 +66,8 @@ public class UserAccountOthers {
         String login = SecurityContextHolder.getContext().getAuthentication().getName();
         if (request.getSession().getAttribute("userName").equals(login))
             if (request.getSession().getAttribute("deleteAccountCode").equals(code)) {
-                User user = RepositoriesAccess.usersRepository.findByLogin(login);
-                RepositoriesAccess.usersRepository.delete(user.getId());
+                User user = usersService.findByLogin(login);
+                usersService.delete(user.getId());
             }
         return Login.logout(request, response, model);
     }

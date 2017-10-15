@@ -1,9 +1,12 @@
 package com.shop.controllers.usersAccount;
 
 
+import com.shop.data.services.CategoriesService;
+import com.shop.data.services.UsersService;
 import com.shop.data.tables.User;
 import com.shop.others.RepositoriesAccess;
 import com.shop.others.email.SendEmailUserAccount;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 @RequestMapping("/account")
 public class ChangeUserData {
+    @Autowired
+    private UsersService usersService;
 
     @RequestMapping(value = "changePassword", method = RequestMethod.POST)
     public String changePassword(@RequestParam("password") String password, @RequestParam("password1") String password1,
@@ -39,9 +44,9 @@ public class ChangeUserData {
                                 HttpServletRequest request) {
         if (request.getSession().getAttribute("code").equals(code)) {
             User user1 = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            User user = RepositoriesAccess.usersRepository.findByLogin(user1.getLogin());
+            User user = usersService.findByLogin(user1.getLogin());
             user.seteMail(eMail);
-            RepositoriesAccess.usersRepository.save(user);
+            usersService.save(user);
             request.getSession().removeAttribute("code");
             model.addAttribute("msg", "success");
         } else {
