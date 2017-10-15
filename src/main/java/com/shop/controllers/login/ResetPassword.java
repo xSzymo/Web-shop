@@ -1,7 +1,9 @@
 package com.shop.controllers.login;
 
+import com.shop.data.services.UsersService;
 import com.shop.data.tables.User;
 import com.shop.others.RepositoriesAccess;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,15 +16,18 @@ import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class ResetPassword {
+    @Autowired
+    private static UsersService usersService;
+
     @RequestMapping(value = "reset", method = RequestMethod.POST)
     public String resetPassword(@RequestParam(name = "password") String password, Model model,
                                 HttpServletRequest request) {
         String eMail = (String) request.getSession().getAttribute("email");
 
         if ((boolean) request.getSession().getAttribute("authorize") == true) {
-            User user = RepositoriesAccess.usersRepository.findByeMail(eMail);
+            User user = usersService.findByEmail(eMail);
             user.setPassword(password);
-            RepositoriesAccess.usersRepository.save(user);
+            usersService.save(user);
 
             model.addAttribute("msg", "Success");
             model.addAttribute("Success", "Success");

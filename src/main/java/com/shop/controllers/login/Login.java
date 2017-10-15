@@ -2,6 +2,8 @@ package com.shop.controllers.login;
 
 import com.shop.data.operations.CookiesDAO;
 import com.shop.data.operations.UserDAO;
+import com.shop.data.services.CookiesService;
+import com.shop.data.services.UsersService;
 import com.shop.data.tables.Cookies;
 import com.shop.data.tables.User;
 import com.shop.others.RepositoriesAccess;
@@ -24,6 +26,10 @@ import javax.servlet.http.HttpServletResponse;
 public class Login {
     @Autowired
     private RememberMeServices rememberMeService;
+    @Autowired
+    private static CookiesService cookiesService;
+    @Autowired
+    private static UsersService usersService;
 
     @RequestMapping(value = "logout", method = RequestMethod.GET)
     public static String logout(HttpServletRequest request, HttpServletResponse response, Model model) {
@@ -31,14 +37,12 @@ public class Login {
             if (x.getName().equals("JSESSIONID"))
                 continue;
             if (x.getName().equals("remember")) {
-                Cookies cookie = RepositoriesAccess.cookiesRepository.findByName(x.getValue());
+                Cookies cookie = cookiesService.findOneByName(x.getValue());//value or name?
                 User user = CookiesDAO.findConnectUserWithCookie(cookie);
                 user.setCookieCode(null);
-                RepositoriesAccess.usersRepository.save(user);
-                RepositoriesAccess.cookiesRepository
-                        .delete(RepositoriesAccess.cookiesRepository.findByName(cookie.getName()));
-                RepositoriesAccess.cookiesRepository
-                        .delete(RepositoriesAccess.cookiesRepository.findByValue(x.getValue()));
+                usersService.save(user);
+                cookiesService.delete(cookiesService.findOneByName(cookie.getName()));
+                cookiesService.delete(cookiesService.findOneByValue(x.getValue()));
             }
             Cookie cookie = new Cookie(x.getName(), x.getValue());
             cookie.setMaxAge(0);
@@ -124,7 +128,7 @@ public class Login {
             return "loginAndRegistration/registration";
         }
 
-        Iterable<User> users = RepositoriesAccess.usersRepository.findAll();
+        Iterable<User> users = usersService.findAll();
 
         for (User x : users) {
             if (x.getLogin() != null)
