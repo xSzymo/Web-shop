@@ -1,9 +1,13 @@
 package com.shop.controllers.administratorSite.books;
 
+import com.shop.data.services.BooksService;
+import com.shop.data.services.CategoriesService;
+import com.shop.data.services.PicturesService;
 import com.shop.data.tables.Book;
 import com.shop.data.tables.Category;
 import com.shop.data.tables.Picture;
 import com.shop.others.RepositoriesAccess;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,10 +20,16 @@ import java.math.BigDecimal;
 @Controller
 @RequestMapping("administratorSite/books")
 public class CreateBooks {
+    @Autowired
+    private BooksService booksService;
+    @Autowired
+    private CategoriesService categoriesService;
+//    @Autowired
+//    private PicturesService picturesService;
 
     @RequestMapping(value = "create", method = RequestMethod.GET)
     public String createSite(Model model) {
-        Iterable<Category> categories = RepositoriesAccess.categoriesRepository.findAll();
+        Iterable<Category> categories = categoriesService.findAll();
         model.addAttribute("categories", categories);
 
         return "administratorSite/booksCRUD/create";
@@ -31,7 +41,7 @@ public class CreateBooks {
                          @RequestParam("price") String price, @RequestParam("pictureName") String pictureName, Model model,
                          HttpServletRequest request) {
 
-        Iterable<Category> categories = RepositoriesAccess.categoriesRepository.findAll();
+        Iterable<Category> categories = categoriesService.findAll();
         model.addAttribute("categories", categories);
 
         String categoryName = null;
@@ -53,17 +63,17 @@ public class CreateBooks {
             return "administratorSite/booksCRUD/create";
         }
 
-        Category category = RepositoriesAccess.categoriesRepository.findByName(categoryName);
-        Picture picture = RepositoriesAccess.picturesRepository.findByName(pictureName);
-
-        if (picture == null) {
-            model.addAttribute("msgError", "No category and picture(optional) found");
-        }
+        Category category = categoriesService.findOneByName(categoryName);
+//        Picture picture = picturesService.findByName(pictureName);
+//
+//        if (picture == null) {
+//            model.addAttribute("msgError", "No category and picture(optional) found");
+//        }
         Book book = new Book(name, author, langauge, description, new BigDecimal(price));
-        book.getPictures().add(picture);
-        RepositoriesAccess.booksRepository.save(book);
+//        book.getPictures().add(picture);
+        booksService.save(book);
         category.getBooks().add(book);
-        RepositoriesAccess.categoriesRepository.save(category);
+        categoriesService.save(category);
         model.addAttribute("msgSuccess", "success");
 
         return "administratorSite/booksCRUD/create";

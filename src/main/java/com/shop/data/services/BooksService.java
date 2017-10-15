@@ -52,6 +52,10 @@ public class BooksService {
 		return repository.findOne(id);
 	}
 
+	public Book findOne(String name) {
+		return repository.findByName(name);
+	}
+
 	public Book findOne(Book book) {
 		if(book.getId() == null)
 			return null;
