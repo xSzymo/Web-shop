@@ -1,8 +1,10 @@
 package com.shop.others.email;
 
 import com.shop.configuration.ApplicationProperties;
+import com.shop.data.services.UsersService;
 import com.shop.data.tables.User;
 import com.shop.others.RepositoriesAccess;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 
@@ -16,6 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 public class SendEmailUserAccount {
+    @Autowired
+    private static UsersService usersService;
 
     public static void sendEmailWithOrder(String text, String eMail, HttpServletRequest request) {
         try {
@@ -35,7 +39,7 @@ public class SendEmailUserAccount {
 
     public static boolean sendEmailWithNewPassswordOrEmail(String email, String newPassword, Model model, HttpServletRequest request) {
         User user1 = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = RepositoriesAccess.usersRepository.findByLogin(user1.getLogin());
+        User user = usersService.findByLogin(user1.getLogin());
 
         boolean success = false;
         try {
@@ -52,7 +56,7 @@ public class SendEmailUserAccount {
                 Transport.send(msg);
 
                 user.setPassword(newPassword);
-                RepositoriesAccess.usersRepository.save(user);
+                usersService.save(user);
                 success = true;
             } else {
                 String code = Long.toHexString(Double.doubleToLongBits(Math.random()));

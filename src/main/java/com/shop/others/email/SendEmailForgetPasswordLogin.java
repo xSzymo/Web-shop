@@ -1,8 +1,10 @@
 package com.shop.others.email;
 
 import com.shop.configuration.ApplicationProperties;
+import com.shop.data.services.UsersService;
 import com.shop.data.tables.User;
 import com.shop.others.RepositoriesAccess;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,14 +23,17 @@ import java.util.Date;
 
 @Controller
 public class SendEmailForgetPasswordLogin {
+    @Autowired
+    private static UsersService usersService;
+
     @RequestMapping(value = "sendCode", method = RequestMethod.POST)
     public String sendCode(@RequestParam("login") String login, @RequestParam("email") String email, Model model,
                            HttpServletResponse response, HttpServletRequest request) {
 
-        if ((RepositoriesAccess.usersRepository.findByeMail(email) == null)) {
+        if ((usersService.findByEmail(email) == null)) {
             model.addAttribute("msg", "Wrong e-mail");
             return "loginAndRegistration/reset/forgotPassword";
-        } else if (RepositoriesAccess.usersRepository.findByLogin(login) == null) {
+        } else if (usersService.findByLogin(login) == null) {
             model.addAttribute("msg", "Wrong login");
             return "loginAndRegistration/reset/forgotPassword";
         }
@@ -58,11 +63,11 @@ public class SendEmailForgetPasswordLogin {
     public String sendUsername(@RequestParam("email") String email, Model model, HttpServletResponse response,
                                HttpServletRequest request) {
 
-        if ((RepositoriesAccess.usersRepository.findByeMail(email) == null)) {
+        if ((usersService.findByEmail(email) == null)) {
             model.addAttribute("msg", "Wrong e-mail");
             return "loginAndRegistration/reset/forgotUsername";
         }
-        User user = RepositoriesAccess.usersRepository.findByeMail(email);
+        User user = usersService.findByEmail(email);
 
         try {
             Session session = EmailActions.authorizeWebShopEmail();

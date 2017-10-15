@@ -1,15 +1,19 @@
 package com.shop.others;
 
+import com.shop.data.services.CookiesService;
 import com.shop.data.tables.Cookies;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Random;
 
 public class Coder {
+    @Autowired
+    private static CookiesService cookiesService;
 
     public static String getUniqueCode() {
-        Iterable<Cookies> cookies = RepositoriesAccess.cookiesRepository.findAll();
+        Iterable<Cookies> cookies = cookiesService.findAll();
         boolean is = true;
-        String code = "";
+        String code;
 
         do {
             code = coder();
