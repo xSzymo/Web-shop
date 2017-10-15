@@ -1,11 +1,16 @@
 package com.shop.controllers.administratorSite.orders;
 
 import com.shop.data.enums.EnumPayments;
+import com.shop.data.services.AddressService;
+import com.shop.data.services.BooksService;
+import com.shop.data.services.CouponCodesService;
+import com.shop.data.services.OrdersService;
 import com.shop.data.tables.Address;
 import com.shop.data.tables.Book;
 import com.shop.data.tables.CouponCode;
 import com.shop.data.tables.Order;
 import com.shop.others.RepositoriesAccess;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +25,15 @@ import java.util.LinkedList;
 @Controller
 @RequestMapping("administratorSite/orders")
 public class CreateOrders {
+    @Autowired
+    private BooksService booksService;
+    @Autowired
+    private OrdersService ordersService;
+    @Autowired
+    private CouponCodesService couponCodesService;
+    @Autowired
+    private AddressService addressService;
+
 
     @RequestMapping(value = "create", method = RequestMethod.GET)
     public String createSite(Model model) {
@@ -33,7 +47,7 @@ public class CreateOrders {
 
         model.addAttribute("books", null);
 
-        Iterable<Book> books = RepositoriesAccess.booksRepository.findAll();
+        Iterable<Book> books = booksService.findAll();
         model.addAttribute("allBooks", books);
         return "administratorSite/ordersManager/create";
     }
@@ -72,11 +86,11 @@ public class CreateOrders {
         CouponCode couponCodes = null;
 
         if (billingAddressId != null)
-            billingAddress = RepositoriesAccess.addressRepository.findById(billingAddressId);
+            billingAddress = addressService.findOne(billingAddressId);
         if (shippingAddressId != null)
-            shippingAddress = RepositoriesAccess.addressRepository.findById(shippingAddressId);
+            shippingAddress = addressService.findOne(shippingAddressId);
         if (couponCodeId != null)
-            couponCodes = RepositoriesAccess.couponCodesRepository.findById(couponCodeId);
+            couponCodes = couponCodesService.findOne(couponCodeId);
 
         if (billingAddress != null) {
             billingAddress.setCity(billingAddressCity);
@@ -112,9 +126,9 @@ public class CreateOrders {
             couponCodes.setCode(couponCode);
             couponCodes.setCodeDiscount(couponCodeDiscount);
         }
-        RepositoriesAccess.addressRepository.save(billingAddress);
-        RepositoriesAccess.addressRepository.save(shippingAddress);
-        RepositoriesAccess.couponCodesRepository.save(couponCodes);
+        addressService.save(billingAddress);
+        addressService.save(shippingAddress);
+        couponCodesService.save(couponCodes);
 
         System.out.println("halo");
         order.setPrice(new BigDecimal(price));
@@ -128,16 +142,16 @@ public class CreateOrders {
 
         if (books != null) {
             for (int i = 0; i < books.length; i++) {
-                if (RepositoriesAccess.booksRepository.findByName(books[i]) != null) {
-                    b.add(RepositoriesAccess.booksRepository.findByName(books[i]));
+                if (booksService.findOne(books[i]) != null) {
+                    b.add(booksService.findOne(books[i]));
                 }
             }
         }
 
-        RepositoriesAccess.booksRepository.save(b);
+        booksService.save(b);
 
         order.getBooks().addAll(b);
-        RepositoriesAccess.ordersRepository.save(order);
+        ordersService.save(order);
 
         addNeedObjects(model, couponCodeId, billingAddressId, shippingAddressId, books);
         model.addAttribute("msg", "Success");
@@ -152,7 +166,7 @@ public class CreateOrders {
                                 @RequestParam("address") String address1, Model model, HttpServletRequest request, String... books) {
 
         Address address = new Address(street, postalCode, city, country);
-        RepositoriesAccess.addressRepository.save(address);
+        addressService.save(address);
 
         addNeedObjects(model, couponCodeId, billingAddressId, shippingAddressId, books);
 
@@ -171,7 +185,7 @@ public class CreateOrders {
                                    Model model, HttpServletRequest request, @RequestParam(name = "books", required = false) String... books) {
 
         addNeedObjects(model, couponCodeId, billingAddressId, shippingAddressId, books);
-        CouponCode couponCodeFound = RepositoriesAccess.couponCodesRepository.findByCode(code);
+        CouponCode couponCodeFound = couponCodesService.findOneByCode(code);
 
         if (couponCodeFound != null) {
             model.addAttribute("msgError", "couponCode already exist");
@@ -179,7 +193,7 @@ public class CreateOrders {
         }
         CouponCode couponCode = new CouponCode(Double.parseDouble(codeDiscount), code);
 
-        RepositoriesAccess.couponCodesRepository.save(couponCode);
+        couponCodesService.save(couponCode);
         model.addAttribute("couponCode", couponCode);
 
         return "administratorSite/ordersManager/create";
@@ -189,7 +203,7 @@ public class CreateOrders {
     public String createBook(@RequestParam("billingAddress") Long billingAddressId,
                              @RequestParam("shippingAddress") Long shippingAddressId, @RequestParam("couponCodeId") Long couponCodeId,
                              Model model, HttpServletRequest request) {
-        Iterable<Book> books = RepositoriesAccess.booksRepository.findAll();
+        Iterable<Book> books = booksService.findAll();
         LinkedList<Book> chosenBooks = new LinkedList<Book>();
         chosenBooks.clear();
 
@@ -210,15 +224,15 @@ public class CreateOrders {
     public void addNeedObjects(Model model, Long couponCodeId, Long billingAddressId, Long shippingAddressId,
                                String[] bookNames) {
         if ((couponCodeId != null)) {
-            CouponCode couponCode = RepositoriesAccess.couponCodesRepository.findById(couponCodeId);
+            CouponCode couponCode = couponCodesService.findOne(couponCodeId);
             model.addAttribute("couponCode", couponCode);
         }
         if ((billingAddressId != null)) {
-            Address billingAddress = RepositoriesAccess.addressRepository.findById(billingAddressId);
+            Address billingAddress = addressService.findOne(billingAddressId);
             model.addAttribute("billingAddress", billingAddress);
         }
         if ((shippingAddressId != null)) {
-            Address shippingAddress = RepositoriesAccess.addressRepository.findById(shippingAddressId);
+            Address shippingAddress = addressService.findOne(shippingAddressId);
             model.addAttribute("shippingAddress", shippingAddress);
         }
 
@@ -231,7 +245,7 @@ public class CreateOrders {
         model.addAttribute("payments", paymentName);
         model.addAttribute("books", bookNames);
 
-        Iterable<Book> books = RepositoriesAccess.booksRepository.findAll();
+        Iterable<Book> books = booksService.findAll();
         model.addAttribute("allBooks", books);
     }
 }

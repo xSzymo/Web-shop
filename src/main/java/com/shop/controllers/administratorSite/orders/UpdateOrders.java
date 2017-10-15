@@ -1,11 +1,16 @@
 package com.shop.controllers.administratorSite.orders;
 
 import com.shop.data.enums.EnumPayments;
+import com.shop.data.services.AddressService;
+import com.shop.data.services.BooksService;
+import com.shop.data.services.CouponCodesService;
+import com.shop.data.services.OrdersService;
 import com.shop.data.tables.Address;
 import com.shop.data.tables.Book;
 import com.shop.data.tables.CouponCode;
 import com.shop.data.tables.Order;
 import com.shop.others.RepositoriesAccess;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,17 +26,25 @@ import java.util.LinkedList;
 @Controller
 @RequestMapping("administratorSite/orders")
 public class UpdateOrders {
+    @Autowired
+    private BooksService booksService;
+    @Autowired
+    private OrdersService ordersService;
+    @Autowired
+    private CouponCodesService couponCodesService;
+    @Autowired
+    private AddressService addressService;
 
     @RequestMapping(value = "/update", method = RequestMethod.GET)
     public String updateSite(Model model) {
-        Iterable<Order> orders = RepositoriesAccess.ordersRepository.findAll();
+        Iterable<Order> orders = ordersService.findAll();
         model.addAttribute("orders", orders);
         return "administratorSite/ordersManager/update";
     }
 
     @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
     public String updateOne(@PathVariable Long id, Model model) {
-        Order foundOrder = RepositoriesAccess.ordersRepository.findById(id);
+        Order foundOrder = ordersService.findOne(id);
 
         if (foundOrder == null)
             model.addAttribute("msg", "not found");
@@ -42,7 +55,7 @@ public class UpdateOrders {
         for (EnumPayments x : kindOfPayment)
             paymentName[i++] = x.name();
 
-        Iterable<Book> books = RepositoriesAccess.booksRepository.findAll();
+        Iterable<Book> books = booksService.findAll();
         model.addAttribute("books", books);
 
         if (foundOrder.getPaymentMethod() != null)
@@ -79,7 +92,7 @@ public class UpdateOrders {
             if (x.name().equals(payment))
                 paymentType = x;
 
-        Order order = RepositoriesAccess.ordersRepository.findById(orderId);
+        Order order = ordersService.findOne(orderId);
         Address billingAddress = order.getBillingAddress();
         Address shippingAddress = order.getShippingAddress();
         CouponCode couponCodes = order.getCouponCodes();
@@ -119,9 +132,9 @@ public class UpdateOrders {
             couponCodes.setCodeDiscount(couponCodeDiscount);
             order.setCouponCodes(couponCodes);
         }
-        RepositoriesAccess.addressRepository.save(billingAddress);
-        RepositoriesAccess.addressRepository.save(shippingAddress);
-        RepositoriesAccess.couponCodesRepository.save(couponCodes);
+        addressService.save(billingAddress);
+        addressService.save(shippingAddress);
+        couponCodesService.save(couponCodes);
 
         order.setPrice(new BigDecimal(price));
         order.setRealized(realized);
@@ -132,16 +145,15 @@ public class UpdateOrders {
         ArrayList<Book> b = new ArrayList<Book>();
 
         for (int i = 0; i < books.length; i++) {
-            if (RepositoriesAccess.booksRepository.findByName(books[i]) != null) {
-                b.add(RepositoriesAccess.booksRepository.findByName(books[i]));
+            if (booksService.findOne(books[i]) != null) {
+                b.add(booksService.findOne(books[i]));
             }
         }
 
-        RepositoriesAccess.booksRepository.save(b);
+        booksService.save(b);
 
         order.getBooks().addAll(b);
-        RepositoriesAccess.ordersRepository.save(order);
-        // System.out.println(order.getBooks());
+        ordersService.save(order);
 
         // if(order.getPaymentMethod() != null)
         // model.addAttribute("orderPayment",
@@ -153,7 +165,7 @@ public class UpdateOrders {
     @RequestMapping(value = "update/createBooks", method = RequestMethod.POST)
     public String createBook(@RequestParam("orderId") Long id, Model model, HttpServletRequest request) {
 
-        Iterable<Book> allBooks = RepositoriesAccess.booksRepository.findAll();
+        Iterable<Book> allBooks = booksService.findAll();
         LinkedList<Book> chosenBooks = new LinkedList<Book>();
         chosenBooks.clear();
 
@@ -161,10 +173,10 @@ public class UpdateOrders {
             if (request.getParameter(x.getName()) != null)
                 chosenBooks.add(x);
 
-        Order order = RepositoriesAccess.ordersRepository.findById(id);
+        Order order = ordersService.findOne(id);
         order.setBooks(chosenBooks);
 
-        RepositoriesAccess.ordersRepository.save(order);
+        ordersService.save(order);
 
         return updateOne(id, model);
     }
