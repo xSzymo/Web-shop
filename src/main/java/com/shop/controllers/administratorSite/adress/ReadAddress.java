@@ -1,37 +1,40 @@
 package com.shop.controllers.administratorSite.adress;
 
+import com.shop.data.services.AddressService;
+import com.shop.data.tables.Address;
+import com.shop.others.RepositoriesAccess;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.shop.data.tables.Address;
-import com.shop.others.RepositoriesAccess;
-
 @Controller
 @RequestMapping("administratorSite/address")
 public class ReadAddress {
+    @Autowired
+    private AddressService addressService;
 
-	@RequestMapping(value = "read", method = RequestMethod.GET)
-	public String readSite(Model model) {
-		Iterable<Address> address = RepositoriesAccess.addressRepository.findAll();
+    @RequestMapping(value = "read", method = RequestMethod.GET)
+    public String readSite(Model model) {
+        Iterable<Address> address = addressService.findAll();
 
-		model.addAttribute("allAddress", address);
-		return "administratorSite/addressManager/read";
-	}
+        model.addAttribute("allAddress", address);
+        return "administratorSite/addressManager/read";
+    }
 
-	@RequestMapping(value = "readOne", method = RequestMethod.GET)
-	public String readOne(@RequestParam("id") String id, Model model) {
-		Iterable<Address> allAddress = RepositoriesAccess.addressRepository.findAll();
-		Address address = RepositoriesAccess.addressRepository.findById(Long.parseLong(id));
+    @RequestMapping(value = "readOne", method = RequestMethod.GET)
+    public String readOne(@RequestParam("id") String id, Model model) {
+        Iterable<Address> allAddress = addressService.findAll();
+        Address address = addressService.findOne(Long.parseLong(id));
 
-		if (allAddress == null) {
-			model.addAttribute("msg", "not found");
-			model.addAttribute("allAddress", allAddress);
-			return "administratorSite/addressManager/read";
-		}
-		model.addAttribute("address", address);
-		return "administratorSite/addressManager/read";
-	}
+        if (allAddress == null) {
+            model.addAttribute("msg", "not found");
+            model.addAttribute("allAddress", allAddress);
+            return "administratorSite/addressManager/read";
+        }
+        model.addAttribute("address", address);
+        return "administratorSite/addressManager/read";
+    }
 }

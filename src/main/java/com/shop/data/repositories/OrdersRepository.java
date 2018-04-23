@@ -1,10 +1,12 @@
 package com.shop.data.repositories;
 
-import org.springframework.data.repository.CrudRepository;
 import com.shop.data.tables.Order;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 
-public interface OrdersRepository extends CrudRepository<Order, Long>{
-	Order findById(Long orderId); 
+@Repository
+public interface OrdersRepository extends CrudRepository<Order, Long> {
+    Order findById(Long orderId);
 
 }

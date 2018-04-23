@@ -1,10 +1,9 @@
 package com.shop.data.tables;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collection;
+import com.shop.data.enums.EnumPayments;
 
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,11 +11,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collection;
 
-import com.shop.data.enums.EnumPayments;
-
+//TODO - after delete repositoryAccess add user to constructor
 @Entity
 @Table(name = "orders")
 public class Order {
@@ -32,6 +34,10 @@ public class Order {
 	private EnumPayments paymentMethod;
 	@Column(name = "realized")
 	private boolean realized = false;
+
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+	@CollectionTable(name = "user_id")
+	private User user;
 
 	@OneToOne
 	@JoinColumn(name = "shipping_address_id")
@@ -51,14 +57,14 @@ public class Order {
 
 	public Order() {
 	}
-	
+
 	public Order(BigDecimal price, boolean realized) {
 		this.price = price;
 		this.realized = realized;
 	}
 
 	public Order(BigDecimal price, EnumPayments paymentMethod, Address shippingAddressId, Address billingAddressId,
-			CouponCode couponCodes) {
+	             CouponCode couponCodes) {
 		this.price = price;
 		this.paymentMethod = paymentMethod;
 		this.shippingAddress = shippingAddressId;
@@ -67,7 +73,7 @@ public class Order {
 	}
 
 	public Order(BigDecimal price, EnumPayments paymentMethod, Address shippingAddressId, Address billingAddressId,
-			CouponCode couponCodes, Collection<Book> books) {
+	             CouponCode couponCodes, Collection<Book> books) {
 		this.price = price;
 		this.paymentMethod = paymentMethod;
 		this.shippingAddress = shippingAddressId;
@@ -76,19 +82,8 @@ public class Order {
 		this.books = books;
 	}
 
-	public Order(Long id, BigDecimal price, EnumPayments paymentMethod, Address shippingAddressId,
-			Address billingAddressId, CouponCode couponCodes, Collection<Book> books) {
-		this.id = id;
-		this.price = price;
-		this.paymentMethod = paymentMethod;
-		this.shippingAddress = shippingAddressId;
-		this.billingAddress = billingAddressId;
-		this.couponCodes = couponCodes;
-		this.books = books;
-	}
-	
-	public Order(Long id, BigDecimal price, boolean realized, Collection<Book> books) {
-		this.id = id;
+
+	public Order(BigDecimal price, boolean realized, Collection<Book> books) {
 		this.price = price;
 		this.realized = realized;
 		this.books = books;
@@ -97,15 +92,54 @@ public class Order {
 	@Override
 	public String toString() {
 		return "Orders [id=" + id + ", price=" + price + ", paymentMethod=" + paymentMethod + ", shippingAddressId="
-				+ shippingAddress + ", billingAddressId=" + billingAddress + ", couponCodes=" + couponCodes				+ ", books=" + books + "]";
+				+ shippingAddress + ", billingAddressId=" + billingAddress + ", couponCodes=" + couponCodes + ", books=" + books + "]";
+	}
+
+	//TODO equals books
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		Order order = (Order) o;
+
+		if (realized != order.realized) return false;
+		if (id != null ? !id.equals(order.id) : order.id != null) return false;
+		if (!(price.longValue() == order.price.longValue())) return false;
+		if (paymentMethod != order.paymentMethod) return false;
+
+		if (user != null ? !user.getLogin().equals(order.user.getLogin()) : order.user != null) return false;
+		if (shippingAddress != null ? !shippingAddress.equals(order.shippingAddress) : order.shippingAddress != null)
+			return false;
+		if (billingAddress != null ? !billingAddress.equals(order.billingAddress) : order.billingAddress != null)
+			return false;
+		if (couponCodes != null ? !couponCodes.equals(order.couponCodes) : order.couponCodes != null) return false;
+//			books.forEach(
+//					x -> {
+//
+//					}
+//			);
+//		}
+//		return books != null ?  : order.books == null;
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		int result = id != null ? id.hashCode() : 0;
+		result = 31 * result + (price != null ? price.hashCode() : 0);
+		result = 31 * result + (paymentMethod != null ? paymentMethod.hashCode() : 0);
+		result = 31 * result + (realized ? 1 : 0);
+		result = 31 * result + (user != null ? user.hashCode() : 0);
+		result = 31 * result + (shippingAddress != null ? shippingAddress.hashCode() : 0);
+		result = 31 * result + (billingAddress != null ? billingAddress.hashCode() : 0);
+		result = 31 * result + (couponCodes != null ? couponCodes.hashCode() : 0);
+		result = 31 * result + (books != null ? books.hashCode() : 0);
+		return result;
 	}
 
 	public Long getId() {
 		return this.id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public BigDecimal getPrice() {
@@ -163,4 +197,13 @@ public class Order {
 	public void setRealized(boolean realized) {
 		this.realized = realized;
 	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 }
+

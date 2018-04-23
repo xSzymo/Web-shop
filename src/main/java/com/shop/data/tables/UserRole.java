@@ -1,47 +1,52 @@
 package com.shop.data.tables;
 
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 
-import javax.persistence.*;
-
 @Entity
-@Table(name="user_roles")
+@Table(name = "user_roles")
 public class UserRole {
-	
-	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)    
-    @Column(name="role_id")
-	private Long roleid;
-	
-	@Column(name="role")
-	private String role;	
-	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-	@JoinColumn(name = "role_id")
-	private Collection<User> user = new LinkedHashSet<User>();
 
-	public String getRole() {
-		return role;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "role_id")
+    private long id;
 
-	public void setRole(String role) {
-		this.role = role;
-	}
+    @Column(name = "role")
+    private String role;
 
-	public Long getUserRoleId() {
-		return roleid;
-	}
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "role_id")
+    private Collection<User> user = new LinkedHashSet<User>();
 
-	public void setUserroleid(Long roleid) {
-		this.roleid = roleid;
-	}
+    private UserRole() {}
 
-	public Collection<User> getUser() {
-		return user;
-	}
+    public UserRole(String role) {
+        this.role = role;
+    }
 
-	public void setUser(Collection<User> user) {
-		this.user = user;
-	}
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long roleid) {
+        this.id = roleid;
+    }
+
+    public Collection<User> getUsers() {
+        return user;
+    }
+
+    public void setUsers(Collection<User> user) {
+        this.user = user;
+    }
 }

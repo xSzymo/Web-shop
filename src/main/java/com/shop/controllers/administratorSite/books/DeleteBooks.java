@@ -1,7 +1,14 @@
 package com.shop.controllers.administratorSite.books;
 
-import java.util.Iterator;
-
+import com.shop.configuration.ApplicationProperties;
+import com.shop.controllers.administratorSite.books.file.FileUploadActions;
+import com.shop.data.services.BooksService;
+import com.shop.data.tables.Book;
+import com.shop.data.tables.Category;
+import com.shop.data.tables.Order;
+import com.shop.data.tables.Picture;
+import com.shop.others.RepositoriesAccess;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,122 +17,58 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
-import com.shop.configuration.ApplicationConfig;
-import com.shop.controllers.administratorSite.books.file.FileUploadActions;
-import com.shop.data.tables.Book;
-import com.shop.data.tables.Category;
-import com.shop.data.tables.Order;
-import com.shop.data.tables.Picture;
-import com.shop.others.RepositoriesAccess;
+import java.util.Iterator;
 
 @Controller
 @RequestMapping("administratorSite/books")
 public class DeleteBooks {
-	
-	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public String deleteSite(Model model) {
-		System.out.println("halo");
-		Iterable<Book> books = RepositoriesAccess.booksRepository.findAll();
+    @Autowired
+    private BooksService booksService;
 
-		model.addAttribute("books", books);
-		return "administratorSite/booksCRUD/delete";
-	}
+    @RequestMapping(value = "/delete", method = RequestMethod.GET)
+    public String deleteSite(Model model) {
+        System.out.println("halo");
+        Iterable<Book> books = booksService.findAll();
+
+        model.addAttribute("books", books);
+        return "administratorSite/booksCRUD/delete";
+    }
 
 
-	@RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
-	public RedirectView deleteFromButton(@PathVariable Long id, Model model) {
-		Book foundBook = RepositoriesAccess.booksRepository.findById(id);
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
+    public RedirectView deleteFromButton(@PathVariable Long id, Model model) {
+        Book foundBook = booksService.findOne(id);
 
-		if (foundBook == null) {
-			model.addAttribute("msg", "not found");
-			Iterable<Book> books = RepositoriesAccess.booksRepository.findAll();
-			model.addAttribute("books", books);
+        if (foundBook == null) {
+            model.addAttribute("msg", "not found");
+            Iterable<Book> books = booksService.findAll();
+            model.addAttribute("books", books);
 
-			return new RedirectView(ApplicationConfig.PROJECT_NAME + "administratorSite/books/delete");
-		}
+            return new RedirectView(ApplicationProperties.PROJECT_NAME + "administratorSite/books/delete");
+        }
+        booksService.delete(foundBook.getId());
 
-		Iterable<Order> orders = RepositoriesAccess.ordersRepository.findAll();
+        Iterable<Book> books = booksService.findAll();
+        model.addAttribute("books", books);
 
-		for (Iterator<Order> iterator = orders.iterator(); iterator.hasNext();) {
-			Order x = iterator.next();
-			for (Iterator<Book> iterator2 = x.getBooks().iterator(); iterator2.hasNext();) {
-				Book x1 = iterator2.next();
-				if (x1.getId() == foundBook.getId()) {
-					iterator2.remove();
-					RepositoriesAccess.ordersRepository.save(x);
-				}
-			}
-		}
+        return new RedirectView(ApplicationProperties.PROJECT_NAME + "administratorSite/books/delete");
+    }
 
-		Iterable<Category> categories = RepositoriesAccess.categoriesRepository.findAll();
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public String deleteFromInputText(@RequestParam("bookName") String bookName, Model model) {
+        Book foundBook = booksService.findOne(bookName);
 
-		for (Iterator<Category> iterator = categories.iterator(); iterator.hasNext();) {
-			Category x2 = iterator.next();
-			for (Iterator<Book> iterator2 = x2.getBooks().iterator(); iterator2.hasNext();) {
-				Book x3 = iterator2.next();
-				if (x3.getId() == foundBook.getId()) {
-					iterator2.remove();
-					RepositoriesAccess.categoriesRepository.save(x2);
-				}
-			}
-		}
+        if (foundBook == null) {
+            model.addAttribute("msg", "not found");
+            Iterable<Book> books = booksService.findAll();
+            model.addAttribute("books", books);
 
-		for (Picture x : foundBook.getPictures())
-			FileUploadActions.deletePicture(x.getName());
+            return "/administratorSite/booksCRUD/delete";
+        }
+        booksService.delete(foundBook.getId());
 
-		RepositoriesAccess.booksRepository.delete(foundBook.getId());
-
-		Iterable<Book> books = RepositoriesAccess.booksRepository.findAll();
-		model.addAttribute("books", books);
-
-		return new RedirectView(ApplicationConfig.PROJECT_NAME + "administratorSite/books/delete");
-	}
-
-	@RequestMapping(value = "/delete", method = RequestMethod.POST)
-	public String deleteFromInputText(@RequestParam("bookName") String bookName, Model model) {
-		Book foundBook = RepositoriesAccess.booksRepository.findByName(bookName);
-
-		if (foundBook == null) {
-			model.addAttribute("msg", "not found");
-			Iterable<Book> books = RepositoriesAccess.booksRepository.findAll();
-			model.addAttribute("books", books);
-
-			return "/administratorSite/booksCRUD/delete";
-		}
-
-		Iterable<Order> orders = RepositoriesAccess.ordersRepository.findAll();
-
-		for (Iterator<Order> iterator = orders.iterator(); iterator.hasNext();) {
-			Order x = iterator.next();
-			for (Iterator<Book> iterator2 = x.getBooks().iterator(); iterator2.hasNext();) {
-				Book x1 = iterator2.next();
-				if (x1.getId() == foundBook.getId()) {
-					iterator2.remove();
-					RepositoriesAccess.ordersRepository.save(x);
-				}
-			}
-		}
-
-		Iterable<Category> categories = RepositoriesAccess.categoriesRepository.findAll();
-
-		for (Iterator<Category> iterator = categories.iterator(); iterator.hasNext();) {
-			Category x2 = iterator.next();
-			for (Iterator<Book> iterator2 = x2.getBooks().iterator(); iterator2.hasNext();) {
-				Book x3 = iterator2.next();
-				if (x3.getId() == foundBook.getId()) {
-					iterator2.remove();
-					RepositoriesAccess.categoriesRepository.save(x2);
-				}
-			}
-		}
-
-		for (Picture x : foundBook.getPictures())
-			FileUploadActions.deletePicture(x.getName());
-
-		RepositoriesAccess.booksRepository.delete(foundBook.getId());
-
-		Iterable<Book> books = RepositoriesAccess.booksRepository.findAll();
-		model.addAttribute("books", books);
-		return "/administratorSite/booksCRUD/delete";
-	}
+        Iterable<Book> books = booksService.findAll();
+        model.addAttribute("books", books);
+        return "/administratorSite/booksCRUD/delete";
+    }
 }
