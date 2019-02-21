@@ -20,7 +20,7 @@ public class PictureOperations {
                 if (!dir.exists())
                     dir.mkdirs();
 
-                File serverFile = new File(dir.getAbsolutePath() + "\\" + picture.getName() + picture.getFileType());
+                File serverFile = new File(dir.getAbsolutePath() + ( isWindows() ? "\\" : "//") + picture.getName() + picture.getFileType());
                 BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 
                 stream.write(bytes);
@@ -31,6 +31,10 @@ public class PictureOperations {
             }
 
         return false;
+    }
+
+    private boolean isWindows() {
+        return System.getProperty("os.name").toLowerCase().contains("win");
     }
 
     public void deletePicture(Picture picture) {

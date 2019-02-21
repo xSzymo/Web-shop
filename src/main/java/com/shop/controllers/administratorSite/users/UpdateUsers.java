@@ -66,7 +66,7 @@ public class UpdateUsers {
 
         if (foundUser == null) {
             model.addAttribute("book", foundUser);
-            model.addAttribute("msg", "not found book to update");
+            model.addAttribute("msg", "not found user to update");
             return "administratorSite/usersManager/updateOneBook";
         }
         if (address == null)
@@ -87,11 +87,12 @@ public class UpdateUsers {
             foundUser.setAge(0);
         else
             foundUser.setAge(UserDAO.convertDateIntoYears(date));
-        if (request.getParameter("Admin") != null)
-            UserDAO.addUserWithRoles(adminRole, foundUser);
-        else if (request.getParameter("User") != null)
-            UserDAO.addUserWithRoles(userRole, foundUser);
-        else
+
+//        if (request.getParameter("Admin") != null)
+//            UserDAO.addUserWithRoles(adminRole, foundUser);
+//        else if (request.getParameter("User") != null)
+//            UserDAO.addUserWithRoles(userRole, foundUser);
+//        else
             usersService.save(foundUser);
         model.addAttribute("msg", "success");
         model.addAttribute("user", foundUser);

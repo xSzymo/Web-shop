@@ -4,14 +4,16 @@ import com.shop.data.services.CookiesService;
 import com.shop.data.tables.Cookies;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Collections;
 import java.util.Random;
+
 
 public class Coder {
     @Autowired
     private static CookiesService cookiesService;
 
     public static String getUniqueCode() {
-        Iterable<Cookies> cookies = cookiesService.findAll();
+        Iterable<Cookies> cookies = cookiesService != null ? cookiesService.findAll() : Collections.EMPTY_LIST;
         boolean is = true;
         String code;
 

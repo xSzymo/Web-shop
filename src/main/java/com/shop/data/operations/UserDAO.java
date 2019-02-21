@@ -76,7 +76,6 @@ public class UserDAO {
         RepositoriesAccess.userRolesRepository.save(role);
     }
 
-    // inexact algorithm
     @SuppressWarnings("deprecation")
     public static int convertDateIntoYears(String date) {
         String year = date.substring(0, 4);

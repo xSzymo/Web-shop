@@ -66,11 +66,11 @@ public class CreateUsers {
         } else
             user.setAddress(address);
 
-        if (request.getParameter("Admin") != null)
-            UserDAO.addUserWithRoles(adminRole, user);
-        else if (request.getParameter("User") != null)
-            UserDAO.addUserWithRoles(userRole, user);
-        else
+//        if (request.getParameter("Admin") != null)
+//            UserDAO.addUserWithRoles(adminRole, user);
+//        else if (request.getParameter("User") != null)
+//            UserDAO.addUserWithRoles(userRole, user);
+//        else
             usersService.save(user);
 
         model.addAttribute("msgSuccess", "success");
