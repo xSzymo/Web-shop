@@ -210,7 +210,7 @@
 
     </dependencies>
     <build>
-        <finalName>BookShopProject</finalName>
+        <finalName>WebShop</finalName>
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -236,7 +236,7 @@
                     <version>2.4</version>
                     <configuration>
                         <warSourceDirectory>src/main/webapp</warSourceDirectory>
-                        <warName>BookShopProject</warName>
+                        <warName>WebShop</warName>
                         <failOnMissingWebXml>false</failOnMissingWebXml>
                     </configuration>
                 </plugin>

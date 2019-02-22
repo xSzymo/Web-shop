@@ -15,7 +15,7 @@ public class ApplicationProperties {
     /**
      * Picture path
      */
-    public static String PICTURE_PATH = "/home/xszymo/programming2/testo/halo";
+    public static String PICTURE_PATH = "/home/pictures";
 
     /**
      * Shop email address
@@ -30,7 +30,7 @@ public class ApplicationProperties {
     /**
      * Access to Data base
      */
-    public static String DATABASE_NAME = "test3";
+    public static String DATABASE_NAME = "db_name";
     public static String DATABASE_USER_NANE = "root";
     public static String DATABASE_USER_PASSWORD = "admin";
     public static String SERVER_NAME = "localhost";

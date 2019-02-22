@@ -4,6 +4,7 @@ import com.shop.configuration.ApplicationProperties;
 import com.shop.configuration.database.DataBaseConfiguration;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import static org.junit.Assert.fail;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = DataBaseConfiguration.class)
 @WebAppConfiguration
+@Ignore
 public class DataBaseTestConfiguration {
 	@Autowired
 	private LocalContainerEntityManagerFactoryBean entityManagerFactoryBean;
