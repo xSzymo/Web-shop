@@ -3,7 +3,6 @@ package com.shop.controllers.shop;
 import com.shop.controllers.shop.actions.OrderActions;
 import com.shop.data.services.UsersService;
 import com.shop.data.tables.User;
-import com.shop.others.RepositoriesAccess;
 import com.shop.others.email.SendEmailUserAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -22,6 +21,10 @@ import javax.servlet.http.HttpServletRequest;
 public class AcceptOrder {
     @Autowired
     private UsersService usersService;
+    @Autowired
+    private OrderActions orderActions;
+    @Autowired
+    private SendEmailUserAccount sendEmailUserAccount;
 
     @Secured(value = {"ROLE_ADMIN", "ROLE_USER"})
     @RequestMapping(value = "accept", method = RequestMethod.POST)
@@ -41,11 +44,11 @@ public class AcceptOrder {
         User user = usersService
                 .findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
 
-        String text = OrderActions.saveOrderAndReturnMessage(shippingAddressStreet, shippingAddressPostalCode, shippingAddressCity,
+        String text = orderActions.saveOrderAndReturnMessage(shippingAddressStreet, shippingAddressPostalCode, shippingAddressCity,
                 shippingAddressCountry, billingAddressStreet, billingAddressPostalCode, billingAddressCity,
                 billingAddressCountry, payment, couponCode, user.geteMail(), request);
 
-        SendEmailUserAccount.sendEmailWithOrder(text, user.geteMail(), request);
+        sendEmailUserAccount.sendEmailWithOrder(text, user.geteMail(), request);
 
         if (!(SecurityContextHolder.getContext().getAuthentication().getName().equals("anonymousUser")))
             model.addAttribute("logged", true);
@@ -69,11 +72,11 @@ public class AcceptOrder {
                                      @RequestParam(name = "couponCode", defaultValue = "") String couponCode,
                                      @RequestParam("payment") Object payment) {
 
-        String text = OrderActions.saveOrderAndReturnMessage(shippingAddressStreet, shippingAddressPostalCode, shippingAddressCity,
+        String text = orderActions.saveOrderAndReturnMessage(shippingAddressStreet, shippingAddressPostalCode, shippingAddressCity,
                 shippingAddressCountry, billingAddressStreet, billingAddressPostalCode, billingAddressCity,
                 billingAddressCountry, payment, couponCode, email, request);
 
-        SendEmailUserAccount.sendEmailWithOrder(text, email, request);
+        sendEmailUserAccount.sendEmailWithOrder(text, email, request);
 
         if (!(SecurityContextHolder.getContext().getAuthentication().getName().equals("anonymousUser")))
             model.addAttribute("logged", true);

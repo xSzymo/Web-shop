@@ -7,7 +7,6 @@ import com.shop.data.services.UsersService;
 import com.shop.data.tables.Address;
 import com.shop.data.tables.User;
 import com.shop.data.tables.UserRole;
-import com.shop.others.RepositoriesAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -93,7 +92,7 @@ public class UpdateUsers {
 //        else if (request.getParameter("User") != null)
 //            UserDAO.addUserWithRoles(userRole, foundUser);
 //        else
-            usersService.save(foundUser);
+        usersService.save(foundUser);
         model.addAttribute("msg", "success");
         model.addAttribute("user", foundUser);
         model.addAttribute("address", address);

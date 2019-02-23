@@ -5,7 +5,6 @@ import com.shop.data.services.UserRolesService;
 import com.shop.data.services.UsersService;
 import com.shop.data.tables.User;
 import com.shop.data.tables.UserRole;
-import com.shop.others.RepositoriesAccess;
 import com.shop.others.email.SendEmailDeleteAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,6 +26,10 @@ public class UserAccountOthers {
     private UsersService usersService;
     @Autowired
     private UserRolesService userRolesService;
+    @Autowired
+    private SendEmailDeleteAccount sendEmailDeleteAccount;
+    @Autowired
+    private Login login;
 
     @RequestMapping(value = "informations", method = RequestMethod.GET)
     public String userInformations(Model model) {
@@ -55,7 +58,7 @@ public class UserAccountOthers {
         User user = usersService.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
         if (password.equals(password1))
             if (user.getPassword().equals(password))
-                SendEmailDeleteAccount.sendCode(user, request);
+                sendEmailDeleteAccount.sendCode(user, request);
 
         return "userAccount/options/deletAccount";
     }
@@ -69,6 +72,6 @@ public class UserAccountOthers {
                 User user = usersService.findByLogin(login);
                 usersService.delete(user.getId());
             }
-        return Login.logout(request, response, model);
+        return this.login.logout(request, response, model);
     }
 }

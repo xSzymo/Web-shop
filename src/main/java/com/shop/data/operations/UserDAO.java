@@ -1,10 +1,10 @@
 package com.shop.data.operations;
 
+import com.shop.configuration.services.configuration.CustomUserDetails;
 import com.shop.data.tables.Address;
 import com.shop.data.tables.User;
 import com.shop.data.tables.UserRole;
 import com.shop.others.RepositoriesAccess;
-import com.shop.configuration.services.configuration.CustomUserDetails;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

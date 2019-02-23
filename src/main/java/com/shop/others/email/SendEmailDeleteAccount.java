@@ -15,7 +15,7 @@ import java.util.Date;
 
 @Component
 public class SendEmailDeleteAccount {
-    public static String sendCode(User user, HttpServletRequest request) {
+    public String sendCode(User user, HttpServletRequest request) {
         try {
             Session session = EmailActions.authorizeWebShopEmail();
 

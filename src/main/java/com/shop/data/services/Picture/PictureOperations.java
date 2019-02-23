@@ -20,7 +20,7 @@ public class PictureOperations {
                 if (!dir.exists())
                     dir.mkdirs();
 
-                File serverFile = new File(dir.getAbsolutePath() + ( isWindows() ? "\\" : "//") + picture.getName() + picture.getFileType());
+                File serverFile = new File(dir.getAbsolutePath() + (isWindows() ? "\\" : "//") + picture.getName() + picture.getFileType());
                 BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 
                 stream.write(bytes);

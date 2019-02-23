@@ -3,9 +3,9 @@ package com.shop.others.email;
 import com.shop.configuration.ApplicationProperties;
 import com.shop.data.services.UsersService;
 import com.shop.data.tables.User;
-import com.shop.others.RepositoriesAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import javax.mail.Message;
@@ -17,11 +17,12 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
+@Service
 public class SendEmailUserAccount {
     @Autowired
-    private static UsersService usersService;
+    private UsersService usersService;
 
-    public static void sendEmailWithOrder(String text, String eMail, HttpServletRequest request) {
+    public void sendEmailWithOrder(String text, String eMail, HttpServletRequest request) {
         try {
             Session session = EmailActions.authorizeWebShopEmail();
 
@@ -37,7 +38,7 @@ public class SendEmailUserAccount {
         }
     }
 
-    public static boolean sendEmailWithNewPassswordOrEmail(String email, String newPassword, Model model, HttpServletRequest request) {
+    public boolean sendEmailWithNewPassswordOrEmail(String email, String newPassword, Model model, HttpServletRequest request) {
         User user1 = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = usersService.findByLogin(user1.getLogin());
 

@@ -32,15 +32,15 @@ public class Address {
 
     public boolean equals(Address address) {
         boolean sameObjects = true;
-        if(!this.id.equals(address.getId()))
+        if (!this.id.equals(address.getId()))
             sameObjects = false;
-        if(!this.street.equals(address.getStreet()))
+        if (!this.street.equals(address.getStreet()))
             sameObjects = false;
-        if(!this.postalCode.equals(address.getPostalCode()))
+        if (!this.postalCode.equals(address.getPostalCode()))
             sameObjects = false;
-        if(!this.city.equals(address.getCity()))
+        if (!this.city.equals(address.getCity()))
             sameObjects = false;
-        if(!this.country.equals(address.getCountry()))
+        if (!this.country.equals(address.getCountry()))
             sameObjects = false;
         return sameObjects;
     }

@@ -6,8 +6,6 @@ import com.shop.data.services.UserRolesService;
 import com.shop.data.services.UsersService;
 import com.shop.data.tables.Address;
 import com.shop.data.tables.User;
-import com.shop.data.tables.UserRole;
-import com.shop.others.RepositoriesAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
 
 @Controller
 @RequestMapping("administratorSite/users")
@@ -71,7 +68,7 @@ public class CreateUsers {
 //        else if (request.getParameter("User") != null)
 //            UserDAO.addUserWithRoles(userRole, user);
 //        else
-            usersService.save(user);
+        usersService.save(user);
 
         model.addAttribute("msgSuccess", "success");
         return "administratorSite/usersManager/create";

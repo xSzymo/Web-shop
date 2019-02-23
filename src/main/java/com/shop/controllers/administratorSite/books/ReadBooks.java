@@ -4,7 +4,6 @@ import com.shop.data.services.BooksService;
 import com.shop.data.services.CategoriesService;
 import com.shop.data.tables.Book;
 import com.shop.data.tables.Category;
-import com.shop.others.RepositoriesAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

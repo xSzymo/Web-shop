@@ -1,7 +1,6 @@
 package com.shop.data.repositories;
 
 import com.shop.data.tables.Book;
-import com.shop.data.tables.Picture;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

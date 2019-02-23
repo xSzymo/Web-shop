@@ -2,7 +2,6 @@ package com.shop.controllers.administratorSite.couponCodes;
 
 import com.shop.data.services.CouponCodesService;
 import com.shop.data.tables.CouponCode;
-import com.shop.others.RepositoriesAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

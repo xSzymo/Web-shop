@@ -1,12 +1,8 @@
 package com.shop.controllers.administratorSite.orders;
 
 import com.shop.configuration.ApplicationProperties;
-import com.shop.data.services.AddressService;
-import com.shop.data.services.BooksService;
-import com.shop.data.services.CouponCodesService;
 import com.shop.data.services.OrdersService;
 import com.shop.data.tables.Order;
-import com.shop.others.RepositoriesAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

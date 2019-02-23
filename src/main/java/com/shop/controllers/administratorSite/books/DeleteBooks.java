@@ -1,13 +1,8 @@
 package com.shop.controllers.administratorSite.books;
 
 import com.shop.configuration.ApplicationProperties;
-import com.shop.controllers.administratorSite.books.file.FileUploadActions;
 import com.shop.data.services.BooksService;
 import com.shop.data.tables.Book;
-import com.shop.data.tables.Category;
-import com.shop.data.tables.Order;
-import com.shop.data.tables.Picture;
-import com.shop.others.RepositoriesAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
-
-import java.util.Iterator;
 
 @Controller
 @RequestMapping("administratorSite/books")

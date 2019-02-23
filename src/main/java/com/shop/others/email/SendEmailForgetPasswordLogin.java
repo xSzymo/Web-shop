@@ -3,7 +3,6 @@ package com.shop.others.email;
 import com.shop.configuration.ApplicationProperties;
 import com.shop.data.services.UsersService;
 import com.shop.data.tables.User;
-import com.shop.others.RepositoriesAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,7 +23,7 @@ import java.util.Date;
 @Controller
 public class SendEmailForgetPasswordLogin {
     @Autowired
-    private static UsersService usersService;
+    private UsersService usersService;
 
     @RequestMapping(value = "sendCode", method = RequestMethod.POST)
     public String sendCode(@RequestParam("login") String login, @RequestParam("email") String email, Model model,

@@ -29,7 +29,7 @@ public class Cookies {
 
     public boolean equals(Cookies cookie) {
         boolean sameObject = true;
-        if(!this.getValue().equals(cookie.getValue()) || !this.getName().equals(cookie.getName()))
+        if (!this.getValue().equals(cookie.getValue()) || !this.getName().equals(cookie.getName()))
             return false;
 //        if(this.getValue().equals(cookie.getName()) || this.getName().equals(cookie.getName())
 //        return;

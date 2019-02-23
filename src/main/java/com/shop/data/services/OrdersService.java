@@ -2,14 +2,12 @@ package com.shop.data.services;
 
 import com.shop.data.repositories.OrdersRepository;
 import com.shop.data.repositories.UsersRepository;
-import com.shop.data.tables.Book;
 import com.shop.data.tables.Order;
 import com.shop.data.tables.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.Collection;
 
 

@@ -6,7 +6,6 @@ import com.shop.data.services.CookiesService;
 import com.shop.data.services.UsersService;
 import com.shop.data.tables.Cookies;
 import com.shop.data.tables.User;
-import com.shop.others.RepositoriesAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,14 +24,14 @@ import javax.servlet.http.HttpServletResponse;
 @Controller("log")
 public class Login {
     @Autowired
+    private CookiesService cookiesService;
+    @Autowired
     private RememberMeServices rememberMeService;
     @Autowired
-    private static CookiesService cookiesService;
-    @Autowired
-    private static UsersService usersService;
+    private UsersService usersService;
 
     @RequestMapping(value = "logout", method = RequestMethod.GET)
-    public static String logout(HttpServletRequest request, HttpServletResponse response, Model model) {
+    public String logout(HttpServletRequest request, HttpServletResponse response, Model model) {
         for (Cookie x : request.getCookies()) {
             if (x.getName().equals("JSESSIONID"))
                 continue;

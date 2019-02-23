@@ -32,11 +32,11 @@ public class CouponCode {
 
     public boolean equals(CouponCode couponCode) {
         boolean sameObjects = true;
-        if(!this.id.equals(couponCode.getId()))
+        if (!this.id.equals(couponCode.getId()))
             sameObjects = false;
-        if(!(this.codeDiscount == couponCode.getCodeDiscount()))
+        if (!(this.codeDiscount == couponCode.getCodeDiscount()))
             sameObjects = false;
-        if(!this.code.equals(couponCode.getCode()))
+        if (!this.code.equals(couponCode.getCode()))
             sameObjects = false;
         return sameObjects;
     }

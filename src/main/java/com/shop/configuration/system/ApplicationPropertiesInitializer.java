@@ -6,6 +6,8 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class ApplicationPropertiesInitializer {
+    String propFileName = "application.properties";
+    InputStream inputStream;
     private String URL = "";
     private String PROJECT_NAME = "";
     private String PICTURE_PATH = "";
@@ -16,9 +18,6 @@ public class ApplicationPropertiesInitializer {
     private String DATABASE_USER_PASSWORD = "";
     private String DATABASE_SERVER_NAME = "";
     private String DATABASE_PORT = "";
-
-    String propFileName = "application.properties";
-    InputStream inputStream;
 
     public ApplicationPropertiesInitializer() {
         try {
@@ -51,7 +50,7 @@ public class ApplicationPropertiesInitializer {
                     ApplicationProperties.PROJECT_NAME = PROJECT_NAME;
                 if (!PICTURE_PATH.equals("")) {
                     ApplicationProperties.PICTURE_PATH = PICTURE_PATH;
-                    if(!ApplicationProperties.PICTURE_PATH.substring(ApplicationProperties.PICTURE_PATH.length() - 1).equals("/"))
+                    if (!ApplicationProperties.PICTURE_PATH.substring(ApplicationProperties.PICTURE_PATH.length() - 1).equals("/"))
                         ApplicationProperties.PICTURE_PATH += "/";
                 }
                 if (!SHOP_EMAIL.equals(""))

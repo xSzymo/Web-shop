@@ -2,7 +2,6 @@ package com.shop.controllers.login;
 
 import com.shop.data.services.UsersService;
 import com.shop.data.tables.User;
-import com.shop.others.RepositoriesAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class ResetPassword {
     @Autowired
-    private static UsersService usersService;
+    private UsersService usersService;
 
     @RequestMapping(value = "reset", method = RequestMethod.POST)
     public String resetPassword(@RequestParam(name = "password") String password, Model model,

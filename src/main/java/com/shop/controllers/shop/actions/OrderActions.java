@@ -8,29 +8,30 @@ import com.shop.data.services.CouponCodesService;
 import com.shop.data.services.OrdersService;
 import com.shop.data.services.UsersService;
 import com.shop.data.tables.*;
-import com.shop.others.RepositoriesAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.LinkedList;
 
+@Service
 public class OrderActions {
     @Autowired
-    private static AddressService addressService;
+    private AddressService addressService;
     @Autowired
-    private static CouponCodesService couponCodesService;
+    private CouponCodesService couponCodesService;
     @Autowired
-    private static UsersService usersService;
+    private UsersService usersService;
     @Autowired
-    private static OrdersService ordersService;
+    private OrdersService ordersService;
 
-    public static String saveOrderAndReturnMessage(String shippingAddressStreet, String shippingAddressPostalCode,
-                                                   String shippingAddressCity, String shippingAddressCountry, String billingAddressStreet,
-                                                   String billingAddressPostalCode, String billingAddressCity, String billingAddressCountry, Object payment,
-                                                   String couponCode, String eMail, HttpServletRequest request) {
+    public String saveOrderAndReturnMessage(String shippingAddressStreet, String shippingAddressPostalCode,
+                                            String shippingAddressCity, String shippingAddressCountry, String billingAddressStreet,
+                                            String billingAddressPostalCode, String billingAddressCity, String billingAddressCountry, Object payment,
+                                            String couponCode, String eMail, HttpServletRequest request) {
         LinkedList<Book> secondBasket = Shop.getBasketWithAllBooks(request);
         HashSet<Book> basket = Shop.getBasket(request);
         BigDecimal price = Basket.toCalculate(secondBasket);

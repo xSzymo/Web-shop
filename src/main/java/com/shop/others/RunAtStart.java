@@ -32,10 +32,12 @@ public class RunAtStart {
         this.ordersService = ordersService;
         this.userRolesService = userRolesService;
         this.couponCodesService = couponCodesService;
-        runAtStart();
     }
 
-    public void runAtStart() {
+    @PostConstruct
+    public void runAtStart() throws InterruptedException {
+        Thread.sleep(1000 * 10);
+
         if (ApplicationProperties.FALSE_WHILE_RUNNING_DB_TESTS) {
             Address a = new Address();
             a.setCity("CITI");

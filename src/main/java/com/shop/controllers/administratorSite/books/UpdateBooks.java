@@ -1,14 +1,12 @@
 package com.shop.controllers.administratorSite.books;
 
 import com.shop.configuration.ApplicationProperties;
-import com.shop.controllers.administratorSite.books.file.FileUploadActions;
 import com.shop.data.services.BooksService;
 import com.shop.data.services.CategoriesService;
 import com.shop.data.services.PicturesService;
 import com.shop.data.tables.Book;
 import com.shop.data.tables.Category;
 import com.shop.data.tables.Picture;
-import com.shop.others.RepositoriesAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,14 +24,14 @@ import java.math.BigDecimal;
 @RequestMapping("administratorSite/books")
 public class UpdateBooks {
     @Autowired
-    private static BooksService booksService;
+    private BooksService booksService;
     @Autowired
-    private static CategoriesService categoriesService;
+    private CategoriesService categoriesService;
     @Autowired
     private PicturesService picturesService;
 
     @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
-    public static String updateOneSite(@PathVariable Long id, Model model) {
+    public String updateOneSite(@PathVariable Long id, Model model) {
         Book foundBook = booksService.findOne(id);
 
         if (foundBook == null)

@@ -56,7 +56,7 @@ public class DataBaseConfiguration {
     @Bean
     public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
         JpaTransactionManager jpaTransactionManager = new JpaTransactionManager(entityManagerFactory);
-        jpaTransactionManager.setDefaultTimeout(60);
+        jpaTransactionManager.setDefaultTimeout(180);
         return jpaTransactionManager;
     }
 

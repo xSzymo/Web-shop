@@ -20,7 +20,8 @@ public class UserRole {
     @JoinColumn(name = "role_id")
     private Collection<User> user = new LinkedHashSet<User>();
 
-    private UserRole() {}
+    private UserRole() {
+    }
 
     public UserRole(String role) {
         this.role = role;
