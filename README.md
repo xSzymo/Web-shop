@@ -1,12 +1,20 @@
 # Spring web shop project
 
-If you want to check functionality of the project go to All-proper-functionality branch.
-There's everything tested by me.<br>
-Master branch have had changes in the production code which wasn't tested on live project.<br>
-Currently work at test development and move repository static access to services.
-<br>
+Web shop project which has some functionalities like :
+- Administrator site where admins can add new users/books/coupon codes etc
+- User site where user can change/check their information such as current orders etc
+- Shop where user can buy books
 
 ### How to run
+<hr>
+
+#### With docker : 
+- make sure your port 8080 is free
+- copy docker-compose.yml file from this repository to your local environment
+- locate docker-compose.yml file and run command in same directory : docker-compose up
+- get onto localhost:8080/WebShop
+
+#### With source
 -----------------------------------------------------------------------------------------------------------------------
 ```
 git clone https://github.com/xSzymo/Spring-web-shop-project.git
@@ -23,7 +31,7 @@ Edit application.properties in resources before you start.
 - JSP/JSTL 
   <br><br>
 
-### Feature
+### Configuration
 -----------------------------------------------------------------------------------------------------------------------
 ApplicationConfig - file where you can easy config whole application :
  - url
@@ -64,3 +72,4 @@ Modules :
     <br><br>
   
 
+#### Checkout wiki for details 
