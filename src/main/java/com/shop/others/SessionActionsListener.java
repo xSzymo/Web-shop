@@ -18,10 +18,15 @@ public class SessionActionsListener implements javax.servlet.http.HttpSessionLis
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         if (ApplicationProperties.FALSE_WHILE_RUNNING_DB_TESTS) {
-            if (applicationContext instanceof WebApplicationContext)
-                ((WebApplicationContext) applicationContext).getServletContext().addListener(this);
-            else
+            if (applicationContext instanceof WebApplicationContext) {
+                try {
+                    ((WebApplicationContext) applicationContext).getServletContext().addListener(this);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
                 throw new RuntimeException("Must be inside a web application context");
+            }
         }
     }
 
