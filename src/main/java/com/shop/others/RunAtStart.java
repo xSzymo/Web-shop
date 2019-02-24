@@ -36,7 +36,7 @@ public class RunAtStart {
 
     @PostConstruct
     public void runAtStart() throws InterruptedException {
-        Thread.sleep(1000 * 10);
+        Thread.sleep(1000 * 15);
 
         if (ApplicationProperties.FALSE_WHILE_RUNNING_DB_TESTS) {
             Address a = new Address();

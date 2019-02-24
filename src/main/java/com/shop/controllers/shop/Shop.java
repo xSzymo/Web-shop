@@ -26,11 +26,15 @@ public class Shop {
 
     @SuppressWarnings("unchecked")
     public static HashSet<Book> getBasket(HttpServletRequest request) {
+        if (request.getSession().getAttribute("basket") == null)
+            request.getSession().setAttribute("basket", new HashSet<Book>());
         return (HashSet<Book>) request.getSession().getAttribute("basket");
     }
 
     @SuppressWarnings("unchecked")
     public static LinkedList<Book> getBasketWithAllBooks(HttpServletRequest request) {
+        if (request.getSession().getAttribute("basketWithAllBooks") == null)
+            request.getSession().setAttribute("basketWithAllBooks", new LinkedList<Book>());
         return (LinkedList<Book>) request.getSession().getAttribute("basketWithAllBooks");
     }
 

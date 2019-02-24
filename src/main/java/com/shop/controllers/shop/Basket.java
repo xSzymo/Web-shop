@@ -113,7 +113,7 @@ public class Basket {
         model.addAttribute("price", price);
 
         model.addAttribute("basket1", basket);
-        model.addAttribute("basket", request.getSession().getAttribute("basket"));
+        model.addAttribute("basket", Shop.getBasket(request));
 
         if (SecurityContextHolder.getContext().getAuthentication().getPrincipal().equals("anonymousUser"))
             return "shop/options/anonymousUserOrder";
