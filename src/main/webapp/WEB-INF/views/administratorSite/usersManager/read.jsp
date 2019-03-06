@@ -9,14 +9,14 @@
 </head>
 <body>
 
-  <form method="POST" action="read">
+ <form method="POST" action="read">
  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
-  Name :  <input type="text" name="login" value="" />
+Name : <input type="text" name="login" value="" />
 		<input align="top" type="submit" value="Find" />
-   </form>
- <form method="get" action="read">
+</form>
+<form method="get" action="read">
 		<input align="top" type="submit" value="Read more" />
-   </form>
+</form>
 
 		<form id="Back" action="${sessionScope.PROJECT_NAME}administratorSite/users" method="get"></form>
 		<input type="submit" value="Back" form="Back" />
@@ -40,7 +40,7 @@
 			<tr><c:out value="Country : ${address.getCountry()}" /><br></tr>
 						
 			 			<c:forEach items="${roles}" var="role">
-				<c:forEach items="${role.getUser()}" var="userRole">
+				<c:forEach items="${role.getUsers()}" var="userRole">
 					<c:if test="${userRole.getId() == user.getId()}">
 						<tr>Role : <c:out value="${role.getRole()}" /></tr>
 					</c:if>
@@ -79,7 +79,7 @@
 			</c:forEach> 
 						
  			<c:forEach items="${roles}" var="role">
-				<c:forEach items="${role.getUser()}" var="userRole">
+				<c:forEach items="${role.getUsers()}" var="userRole">
 					<c:if test="${userRole.getId() == user.getId()}">
 						<tr>Role : <c:out value="${role.getRole()}" /></tr>
 					</c:if>

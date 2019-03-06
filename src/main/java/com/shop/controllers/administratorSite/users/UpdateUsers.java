@@ -40,7 +40,7 @@ public class UpdateUsers {
     }
 
     @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
-    public String updateBook(@PathVariable Long id, Model model, HttpServletRequest request) {
+    public String updateUser(@PathVariable Long id, Model model, HttpServletRequest request) {
         User foundUser = usersService.findOne(id);
 
         if (foundUser == null)
@@ -52,7 +52,7 @@ public class UpdateUsers {
     }
 
     @RequestMapping(value = "update/update", method = RequestMethod.POST)
-    public String updateBook(@RequestParam("id") String id, @RequestParam("login") String login,
+    public String updateUser(@RequestParam("id") String id, @RequestParam("login") String login,
                              @RequestParam("password") String password, @RequestParam("name") String name,
                              @RequestParam("surname") String surname, @RequestParam("date") String date,
                              @RequestParam("eMail") String eMail, @RequestParam(name = "addressId", required = false) Long addressId,

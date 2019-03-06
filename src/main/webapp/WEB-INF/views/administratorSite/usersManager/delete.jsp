@@ -8,11 +8,11 @@
 <title>Delete</title>
 </head>
 <body>
- <form method="POST" action="delete">
-  Name :  <input type="text" name="userName"  />
+<form method="POST" action="delete">
+Name : <input type="text" name="userName"  />
 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
 		<input align="top" type="submit" value="Delete" />
-   </form>
+</form>
 		<form id="Back" action="${sessionScope.PROJECT_NAME}administratorSite/users" method="get"></form>
 		<input type="submit" value="Back" form="Back" />
 
@@ -40,7 +40,7 @@
 			<tr><c:out value="Country : ${address.getCountry()}" /><br></tr>
 			
 						 			<c:forEach items="${roles}" var="role">
-				<c:forEach items="${role.getUser()}" var="userRole">
+				<c:forEach items="${role.getUsers()}" var="userRole">
 					<c:if test="${userRole.getId() == user.getId()}">
 						<tr>Role : <c:out value="${role.getRole()}" /><br></tr>
 					</c:if>
@@ -48,10 +48,10 @@
 			</c:forEach> 
 			<br>
 			
-			 <form action="delete/${user.id}" method = "POST">
+			<form action="delete/${user.id}" method = "POST">
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"></input>
 				<input align="top" type="submit" value="Delete" />
-  			 </form>
+			</form>
 			</table>
 			</c:forEach>
 		</center>
