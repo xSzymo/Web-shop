@@ -1,7 +1,9 @@
 package com.shop.configuration.services.configuration;
 
+import com.shop.configuration.ApplicationProperties;
 import com.shop.data.operations.CookiesDAO;
 import com.shop.data.operations.UserDAO;
+import com.shop.data.tables.Book;
 import com.shop.data.tables.Cookies;
 import com.shop.data.tables.User;
 import com.shop.others.Coder;
@@ -14,12 +16,16 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashSet;
+import java.util.LinkedList;
 
 @Service("rememberMeService")
 public class CustomRememberMeServices implements RememberMeServices {
 
     @Override
     public Authentication autoLogin(HttpServletRequest request, HttpServletResponse response) {
+        addBasicVariablesToSession(request);
+
         if (!CookiesDAO.checkCookiesExistsAndDeleteIfNo(request, response))
             return null;
         if (CookiesDAO.isCookieStillActualDeleteIfNo(request, response))
@@ -83,5 +89,19 @@ public class CustomRememberMeServices implements RememberMeServices {
         RepositoriesAccess.cookiesRepository.save(mainCookie);
         RepositoriesAccess.cookiesRepository.save(rememberMeCookie);
         RepositoriesAccess.usersRepository.save(user);
+    }
+
+    private void addBasicVariablesToSession(HttpServletRequest request) {
+        HashSet<Book> shopBasket = new HashSet<>();
+        LinkedList<Book> shopBasketUno = new LinkedList<>();
+
+        if (request.getSession().getAttribute("basket") == null)
+            request.getSession().setAttribute("basket", shopBasket);
+        if (request.getSession().getAttribute("basketWithAllBooks") == null)
+            request.getSession().setAttribute("basketWithAllBooks", shopBasketUno);
+        if (request.getSession().getAttribute("PROJECT_NAME") == null)
+            request.getSession().setAttribute("PROJECT_NAME", ApplicationProperties.PROJECT_NAME);
+        if (request.getSession().getAttribute("URL") == null)
+            request.getSession().setAttribute("URL", ApplicationProperties.URL);
     }
 }
