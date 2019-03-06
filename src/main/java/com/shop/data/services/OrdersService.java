@@ -69,6 +69,8 @@ public class OrdersService {
         removeUserFromOrders(order);
 
         try {
+            order.setUser(null);
+            repository.save(order);
             repository.delete(order.getId());
         } catch (Exception e) {
             e.printStackTrace();

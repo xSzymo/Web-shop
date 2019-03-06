@@ -85,6 +85,7 @@ public class RunAtStart {
             addressService.save(billingAddressId);
 
             Order o = new Order(new BigDecimal("100"), EnumPayments.BANKTRANSFER, shippingAddressId, billingAddressId, couponCode);
+            o.setUser(user);
             o.setBooks(booksCollection);
             ordersService.save(o);
 
@@ -96,6 +97,7 @@ public class RunAtStart {
             ordersService.save(new Order(new BigDecimal("100000"), false, books123));
 
             Order o1 = new Order(new BigDecimal("50"), true);
+            o1.setUser(user1);
             o.setBooks(booksCollection);
             ordersService.save(o1);
 

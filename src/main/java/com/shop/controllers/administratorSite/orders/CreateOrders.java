@@ -1,14 +1,8 @@
 package com.shop.controllers.administratorSite.orders;
 
 import com.shop.data.enums.EnumPayments;
-import com.shop.data.services.AddressService;
-import com.shop.data.services.BooksService;
-import com.shop.data.services.CouponCodesService;
-import com.shop.data.services.OrdersService;
-import com.shop.data.tables.Address;
-import com.shop.data.tables.Book;
-import com.shop.data.tables.CouponCode;
-import com.shop.data.tables.Order;
+import com.shop.data.services.*;
+import com.shop.data.tables.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +26,8 @@ public class CreateOrders {
     private CouponCodesService couponCodesService;
     @Autowired
     private AddressService addressService;
+    @Autowired
+    private UsersService usersService;
 
 
     @RequestMapping(value = "create", method = RequestMethod.GET)
@@ -52,7 +48,8 @@ public class CreateOrders {
     }
 
     @RequestMapping(value = "create", method = RequestMethod.POST)
-    public String createOrder(@RequestParam("shippingAddressStreet") String shippingAddressStreet,
+    public String createOrder(@RequestParam("userId") String userId,
+                              @RequestParam("shippingAddressStreet") String shippingAddressStreet,
                               @RequestParam("shippingAddressPostalCode") String shippingAddressPostalCode,
                               @RequestParam("shippingAddressCity") String shippingAddressCity,
                               @RequestParam("shippingAddressCountry") String shippingAddressCountry,
@@ -129,7 +126,6 @@ public class CreateOrders {
         addressService.save(shippingAddress);
         couponCodesService.save(couponCodes);
 
-        System.out.println("halo");
         order.setPrice(new BigDecimal(price));
         order.setRealized(realized);
         order.setPaymentMethod(paymentType);
@@ -148,6 +144,7 @@ public class CreateOrders {
         }
 
         booksService.save(b);
+        order.setUser(usersService.findOne(Long.parseLong(userId)));
 
         order.getBooks().addAll(b);
         ordersService.save(order);

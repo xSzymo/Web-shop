@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 
 //TODO - after delete repositoryAccess add user to constructor
 @Entity
@@ -84,7 +85,10 @@ public class Order {
                 + shippingAddress + ", billingAddressId=" + billingAddress + ", couponCodes=" + couponCodes + ", books=" + books + "]";
     }
 
-    //TODO equals books
+    public Long getId() {
+        return this.id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -92,25 +96,16 @@ public class Order {
 
         Order order = (Order) o;
 
+        if (!Objects.equals(id, order.id)) return false;
         if (realized != order.realized) return false;
-        if (id != null ? !id.equals(order.id) : order.id != null) return false;
-        if (!(price.longValue() == order.price.longValue())) return false;
         if (paymentMethod != order.paymentMethod) return false;
 
         if (user != null ? !user.getLogin().equals(order.user.getLogin()) : order.user != null) return false;
-        if (shippingAddress != null ? !shippingAddress.equals(order.shippingAddress) : order.shippingAddress != null)
+        if (!Objects.equals(shippingAddress, order.shippingAddress))
             return false;
-        if (billingAddress != null ? !billingAddress.equals(order.billingAddress) : order.billingAddress != null)
+        if (!Objects.equals(billingAddress, order.billingAddress))
             return false;
-        if (couponCodes != null ? !couponCodes.equals(order.couponCodes) : order.couponCodes != null) return false;
-//			books.forEach(
-//					x -> {
-//
-//					}
-//			);
-//		}
-//		return books != null ?  : order.books == null;
-        return true;
+        return Objects.equals(couponCodes, order.couponCodes);
     }
 
     @Override
@@ -119,16 +114,10 @@ public class Order {
         result = 31 * result + (price != null ? price.hashCode() : 0);
         result = 31 * result + (paymentMethod != null ? paymentMethod.hashCode() : 0);
         result = 31 * result + (realized ? 1 : 0);
-        result = 31 * result + (user != null ? user.hashCode() : 0);
         result = 31 * result + (shippingAddress != null ? shippingAddress.hashCode() : 0);
         result = 31 * result + (billingAddress != null ? billingAddress.hashCode() : 0);
         result = 31 * result + (couponCodes != null ? couponCodes.hashCode() : 0);
-        result = 31 * result + (books != null ? books.hashCode() : 0);
         return result;
-    }
-
-    public Long getId() {
-        return this.id;
     }
 
     public BigDecimal getPrice() {
